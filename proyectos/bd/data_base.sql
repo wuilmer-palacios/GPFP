@@ -29,14 +29,14 @@ CREATE TABLE alcances_has_cp_participantes(
 );
 
 CREATE TABLE ejes_estrategicos(
-	idEje int not null,
+	idEje int not null auto_increment,
 	ejeEstrategico varchar(30) not null,
 	estadoEje tinyint  not null,
 	PRIMARY KEY(idEje)
 );
 
 CREATE TABLE estrategias(
-	idEstrategia int not null,
+	idEstrategia int not null auto_increment,
 	estrategia varchar(30) not null,
 	ejeEstrategico int not null,
 	fechaInicio datetime not null,
@@ -48,7 +48,7 @@ CREATE TABLE estrategias(
 );
 
 CREATE TABLE gestion_alcance(
-	idGestion int not null,
+	idGestion int not null auto_increment,
 	gestion varchar(30) not null,
 	alcance int not null,
 	usuarioGestion varchar(30) not null,
@@ -68,9 +68,11 @@ CREATE TABLE participantes(
 );
 
 CREATE TABLE responsables(
-	idResponsable int not null,
-	nombre varchar(15) not null,
-	apellido varchar(15) not null,
+	idResponsable int not null auto_increment,
+	primerNombre varchar(15) not null,
+	segundoNombre varchar (15) null,
+	primerApellido varchar(15) not null,
+	segundoApellido varchar (15) null,
 	estadoResponsable tinyint not null,
 	PRIMARY KEY(idResponsable)
 );

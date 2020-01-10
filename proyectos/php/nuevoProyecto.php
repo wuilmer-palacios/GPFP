@@ -92,7 +92,6 @@
 					</li>
 				</ul>
 			</div>
-
 			<!-- Cuerpo del body -->
 			<div id="capa" class="">
 				<div class="row">
@@ -100,60 +99,71 @@
 						<h5 class="text-center">Nuevo Plan Tactico</h5>
 					</div>
 				</div>
-				<form class="row">
+				<div class="row row-body">
 					<div style="" class="col-md-5 center-block">
-						<div class="row">
-							<div class="col-md-12">
-								Nombre del Plan
-								<input class="form-control form-control-danger" type="text" name="">
-								<br>
+
+						<!-- Formulario del Primer Bloque donde se capturan los datos para la tabla de planes Tacticos -->
+						<!-- Incio -- Inicio --  Incio -- Inicio --  Incio -- Inicio --  Incio -- Inicio --  Incio -- -->
+						<form id="form-plan-tactico" action="" method="POST">
+							<div class="row">
+								<div class="col-md-12">
+									Nombre del Plan
+									<input class="form-control" type="text" name="nombrePlan">
+									<br>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								Fecha de Inicio
-								<input class="form-control" type="date" name="">
-								<br>
+							<div class="row">
+								<div class="col-md-6">
+									Fecha de Inicio
+									<input class="form-control" type="date" name="fechaInicio">
+									<br>
+								</div>
+								<div class="col-md-6">
+									Fecha Final
+									<input class="form-control" type="date" name="fechaFinal">
+									<br>
+								</div>
 							</div>
-							<div class="col-md-6">
-								Fecha Final
-								<input class="form-control" type="date" name="">
-								<br>
+							<div class="row">
+								<div class="col-md-12">
+									Responsable
+								</div>
+								<div class="col-md-12">
+									<select class="form-control" name="responsable">
+										<option value="">--Seleccione--</option>
+										<option value="Juan Carrizo">Juan Carrizo</option>
+										<option value="Wuilmer Andres">Wuilmer Andres</option>
+										<option value="Wilson Eduardo">Wilson Eduardo</option>
+									</select>
+									<br>
+								</div>
+								<div class="col-md-12 text-center">
+									<input type="submit" class="btn btn-primary" value="Registrar" name="">
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								Responsable
-							</div>
-							<div class="col-md-12">
-								<select class="form-control" name="responsable">
-									<option value="">--Seleccione--</option>
-									<option value="Juan Carrizo">Juan Carrizo</option>
-									<option value="Wuilmer Andres">Wuilmer Andres</option>
-									<option value="Wilson Eduardo">Wilson Eduardo</option>
-								</select>
-								<br>
-							</div>
-						</div>
+						</form>
+						<!-- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin  -->
+						<!-- Formulario del Primer Bloque donde se capturan los datos para la tabla de planes Tacticos -->
+						
 					</div>
 					<!-- sdlkjfhskj -->
 					<div style="" class="col-md-5 center-block">
 						<div class="row">
 							<div class="col-md-12">
 								Agregar Alcances
-								<input class="form-control" type="text" name="">
+								<input class="form-control" type="text" name="" disabled="">
 								<br>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								Fecha de Inicio
-								<input class="form-control" type="date" name="">
+								<input class="form-control" type="date" name="" disabled="">
 								<br>
 							</div>
 							<div class="col-md-6">
 								Fecha Final
-								<input class="form-control" type="date" name="">
+								<input class="form-control" type="date" name="" disabled="">
 								<br>
 							</div>
 						</div>
@@ -162,7 +172,7 @@
 								<label for="">
 									Participantes que pertenecen a este alcance
 								</label>
-								<select multiple class="form-control" id="">
+								<select multiple class="form-control" id="" disabled="">
 									<?php
 										while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
 											echo '
@@ -175,29 +185,61 @@
 						</div>
 						
 						<div class="row">
-							<div class="col-md-6">
-								<button class="btn btn-success"> + </button>
+							<div class="col-md-12 text-center">
+								<button class="btn btn-success"> Añadir </button>
 							</div>
 						</div>
 					</div>
-				</form>
-				<br>
-				<br>
-				<br>
-				<div class="row">
-					<div class="col-md-11 center-block">
-						Proyecto Fulano de tal
-					</div>
-					<hr style="background: red">
-					<div class="col-md-11 center-block">
-						<table>
-							<thead>
+				</div>
+				<div class="row row-body">
+					<div class="col-md-12">
+						<table class="table table-bordered">
+							<thead class="thead-dark">
 								<tr>
-									<th>Actividad N° 1</th>
-									<th></th>
-									<th></th>
+									<th colspan="3" class="text-center">Detalles del Plan Tactico</th>
 								</tr>
 							</thead>
+							<tr>
+								<th style="width: 20%;">
+									Nombre del Plan Tactico:
+								</th>
+								<td style="width:80%;" colspan="2">
+									<?php
+									echo "Gestor de Proyectos";
+									?>
+								</td>
+							</tr>
+							<tr>
+								<th colspan="3">
+									Alcances
+								</th>
+							</tr>
+
+							<tr>
+								<td class="align-middle" rowspan="<?php echo"5" ?>">
+									Diseñar Base de Datos
+								</td>
+								<td class="align-middle" rowspan="5">
+									Inicio: 01 de Enero del 2020 <br>
+									Finaliza: 12 de Enero del 2020 <br>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Wuilmer Palacios
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Wilson Palacios
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Carlos Hernandez
+								</td>
+							</tr>
+							
 						</table>
 					</div>
 				</div>
