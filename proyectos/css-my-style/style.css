@@ -1,0 +1,145 @@
+*{
+	margin:0px;
+	padding:0px;
+	font-family: 'Comfortaa', cursive;
+	font-size:12px;
+}
+body{
+	background:#F9F9F9;
+/*	background-image:url('../img/fondo_1.jpg');*/
+	background-position:0px 0px;
+	background-size:100%;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+}
+#capa{
+	color:black;
+	margin-top:60px;
+}
+.capa-capa{
+	opacity:0.2;
+	z-index:1000;
+}
+.row-header{
+	color:white;
+	width:100%;
+	z-index:1000;
+	position:relative;
+	background:#5F6A69;
+	padding:9px;
+	border-bottom:solid 1px #E3E3E3;
+	position:fixed;
+}
+.col-md-3 {
+	text-align:center;
+}
+.ayuda{
+	text-align:right;
+}
+.toggle-btn{
+	padding:6px;
+	text-align:left;
+}
+.toggle-btn span {
+	z-index:1000;
+	border:1px solid;
+	padding:4px 6px;
+	margin:0px auto;
+	font-size:15px;
+	cursor:pointer;
+}
+/*Estilos del Menu*/
+.father > li > img{
+	padding:50px 0px;
+}
+.nav span{
+	float:lseft;
+}
+.nav{
+	background:rgba(0, 0, 0, .8);
+	width:250px;
+	height:100%;
+	position:fixed;
+	top:54px;
+	left:-250px;
+	transition:600ms;
+	z-index:1000;
+    overflow-x:hidden;
+}
+.nav > ul{
+	width:100%;
+	padding:2px;
+}
+.nav > ul > li{
+	text-align:center;
+	list-style:none;
+	padding:0px 0px;
+
+}
+.nav > ul > li > a:hover{
+	background:#424747;
+}
+.nav > ul > li > a{
+	text-decoration:none;
+	padding:10px 0px;
+	display:block;
+	width:100%;
+	border-bottom:solid 1px;
+	color:#ffffff;
+	font-weight:600;
+}
+.nav > ul li img{
+	width:150px;
+}
+.seleccion{
+	background:#424747;
+}
+/*Estilos de los sub-menus*/
+#children1{
+	display:none;
+}
+.children {
+	width:100%;
+	background:;
+	padding:0px;
+	position:relative;
+}
+.children li{
+	text-align:center;
+	list-style:none;
+	padding:0px 0px;
+	background:#737C7C;
+}
+.children > li > a:hover{
+	background:#424747;
+	width:110%;
+}
+.children > li > a{
+	text-decoration:none;
+	padding:10px 0px;
+	display:block;
+	width:100%;
+	border-bottom:solid 1px;
+	color:#ffffff;
+}
+.active{
+	left:0px;
+}
+
+/**//**//**//**//**//**/
+.form-control-date{
+	width:260px;
+}
+.capa{
+	z-index:1000;
+	background:black;
+	opacity:0.3;
+	width:100%;
+	height:100%;
+}
+.participantes{
+	padding:4px 0px;
+}
+.form-control-danger{
+	border:1px solid red;
+}
