@@ -11,16 +11,8 @@ function registraResponsable(){
 		$('#primerNombre').toggleClass('form-control-danger');
 		var error=true;
 	}
-	if (segundoNom==""){
-		$('#segundoNombre').toggleClass('form-control-danger');
-		var error=true;
-	}
 	if (primerApe==""){
 		$('#primerApellido').toggleClass('form-control-danger');
-		var error=true;
-	}
-	if (segundoApe==""){
-		$('#segundoApellido').toggleClass('form-control-danger');
 		var error=true;
 	}	
 
@@ -47,11 +39,9 @@ function registraResponsable(){
 							var dat=date;
 							
 								$('#label').html(dat);
+								$('#lista-registro').css('display','block');
 						}
 					})
-				}
-				else{
-					CWdialog('Nuevo Responsable no Almacenado con exito');
 				}
 			}
 		})

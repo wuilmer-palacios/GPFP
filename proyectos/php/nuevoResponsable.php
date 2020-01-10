@@ -140,10 +140,13 @@
 						</button>
 					</div>
 				</div>
-
-				<div class="row row-body">
-					<div class="col-md-8 center-block">
-						<label id="label">
+				<br>
+				<div style="display:none;" id="lista-registro" class="row">
+					<div class="col-md-5 center-block text-center">
+						<label class="success">
+							Nuevo responsable agregado con exito
+						</label>
+						<label id="label" class="juanca">
 							
 						</label>
 					</div>

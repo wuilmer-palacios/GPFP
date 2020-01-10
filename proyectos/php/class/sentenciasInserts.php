@@ -11,13 +11,8 @@
 		if ($_POST["primerNombre"]=="") {
 			$error=true;
 		}
-		if ($_POST["segundoNombre"]=="") {
-			$error=true;
-		}
+		
 		if ($_POST["primerApellido"]=="") {
-			$error=true;
-		}
-		if ($_POST["segundoApellido"]=="") {
 			$error=true;
 		}
 

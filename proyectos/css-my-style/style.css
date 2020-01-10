@@ -153,3 +153,13 @@ body{
 	padding:3%;
 	border-radius:8PX;
 }
+.juanca{
+	padding:15px;
+	border:1px solid #1CE700;
+	width:100%;
+}
+.success{
+	font-weight:500px;
+	font-size:15px;
+	color:green;
+}
