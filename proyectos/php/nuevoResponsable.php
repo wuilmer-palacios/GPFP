@@ -42,17 +42,17 @@
 					<li>
 						<img src="../img/logo_login.png"></li>
 					<li>
-						<a href="#" >Inicio</a>
+						<a href="../" >Inicio</a>
 					</li>
 					<li>
 						<a id="subMenu1" onclick="despliegaSubMenu1();" href="#">Proyectos</a>
 						<ul id="children1" class="children">
 							<li>
-								<a href="php/nuevoProyecto.php">Nuevo Proyecto</a>
+								<a href="nuevoProyecto.php">Nuevo Proyecto</a>
 							</li>
 						
 							<li>
-								<a href="php/verProyecto.php">Ver Proyectos</a>
+								<a href="verProyecto.php">Ver Proyectos</a>
 							</li>
 						</ul>
 					</li>
@@ -60,10 +60,10 @@
 						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
 						<ul id="children2" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Responsables</a>
+								<a href="nuevoResponsable.php">Nuevo Responsables</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Responsables</a>
+								<a href="verResponsable.php">Ver Responsables</a>
 							</li>
 							
 						</ul>
@@ -72,10 +72,10 @@
 						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
 						<ul id="children3" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Participante</a>
+								<a href="nuevoParticipante.php">Nuevo Participante</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Participante</a>
+								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
 					</li>
@@ -141,13 +141,13 @@
 					</div>
 				</div>
 				<br>
-				<div style="display:none;" id="lista-registro" class="row">
-					<div class="col-md-5 center-block text-center">
+				<div style="display:none;" id="lista-registro" class="row content-center">
+					<div id="col-list" class="col-md-12 text-center">
 						<label class="success">
 							Nuevo responsable agregado con exito
 						</label>
 						<label id="label" class="juanca">
-							
+							asdasd
 						</label>
 					</div>
 				</div>			

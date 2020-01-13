@@ -59,10 +59,10 @@
 						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
 						<ul id="children2" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Responsables</a>
+								<a href="php/nuevoResponsable.php">Nuevo Responsables</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Responsables</a>
+								<a href="php/verResponsable.php">Ver Responsables</a>
 							</li>
 							
 						</ul>
@@ -71,10 +71,10 @@
 						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
 						<ul id="children3" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Participante</a>
+								<a href="php/nuevoParticipante.php">Nuevo Participante</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Participante</a>
+								<a href="php/verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
 					</li>

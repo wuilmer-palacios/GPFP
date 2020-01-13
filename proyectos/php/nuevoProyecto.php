@@ -6,6 +6,11 @@
 	$resultado=$cnx->prepare($consulta);
 	$resultado->execute();
 
+	/*Consulta para llenar select de responsables*/
+	$consultaResponsables="SELECT * FROM responsables WHERE estadoResponsable=1";
+	$resultadoResponsable=$cnx->prepare($consultaResponsables);
+	$resultadoResponsable->execute();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,6 +27,7 @@
 	<script src="../js/jquery-3.4.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
+	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
 	
 </head>
 <body>
@@ -50,17 +56,17 @@
 					<li>
 						<img src="../img/logo_login.png"></li>
 					<li>
-						<a href="#" >Inicio</a>
+						<a href="../" >Inicio</a>
 					</li>
 					<li>
 						<a id="subMenu1" onclick="despliegaSubMenu1();" href="#">Proyectos</a>
 						<ul id="children1" class="children">
 							<li>
-								<a href="php/nuevoProyecto.php">Nuevo Proyecto</a>
+								<a href="nuevoProyecto.php">Nuevo Proyecto</a>
 							</li>
 						
 							<li>
-								<a href="php/verProyecto.php">Ver Proyectos</a>
+								<a href="verProyecto.php">Ver Proyectos</a>
 							</li>
 						</ul>
 					</li>
@@ -68,10 +74,10 @@
 						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
 						<ul id="children2" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Responsables</a>
+								<a href="nuevoResponsable.php">Nuevo Responsables</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Responsables</a>
+								<a href="verResponsable.php">Ver Responsables</a>
 							</li>
 							
 						</ul>
@@ -80,10 +86,10 @@
 						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
 						<ul id="children3" style="display:none;" class="children">
 							<li>
-								<a href="">Nuevo Participante</a>
+								<a href="nuevoParticipante.php">Nuevo Participante</a>
 							</li>
 							<li>
-								<a href="php/nuevoProyecto">Ver Participante</a>
+								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
 					</li>
@@ -108,19 +114,30 @@
 							<div class="row">
 								<div class="col-md-12">
 									Nombre del Plan
-									<input class="form-control" type="text" name="nombrePlan">
+									<input id="nombrePlan" class="form-control" type="text" name="nombrePlan" onblur="validaNombrePlan()">
+									<label style="display:none;" id="label-control-danger" class="label-control-danger">
+										Ya existe un Plan con este nombre
+									</label>
 									<br>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">
 									Fecha de Inicio
-									<input class="form-control" type="date" name="fechaInicio">
+									<input id="fechaInicio" class="form-control" type="date" name="fechaInicio" onblur="validaFechaInicio();">
+									<label style="display:none;" id="label-inicio" class="label-control-warning">
+										<span class="icon-warning"></span>
+										La Fecha de Inicio no puede ser menor a la fecha Actual.
+									</label>
 									<br>
 								</div>
 								<div class="col-md-6">
 									Fecha Final
-									<input class="form-control" type="date" name="fechaFinal">
+									<input id="fechaFinal" class="form-control" type="date" name="fechaFinal" onblur="validaFechaFinal();">
+									<label style="display:none;" id="label-final" class="label-control-warning">
+										<span class="icon-warning"></span>
+										Fecha Invalida
+									</label>
 									<br>
 								</div>
 							</div>
@@ -129,19 +146,26 @@
 									Responsable
 								</div>
 								<div class="col-md-12">
-									<select class="form-control" name="responsable">
-										<option value="">--Seleccione--</option>
-										<option value="Juan Carrizo">Juan Carrizo</option>
-										<option value="Wuilmer Andres">Wuilmer Andres</option>
-										<option value="Wilson Eduardo">Wilson Eduardo</option>
+									<input type="hidden" name="tipo" value="nuevoPlanTactico">
+									<select class="form-control" name="responsable" id="responsable" onchange="desactivarDanger();">
+										<option value="nulo">--Seleccione--</option>
+										<?php
+										while ($row_res=$resultadoResponsable->fetch(PDO::FETCH_ASSOC)) {
+										 	echo '<option value="'.$row_res["idResponsable"].'">'.$row_res["primerNombre"]." ".$row_res["primerApellido"].'</option>';
+										 } 
+										
+										 ?>
 									</select>
 									<br>
 								</div>
-								<div class="col-md-12 text-center">
-									<input type="submit" class="btn btn-primary" value="Registrar" name="">
-								</div>
 							</div>
 						</form>
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<input id="boton-registrar" type="submit" class="btn btn-primary" value="Registrar" name="" onclick="registraPlanTactico();">
+							</div>
+						</div>
+
 						<!-- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin -- Fin  -->
 						<!-- Formulario del Primer Bloque donde se capturan los datos para la tabla de planes Tacticos -->
 						
@@ -191,6 +215,15 @@
 						</div>
 					</div>
 				</div>
+
+				<div id="success" style="display:none;" class="row row-body">
+					<div class="col-md-12 text-center">
+						<label class="success">
+							Nuevo Plan Registrado con Exito
+						</label>
+					</div>
+				</div>
+
 				<div class="row row-body">
 					<div class="col-md-12">
 						<table class="table table-bordered">
@@ -201,12 +234,12 @@
 							</thead>
 							<tr>
 								<th style="width: 20%;">
-									Nombre del Plan Tactico:
+									Nombre del Plan Tactico
 								</th>
 								<td style="width:80%;" colspan="2">
-									<?php
-									echo "Gestor de Proyectos";
-									?>
+									<label id="namePlanTactico">
+										
+									</label>
 								</td>
 							</tr>
 							<tr>
@@ -220,8 +253,13 @@
 									Diseñar Base de Datos
 								</td>
 								<td class="align-middle" rowspan="5">
-									Inicio: 01 de Enero del 2020 <br>
-									Finaliza: 12 de Enero del 2020 <br>
+									<label id="fecInicio">
+
+									</label>
+									<br>
+									<label id="fecFinal">
+										
+									</label>
 								</td>
 							</tr>
 							<tr>

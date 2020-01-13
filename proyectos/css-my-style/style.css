@@ -163,3 +163,11 @@ body{
 	font-size:15px;
 	color:green;
 }
+.label-control-danger{
+	color:red;
+	padding:4px;
+}
+.label-control-warning{
+	color:#FF8B00;
+	padding:4px;
+}

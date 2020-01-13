@@ -89,76 +89,12 @@
 			<div id="capa" class="">
 				<div class="row">
 					<div class="col-md-10 center-block">
-						<h5 class="text-center">Registro de Nuevo Participante</h5>
+						<h5 class="text-center">Ver Participantes "En construccion"</h5>
 						<br>
-					</div>
-				</div>
-				<form id="form-participante" class="row" method="POST">
-					<div style="" class="col-md-8 center-block">
-						<div class="row">
-							<div class="col-md-6">
-								Primer Nombre
-								<input id="primerNombre" class="form-control" type="text" name="primerNombre">
-								<br>
-							</div>
-							<div class="col-md-6">
-								Segundo Nombre
-								<input id="segundoNombre" class="form-control" type="text" name="segundoNombre">
-								<br>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								Primer Apellido
-								<input id="primerApellido" class="form-control" type="text" name="primerApellido">
-								<br>
-							</div>
-							<div class="col-md-6">
-								Segundo Apellido
-								<input id="segundoApellido" class="form-control" type="text" name="segundoApellido">
-								<br>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								Area de dependencia
-							</div>
-							<div class="col-md-6">
-								<input type="hidden" name="tipo" value="participante">
-								<select class="form-control">
-									<option>--Seleccione--</option>
-								</select>
-								<br>
-							</div>
-						</div>
-					</div>
-				</form>
-				<div class="row">
-					<div class="col-md-8 center-block">
-						<button class="btn btn-primary" onclick="registraParticipante()">
-							Registrar
-						</button>
-					</div>
-				</div>
-				<br>
-				<div style="display:none;" id="lista-registro" class="row content-center">
-					<div id="col-list" class="col-md-12 text-center">
-						<label class="success">
-							Nuevo Participante agregado con exito
-						</label>
-						<label id="label" class="juanca">
-
-						</label>
 					</div>
 				</div>			
 			</div>
 		</div>
 	</div>
-</body>
-</html>
-
-</head>
-<body>
-
 </body>
 </html>
