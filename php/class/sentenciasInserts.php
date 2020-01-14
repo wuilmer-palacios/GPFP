@@ -146,11 +146,13 @@
 	if (@$valor["tipo"]=="nuevoAlcance") {
 
 		echo "<br>".$idAlcance=NULL;
-		echo "<br>".$alcance=$valor["nombreAlcance"];
+		echo "<br>".$alcance=str_replace("%20", " ", $valor["nombreAlcance"]);
 		echo "<br>".$planTactico=$valor["idPlan"];
 		echo "<br>".$fechaInicio=$valor["fechaInicioAlcance"];
 		echo "<br>".$fechaFinal=$valor["fechaFinalAlcance"];
 		echo "<br>".$estadoAlcance=1;
+
+		
 
 		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicio, fechaFinal, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
 		$resultado=$conexion->prepare($consulta);
@@ -162,7 +164,7 @@
 			':fechaFinal' => $fechaFinal,
 			':estadoAlcance' => $estadoAlcance
 			 ));
-		
+
 		@$participantes=$_POST["participantes"];
 	}
 /*k------------------------------------*/
