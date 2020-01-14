@@ -14,7 +14,7 @@
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
-	
+
 </head>
 <body>
 	<div id="body-z">
@@ -141,7 +141,7 @@
 					</div>
 				</div>
 				<br>
-				<div style="display:none;" id="lista-registro" class="row content-center">
+				<div style="display:nodne;" id="lista-registro" class="row content-center">
 					<div id="col-list" class="col-md-12 text-center">
 						<label class="success">
 							Nuevo Participante agregado con exito

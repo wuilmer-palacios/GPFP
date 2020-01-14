@@ -120,12 +120,69 @@
 
 		if ($resultado->execute()) {
 
-			echo "1";
+			$consulta="SELECT *FROM planes_tacticos ORDER by idPlan DESC LIMIT 1";
+			$resultado=$conexion->prepare($consulta);
+			$resultado->execute();
+
+			while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+				echo $row["idPlan"];
+			}
 		}
 		else{
 
 			echo "0";
 		}
 	}
+/*-------------------------------------*/
+	@$valores=explode("&", $_POST["valores"]);
+
+	for ($i=0; $i < count($valores); $i++) {
+
+		$subValor[$i]=explode("=", $valores[$i]);
+
+		@$valor[$subValor[$i][0]]=$subValor[$i][1];
+	}
+	
+	if (@$valor["tipo"]=="nuevoAlcance") {
+
+		echo "<br>".$idAlcance=NULL;
+		echo "<br>".$alcance=$valor["nombreAlcance"];
+		echo "<br>".$planTactico=$valor["idPlan"];
+		echo "<br>".$fechaInicio=$valor["fechaInicioAlcance"];
+		echo "<br>".$fechaFinal=$valor["fechaFinalAlcance"];
+		echo "<br>".$estadoAlcance=1;
+
+		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicio, fechaFinal, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
+		$resultado=$conexion->prepare($consulta);
+		$resultado->execute(array(
+			':idAlcance' => $idAlcance,
+			':alcance' => $alcance,
+			':planTactico' => $planTactico,
+			':fechaInicio' => $fechaInicio,
+			':fechaFinal' => $fechaFinal,
+			':estadoAlcance' => $estadoAlcance
+			 ));
 		
+		@$participantes=$_POST["participantes"];
+	}
+/*k------------------------------------*/
+	if (@$_POST["senUltimoRegistro"]>=1) {
+
+		$idPlan=$_POST["senUltimoRegistro"];
+		$estadoPlan=1;
+		
+		$sentecia="SELECT * FROM planes_tacticos 
+		INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
+		WHERE planes_tacticos.idPlan=:idPlan AND planes_tacticos.estadoPlan=:estadoPlan";
+		$resultado=$conexion->prepare($sentecia);
+
+		if ($resultado->execute(array(':idPlan' => $idPlan, ':estadoPlan' => $estadoPlan))) {
+			
+			while ($row_plan=$resultado->fetch(PDO::FETCH_ASSOC)) {
+				
+				echo $row_plan["idPlan"]."-".$row_plan["plan"]."-".$row_plan["primerNombre"]." ".$row_plan["primerApellido"];
+			}
+		}
+
+	}
 ?>

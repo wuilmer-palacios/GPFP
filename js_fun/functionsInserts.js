@@ -138,21 +138,79 @@ function registraPlanTactico(){
 			success: function(data){
 				var elemento=data;
 
-				if (elemento==1) {
+				if (elemento>=1) {
 
-					$("#boton-registrar").prop("disabled",true)
+					$("#boton-registrar").prop("disabled",true);
 					$("#success").css("display","block");
 
-					$("#namePlanTactico").append(nomPlan);
-					$("#fecInicio").append('Fecha de Inicio '+fecInicio);
-					$("#fecFinal").append('Fechad de Finalizacion'+fecFinal);
+					$("#nombreAlcance").prop("disabled",false);
+					$("#fechaInicioAlcance").prop("disabled",false);
+					$("#fechaFinalAlcance").prop("disabled",false);
+					$("#participantes").prop("disabled",false);
+					var ultimoRegistro="ultimoRegistro";
+					$.ajax({
+						url:'class/sentenciasInserts.php',
+						type:'POST',
+						data:{senUltimoRegistro: elemento},
+						success: function(data_two){
+							var valorPlanTactico=data_two.split('-');
+							 sessionStorage.id=valorPlanTactico[0];
+							 sessionStorage.planNombre=valorPlanTactico[1];
+							 sessionStorage.planResponsable=valorPlanTactico[2];
+
+							$("#idPlan").val(sessionStorage.id);
+							$("#namePlanTactico").append(sessionStorage.planNombre);
+							$("#nameResponsable").append(sessionStorage.planResponsable);
+
+						}
+					})
 					
-
 				}
-
-
 			}
 
+		})
+	}
+}
+function unirAlcanceYParticipante(){
+	var valores=$("#form-alcances").serialize();
+	var error=false;
+	var nomAlcance=$("#nombreAlcance").val();
+	var fecInicioAlcance=$("#fechaInicioAlcance").val();
+	var fecFinalAlcance=$("#fechaFinalAlcance").val();
+	var participantes=$("#participantes").val();
+
+
+	if (nomAlcance=="") {
+		$("#nombreAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (fecInicioAlcance=="") {
+		$("#fechaInicioAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (fecFinalAlcance=="") {
+		$("#fechaFinalAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (participantes=="") {
+		$("#participantes").toggleClass('form-control-danger');
+		error=true;
+	}
+	
+	if (error==false) {
+
+		$("#nombreAlcance").removeClass('form-control-danger');
+		$("#fechaInicioAlcance").removeClass('form-control-danger');
+		$("#fechaFinalAlcance").removeClass('form-control-danger');
+		$("#participantes").removeClass('form-control-danger');
+
+		$.ajax({
+			url:'class/sentenciasInserts.php',
+			type:'POST',
+			data:{participantes,valores},
+			success: function(data){
+				
+			}		
 		})
 	}
 }

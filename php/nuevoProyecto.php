@@ -172,45 +172,51 @@
 					</div>
 					<!-- sdlkjfhskj -->
 					<div style="" class="col-md-5 center-block">
-						<div class="row">
-							<div class="col-md-12">
-								Agregar Alcances
-								<input class="form-control" type="text" name="" disabled="">
-								<br>
+						<form id="form-alcances" method="POST">
+							<div class="row">
+								<div class="col-md-12">
+									Agregar Alcances
+									<input id="idPlan" type="hidden" name="idPlan" value="">
+									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" ddisabled="">
+									<br>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								Fecha de Inicio
-								<input class="form-control" type="date" name="" disabled="">
-								<br>
+							<div class="row">
+								<div class="col-md-6">
+									Fecha de Inicio
+									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" ddisabled="">
+									<br>
+								</div>
+								<div class="col-md-6">
+									Fecha Final
+									<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" ddisabled="">
+									<br>
+								</div>
 							</div>
-							<div class="col-md-6">
-								Fecha Final
-								<input class="form-control" type="date" name="" disabled="">
-								<br>
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label for="">
+										Participantes que pertenecen a este alcance
+									</label>
+									<input type="hidden" name="tipo" value="nuevoAlcance">
+									<select id="participantes" multiple class="form-control" name="participantes" ddisabled="">
+										<?php
+											while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+												echo '
+												<option class="participantes" value="'.$row["idParticipante"].'">'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
+												';
+											}
+										?>
+									</select>
+								</div>
 							</div>
-						</div>
+						</form>
 						<div class="row">
-							<div class="form-group col-md-12">
-								<label for="">
-									Participantes que pertenecen a este alcance
-								</label>
-								<select multiple class="form-control" id="" disabled="">
-									<?php
-										while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
-											echo '
-											<option class="participantes" value="'.$row["idParticipante"].'">'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
-											';
-										}
-									?>
-								</select>
+							<div class="col-md-6 text-center">
+								<button class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir Ahora </button>
 							</div>
-						</div>
-						
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<button class="btn btn-success"> Añadir </button>
+							<div class="col-md-6 text-center">
+								<button class="btn btn-secondary"> Añadir mas Tarde</button>
 							</div>
 						</div>
 					</div>
@@ -243,16 +249,28 @@
 								</td>
 							</tr>
 							<tr>
+								<th style="width: 20%;">
+									Responsable
+								</th>
+								<td style="width:80%;" colspan="2">
+									<label id="nameResponsable">
+										
+									</label>
+								</td>
+							</tr>
+							
+							<tr>
 								<th colspan="3">
 									Alcances
 								</th>
 							</tr>
 
+							<!-- Parte Dinamica -->
 							<tr>
-								<td class="align-middle" rowspan="<?php echo"5" ?>">
+								<td class="align-middle" rowspan="6">
 									Diseñar Base de Datos
 								</td>
-								<td class="align-middle" rowspan="5">
+								<td class="align-middle" rowspan="6">
 									<label id="fecInicio">
 
 									</label>
@@ -277,7 +295,16 @@
 									Carlos Hernandez
 								</td>
 							</tr>
-							
+							<tr>
+								<td>
+									Carlos Hernandez
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Carlos Hernandez
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
