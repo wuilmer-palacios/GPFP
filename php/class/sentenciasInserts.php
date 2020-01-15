@@ -143,30 +143,86 @@
 		@$valor[$subValor[$i][0]]=$subValor[$i][1];
 	}
 	
+	
 	if (@$valor["tipo"]=="nuevoAlcance") {
 
-		echo "<br>".$idAlcance=NULL;
-		echo "<br>".$alcance=str_replace("%20", " ", $valor["nombreAlcance"]);
-		echo "<br>".$planTactico=$valor["idPlan"];
-		echo "<br>".$fechaInicio=$valor["fechaInicioAlcance"];
-		echo "<br>".$fechaFinal=$valor["fechaFinalAlcance"];
-		echo "<br>".$estadoAlcance=1;
+		$idAlcance=NULL;
+		$alcance=str_replace("%20", " ", $valor["nombreAlcance"]);
+		$planTactico=$valor["idPlan"];
+		$fechaInicio=$valor["fechaInicioAlcance"];
+		$fechaFinal=$valor["fechaFinalAlcance"];
+		$estadoAlcance=1;
 
 		
 
 		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicio, fechaFinal, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
 		$resultado=$conexion->prepare($consulta);
-		$resultado->execute(array(
+		if ($resultado->execute(array(
 			':idAlcance' => $idAlcance,
 			':alcance' => $alcance,
 			':planTactico' => $planTactico,
 			':fechaInicio' => $fechaInicio,
 			':fechaFinal' => $fechaFinal,
 			':estadoAlcance' => $estadoAlcance
-			 ));
+			 ))) {
+			
+			@$participantes=$_POST["participantes"];
+			$consultaUltimoAlcance="SELECT * FROM alcances ORDER BY idAlcance DESC LIMIT 1";
+			$resultadoUltimoAlcance=$conexion->prepare($consultaUltimoAlcance);
+			$resultadoUltimoAlcance->execute();
 
-		@$participantes=$_POST["participantes"];
+			while ($row_ultimo=$resultadoUltimoAlcance->fetch(PDO::FETCH_ASSOC)) {
+				
+				$participantes=$_POST["participantes"];
+				
+
+				for ($i=0; $i < count($participantes); $i++) { 
+					
+					$row_ultimo["idAlcance"];
+					$participantes[$i];
+
+					$consulta_unir="INSERT INTO alcances_has_cp_participantes (idAlcance, idParticipante) VALUES (:idAlcance, :idParticipante)";
+					$resultado_unir=$conexion->prepare($consulta_unir);
+
+					if ($resultado_unir->execute(array(
+						':idAlcance' => $row_ultimo["idAlcance"],
+						':idParticipante' => $participantes[$i]))) {
+						@$numero+=1;
+					}
+
+				}
+
+				$consulta_participantes="SELECT * FROM alcances_has_cp_participantes
+				INNER JOIN alcances ON alcances.idAlcance = alcances_has_cp_participantes.idAlcance
+				INNER JOIN participantes ON participantes.idParticipante = alcances_has_cp_participantes.idParticipante
+				WHERE alcances_has_cp_participantes.idAlcance=:idAlcance";
+				$resultado_participantes=$conexion->prepare($consulta_participantes);
+				$resultado_participantes->execute(array(':idAlcance' => $row_ultimo["idAlcance"]));
+				while ($datos=$resultado_participantes->fetch(PDO::FETCH_ASSOC)) {
+					
+					@$e+=1;
+					
+					if ($e==1) {
+						echo $datos["alcance"]."*";
+						echo $datos["fechaInicio"]."*";
+						echo $datos["fechaFinal"]."*";
+					}
+					
+					$nombre[$e-1]=$datos["primerNombre"]." ".$datos["primerApellido"]."|";
+					echo $nombre[$e-1];
+				}
+
+				
+			}
+			
+		}
+		else{
+			echo "No se registro la informacion";
+		}
+
+		
 	}
+
 /*k------------------------------------*/
 	if (@$_POST["senUltimoRegistro"]>=1) {
 

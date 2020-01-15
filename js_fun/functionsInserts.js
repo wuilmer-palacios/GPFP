@@ -142,11 +142,19 @@ function registraPlanTactico(){
 
 					$("#boton-registrar").prop("disabled",true);
 					$("#success").css("display","block");
+					$("#form-alcence").css("display","block");
+
+					$("#nombrePlan").prop("disabled", true);
+					$("#fechaInicio").prop("disabled", true);
+					$("#fechaFinal").prop("disabled", true);
+					$("#responsable").prop("disabled", true);
 
 					$("#nombreAlcance").prop("disabled",false);
 					$("#fechaInicioAlcance").prop("disabled",false);
 					$("#fechaFinalAlcance").prop("disabled",false);
 					$("#participantes").prop("disabled",false);
+
+
 					var ultimoRegistro="ultimoRegistro";
 					$.ajax({
 						url:'class/sentenciasInserts.php',
@@ -209,7 +217,20 @@ function unirAlcanceYParticipante(){
 			type:'POST',
 			data:{participantes,valores},
 			success: function(data){
-				
+				var value=data.split('*');
+				console.log(value);
+				var colaboradores=value[3].split('|');
+				var rowspan=colaboradores.length-1;
+
+				$("#form-table-wuil").css("display","block");
+
+				$("#antepenultimo-tr").after('<tr id="ultimo-tr" class="moment"><td class="align-middle" rowspan="'+rowspan+'">'+value[0]+'</td><td class="align-middle" rowspan="'+rowspan+'"><label id="fecInicio">'+value[1]+'</label><br><label id="fecFinal">'+value[2]+'</label><td>'+colaboradores[0]+'</td></td></tr>');
+
+				for (var i = 1; i < colaboradores.length-1; i++) {
+
+					$(".moment").after('<tr><td>'+colaboradores[i]+'</td></tr>');
+				}
+				$("#ultimo-tr").removeClass('moment');
 			}		
 		})
 	}

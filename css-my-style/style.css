@@ -171,3 +171,22 @@ body{
 	color:#FF8B00;
 	padding:4px;
 }
+.list-group-flush{
+	background:#DCDCDC;
+}
+.list-group-flush > li{
+	list-style:none;
+	padding:4px 10px;
+	color:black;
+	font-weight:900;
+}
+.list-group-flush > li:hover{
+	background:#AFAFAF;
+}
+.list-group-flush > li > span{
+	float:right;
+	padding:4px;
+	margin-right:8px;
+	color:red;
+	cursor:pointer;
+}

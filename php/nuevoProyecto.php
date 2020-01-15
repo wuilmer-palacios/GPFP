@@ -16,6 +16,7 @@
 <html>
 <head>
 	<title>Nuevo Proyecto</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/png" href="../img/icon.png">
@@ -171,7 +172,7 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div style="" class="col-md-5 center-block">
+					<div id="form-alcence" style="display: nosne;" class="col-md-5 center-block">
 						<form id="form-alcances" method="POST">
 							<div class="row">
 								<div class="col-md-12">
@@ -210,13 +211,19 @@
 									</select>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<ul class="list-group list-group-flush">
+										<li>Wuilmer	palacios <span class="icon-cancel-circle"></span></li>
+										<li>Elvinia Oliveros <span class="icon-cancel-circle"></span></li>
+										<li>Wilson Palacio <span class="icon-cancel-circle"></span></li>
+									</ul>
+								</div>
+							</div>
 						</form>
 						<div class="row">
-							<div class="col-md-6 text-center">
-								<button class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir Ahora </button>
-							</div>
-							<div class="col-md-6 text-center">
-								<button class="btn btn-secondary"> Añadir mas Tarde</button>
+							<div class="col-md-12 text-center">
+								<button class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
 							</div>
 						</div>
 					</div>
@@ -230,7 +237,7 @@
 					</div>
 				</div>
 
-				<div class="row row-body">
+				<div id="form-table-wuil" style="display: none" class="row row-body">
 					<div class="col-md-12">
 						<table class="table table-bordered">
 							<thead class="thead-dark">
@@ -266,44 +273,8 @@
 							</tr>
 
 							<!-- Parte Dinamica -->
-							<tr>
-								<td class="align-middle" rowspan="6">
-									Diseñar Base de Datos
-								</td>
-								<td class="align-middle" rowspan="6">
-									<label id="fecInicio">
-
-									</label>
-									<br>
-									<label id="fecFinal">
-										
-									</label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									Wuilmer Palacios
-								</td>
-							</tr>
-							<tr>
-								<td>
-									Wilson Palacios
-								</td>
-							</tr>
-							<tr>
-								<td>
-									Carlos Hernandez
-								</td>
-							</tr>
-							<tr>
-								<td>
-									Carlos Hernandez
-								</td>
-							</tr>
-							<tr>
-								<td>
-									Carlos Hernandez
-								</td>
+							<tr id="antepenultimo-tr">
+								
 							</tr>
 						</table>
 					</div>
