@@ -114,6 +114,7 @@ function validaFechaFinal(){
 		$("#label-final").css("display","block");
 		$("#boton-registrar").prop("disabled",true);
 		$('#fechaFinal').addClass('form-control-success');
+		$('#fechaInicio').val('');
 	}
 	else{
 		$("#label-final").css("display","none");
@@ -123,4 +124,50 @@ function validaFechaFinal(){
 
 function desactivarDanger(){
 	$('#responsable').addClass('form-control-success');
+}7
+function agregaParticipante(){
+
+	var variable=$('#participantes').val();
+	var combo = document.getElementById("participantes");
+	var selected = combo.options[combo.selectedIndex].text;
+
+
+	if (!$('#'+variable).length) {
+		
+		$('#lista-dinamica').append('<li id="'+ variable + '" class="participantes" value="' + variable + '">' + selected + '<span class="icon-bin" onclick="eliminarListaDinamica(' + variable + ');"></span></li>');
+		
+	}
+	else{
+		alert("Participante ya esta en lista");
+	}
+
+	
+}
+function eliminarListaDinamica(valorVariable){
+	var variable=valorVariable;
+	var node=document.getElementById(variable);
+	node.parentNode.removeChild(node);
+}
+function find_li(contenido){
+
+	var el = document.getElementById("lista-dinamica").getElementsByTagName("li");
+	for (var i=0; i<el.length; i++)	{
+
+		if(el[i].innerHTML==contenido)
+		return false;
+	}
+		return true;
+}
+function validaNombreAlcance(){
+	var nombreAlcance=$("#nombreAlcance").val();
+	if (nombreAlcance!=="") {
+		$.ajax({
+			url:'class/validaNombre.php',
+			type:'POST',
+			data:{sendNombreAlcance:nombreAlcance},
+			success:function(){
+				
+			}
+		});
+	}
 }

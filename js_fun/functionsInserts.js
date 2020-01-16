@@ -154,6 +154,12 @@ function registraPlanTactico(){
 					$("#fechaFinalAlcance").prop("disabled",false);
 					$("#participantes").prop("disabled",false);
 
+					/*Asignar minimo y maximo de fechas de los alcances*/
+					$("#fechaInicioAlcance").prop("min",fecInicio);
+					$("#fechaInicioAlcance").prop("max",fecFinal);
+					$("#fechaFinalAlcance").prop("min",fecInicio);
+					$("#fechaFinalAlcance").prop("max",fecFinal);
+					/*----------------FIN FIN ----------------*/
 
 					var ultimoRegistro="ultimoRegistro";
 					$.ajax({
@@ -180,12 +186,21 @@ function registraPlanTactico(){
 	}
 }
 function unirAlcanceYParticipante(){
+
+	var i=0;
+	var partici=[];
+	$("#lista-dinamica li").each(function(){
+		
+	partici[i]=$(this).val();
+	i=i+1;
+	});
+
 	var valores=$("#form-alcances").serialize();
 	var error=false;
 	var nomAlcance=$("#nombreAlcance").val();
 	var fecInicioAlcance=$("#fechaInicioAlcance").val();
 	var fecFinalAlcance=$("#fechaFinalAlcance").val();
-	var participantes=$("#participantes").val();
+	var participantes=partici;
 
 
 	if (nomAlcance=="") {
@@ -218,19 +233,35 @@ function unirAlcanceYParticipante(){
 			data:{participantes,valores},
 			success: function(data){
 				var value=data.split('*');
-				console.log(value);
 				var colaboradores=value[3].split('|');
 				var rowspan=colaboradores.length-1;
 
 				$("#form-table-wuil").css("display","block");
 
-				$("#antepenultimo-tr").after('<tr id="ultimo-tr" class="moment"><td class="align-middle" rowspan="'+rowspan+'">'+value[0]+'</td><td class="align-middle" rowspan="'+rowspan+'"><label id="fecInicio">'+value[1]+'</label><br><label id="fecFinal">'+value[2]+'</label><td>'+colaboradores[0]+'</td></td></tr>');
+				$("#antepenultimo-tr").after('<tr id="ultimo-tr" class="moment"><td class="align-middle" rowspan="'+rowspan+'">'+value[0]+'</td><td class="align-middle" rowspan="'+rowspan+'"><label id="fecInicio"> Fecha de Inicio: '+value[1]+'</label><br><label id="fecFinal"> Fecha Final: '+value[2]+'</label><td>'+colaboradores[0]+'</td></td></tr>');
 
 				for (var i = 1; i < colaboradores.length-1; i++) {
 
 					$(".moment").after('<tr><td>'+colaboradores[i]+'</td></tr>');
 				}
+				
 				$("#ultimo-tr").removeClass('moment');
+
+				$("#lista-dinamica").find('li').remove();
+				$("#nombreAlcance").val('');
+				$("#fechaInicioAlcance").val(fecFinalAlcance);
+				$("#fechaFinalAlcance").val('');
+				$("#participantes").val('');
+
+				$(document).ready(function() {
+
+				setTimeout(function() {
+					$("#success-card").fadeIn(100);
+					},1);
+				setTimeout(function() {
+					$("#success-card").fadeOut(1000);
+					},3000);
+				});
 			}		
 		})
 	}

@@ -4,6 +4,10 @@
 	font-family: 'Comfortaa', cursive;
 	font-size:12px;
 }
+table, tr, th, td {
+	border:solid 1px black! important;
+  border-collapse: collapse;
+}
 body{
 	background:#F9F9F9;
 /*	background-image:url('../img/fondo_1.jpg');*/

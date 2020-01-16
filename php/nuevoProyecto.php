@@ -172,25 +172,25 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div id="form-alcence" style="display: nosne;" class="col-md-5 center-block">
+					<div id="form-alcence" style="display:nosne;" class="col-md-5 center-block">
 						<form id="form-alcances" method="POST">
 							<div class="row">
 								<div class="col-md-12">
 									Agregar Alcances
-									<input id="idPlan" type="hidden" name="idPlan" value="">
-									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" ddisabled="">
+									<input id="idPlan" type="hiddesn" name="idPlan" value="">
+									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" onblur="validaNombreAlcance();">
 									<br>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">
 									Fecha de Inicio
-									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" ddisabled="">
+									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" min="2020-01-01" max="">
 									<br>
 								</div>
 								<div class="col-md-6">
 									Fecha Final
-									<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" ddisabled="">
+									<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" min="" max="">
 									<br>
 								</div>
 							</div>
@@ -200,11 +200,13 @@
 										Participantes que pertenecen a este alcance
 									</label>
 									<input type="hidden" name="tipo" value="nuevoAlcance">
-									<select id="participantes" multiple class="form-control" name="participantes" ddisabled="">
+									<select id="participantes" multiple class="form-control" name="participantes" ondblclick="agregaParticipante();">
 										<?php
 											while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+												$var+=1;
 												echo '
-												<option class="participantes" value="'.$row["idParticipante"].'">'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
+												<option id="parti['.$var.']" class="participantes" value="'.$row["idParticipante"].'" >'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
+
 												';
 											}
 										?>
@@ -213,10 +215,8 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<ul class="list-group list-group-flush">
-										<li>Wuilmer	palacios <span class="icon-cancel-circle"></span></li>
-										<li>Elvinia Oliveros <span class="icon-cancel-circle"></span></li>
-										<li>Wilson Palacio <span class="icon-cancel-circle"></span></li>
+									<ul id="lista-dinamica" class="list-group list-group-flush">
+
 									</ul>
 								</div>
 							</div>
@@ -224,6 +224,12 @@
 						<div class="row">
 							<div class="col-md-12 text-center">
 								<button class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
+							</div>
+							<hr>
+							<div style="display: none;" id="success-card" class="col-md-12 text-center">
+								<div class="alert alert-success alert-dismissible">
+									<strong>Nuevo Alcance Registrado con exito.</strong>
+								</div>
 							</div>
 						</div>
 					</div>
