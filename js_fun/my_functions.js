@@ -94,10 +94,10 @@ function validaFechaInicio(){
 	}
 	else{
 		$("#label-inicio").css("display","block");
-		$("#boton-registrar").prop("disabled",true);
+		$("#boton-registrar").prop("disabled",false);
 	}
-		
-	
+	$("#fechaFinal").val('');
+
 }
 function validaFechaFinal(){
 
@@ -160,14 +160,49 @@ function find_li(contenido){
 }
 function validaNombreAlcance(){
 	var nombreAlcance=$("#nombreAlcance").val();
+	var planTactico=$("#idPlan").val();
 	if (nombreAlcance!=="") {
 		$.ajax({
 			url:'class/validaNombre.php',
 			type:'POST',
-			data:{sendNombreAlcance:nombreAlcance},
-			success:function(){
-				
+			data:{sendNombreAlcance:nombreAlcance, sendIdPlan:planTactico},
+			success:function(data){
+				var datos=data;
+
+				if (datos==1) {
+					$('#label-control-danger-alcance').css('display','block');
+				}else{
+					$('#label-control-danger-alcance').css('display','none');
+				}
 			}
 		});
 	}
+}
+
+function validaFechaFinalAlcance(){
+
+	var fechaini=$("#fechaInicioAlcance").val().split('-');
+	var fechaInicio=(fechaini[1] + '/' + fechaini[2] + '/' + fechaini[0]);
+
+	var fechafin=$("#fechaFinalAlcance").val().split('-');
+	var fechaFinal=(fechafin[1] + '/' + fechafin[2] + '/' + fechafin[0]);
+
+	var primera = Date.parse(fechaInicio);
+	var segunda = Date.parse(fechaFinal);
+	 
+	if (primera >= segunda) {
+		$("#label-final-alcance").css("display","block");
+		$("#boton-anadir").prop("disabled",true);
+		$('#fechaFinal').addClass('form-control-success');
+		$('#fechaInicio').val('');
+	}
+	else{
+		$("#label-final-alcance").css("display","none");
+		$("#boton-anadir").prop("disabled",false);
+	}
+
+}
+function validaFechaInicioAlcance(){
+
+		$("#fechaFinalAlcance").val('');
 }

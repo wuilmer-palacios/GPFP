@@ -1,4 +1,4 @@
-CREATE DATABASE progressa_proyectos;
+CREATE DATABASE progressa_proyectos CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE progressa_proyectos;
 
 CREATE TABLE planes_tacticos(
@@ -7,6 +7,8 @@ CREATE TABLE planes_tacticos(
 	plan varchar(30) not null,
 	fechaInicio datetime not null,
 	fechaFinal datetime not null,
+	fechaStartPlan datetime null,
+	fechaFinishPlan datetime null,
 	responsable int not null,
 	estadoPlan int(1) not null,
 	PRIMARY KEY(idPlan)
@@ -18,6 +20,9 @@ CREATE TABLE alcances(
 	planTactico int not null,
 	fechaInicio datetime not null,
 	fechaFinal datetime not null,
+	fechaStart datetime null,
+	fechaFinish datetime null,
+	observaciones varchar(160) null,
 	estadoAlcance int(1) not null,
 	PRIMARY KEY (idAlcance)
 );

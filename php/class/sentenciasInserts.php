@@ -1,9 +1,11 @@
+<meta charset="utf-8">
 <?php
 
 	include('../conexion.php');
 
 	$conexion= new Conexion();
-
+	$conexion->exec("set names utf8");
+	$conexion->exec("set names utf8");
 	if (@$_POST["tipo"]=="responsable") {
 
 		$error=false;
@@ -147,11 +149,11 @@
 	if (@$valor["tipo"]=="nuevoAlcance") {
 
 		$idAlcance=NULL;
-		$alcance=str_replace("%20", " ", $valor["nombreAlcance"]);
+		echo $alcance=$valor["nombreAlcance"].'<br>';
 		$planTactico=$valor["idPlan"];
 		$fechaInicio=$valor["fechaInicioAlcance"];
 		$fechaFinal=$valor["fechaFinalAlcance"];
-		$estadoAlcance=1;
+		$estadoAlcance=0;
 
 		
 

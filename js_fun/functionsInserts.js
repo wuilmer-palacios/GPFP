@@ -230,6 +230,8 @@ function unirAlcanceYParticipante(){
 		$.ajax({
 			url:'class/sentenciasInserts.php',
 			type:'POST',
+			encoding:"UTF-8",
+			scriptCharset: "utf-8",
 			data:{participantes,valores},
 			success: function(data){
 				var value=data.split('*');

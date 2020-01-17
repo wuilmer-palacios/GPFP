@@ -17,6 +17,7 @@
 <head>
 	<title>Nuevo Proyecto</title>
 	<meta charset="utf-8">
+	<meta http-equiv=content-type content=text/html; charset=utf-8>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/png" href="../img/icon.png">
@@ -125,10 +126,11 @@
 							<div class="row">
 								<div class="col-md-6">
 									Fecha de Inicio
-									<input id="fechaInicio" class="form-control" type="date" name="fechaInicio" onblur="validaFechaInicio();">
+									<input id="fechaInicio" class="form-control" type="date" name="fechaInicio" min="2020-01-01" onblur="validaFechaInicio();">
 									<label style="display:none;" id="label-inicio" class="label-control-warning">
+										<span class="icon-warning"></span>--
+										<span class="icon-warning"></span>--
 										<span class="icon-warning"></span>
-										La Fecha de Inicio no puede ser menor a la fecha Actual.
 									</label>
 									<br>
 								</div>
@@ -172,25 +174,33 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div id="form-alcence" style="display:nosne;" class="col-md-5 center-block">
-						<form id="form-alcances" method="POST">
+					<div id="form-alcence" style="display:nodne;" class="col-md-5 center-block">
+						<form id="form-alcances" method="POST" accept-charset="utf-8">
 							<div class="row">
 								<div class="col-md-12">
 									Agregar Alcances
-									<input id="idPlan" type="hiddesn" name="idPlan" value="">
+									<input id="idPlan" type="hidden" name="idPlan" value="1" readonly="readonly">
 									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" onblur="validaNombreAlcance();">
+									<label style="display:none;" id="label-control-danger-alcance" class="label-control-danger">
+										Ya existe un Ancance con este nombre
+									</label>
+
 									<br>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">
 									Fecha de Inicio
-									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" min="2020-01-01" max="">
+									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" min="2020-01-01" max="" onblur="validaFechaInicioAlcance();">
 									<br>
 								</div>
 								<div class="col-md-6">
 									Fecha Final
-									<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" min="" max="">
+									<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" min="" max="" onblur="validaFechaFinalAlcance();">
+									<label style="display:none;" id="label-final-alcance" class="label-control-warning">
+										<span class="icon-warning"></span>
+										Fecha Invalida
+									</label>
 									<br>
 								</div>
 							</div>
@@ -223,7 +233,7 @@
 						</form>
 						<div class="row">
 							<div class="col-md-12 text-center">
-								<button class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
+								<button id="boton-anadir" class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
 							</div>
 							<hr>
 							<div style="display: none;" id="success-card" class="col-md-12 text-center">
