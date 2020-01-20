@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Nuevo Proyecto</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/png" href="../img/icon.png">
@@ -73,6 +74,17 @@
 						<ul id="children3" style="display:none;" class="children">
 							<li>
 								<a href="nuevoParticipante.php">Nuevo Participante</a>
+							</li>
+							<li>
+								<a href="verParticipante.php">Ver Participante</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
+						<ul id="children4" style="display:none;" class="children">
+							<li>
+								<a href="nuevoParticipante.php">Gestion de Avances</a>
 							</li>
 							<li>
 								<a href="verParticipante.php">Ver Participante</a>

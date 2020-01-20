@@ -10,6 +10,7 @@ CREATE TABLE planes_tacticos(
 	fechaStartPlan datetime null,
 	fechaFinishPlan datetime null,
 	responsable int not null,
+	avance int not null default 0,
 	estadoPlan int(1) not null,
 	PRIMARY KEY(idPlan)
 );

@@ -1,3 +1,14 @@
+<?php
+	include('conexion.php');
+	$conexion= new Conexion();
+	$conexion->exec("set names utf8");
+
+	$consulta_proyectos="SELECT * FROM planes_tacticos 
+	INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable ORDER BY planes_tacticos.plan ASC";
+	
+	$resultado=$conexion->prepare($consulta_proyectos);
+	$resultado->execute();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +93,17 @@
 						</ul>
 					</li>
 					<li>
+						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
+						<ul id="children4" style="display:none;" class="children">
+							<li>
+								<a href="nuevoParticipante.php">Gestion de Avances</a>
+							</li>
+							<li>
+								<a href="verParticipante.php">Ver Participante</a>
+							</li>
+						</ul>
+					</li>
+					<li>
 						<a href="#">Cerrar Session</a>
 					</li>
 				</ul>
@@ -98,7 +120,7 @@
 
 				<div class="row">
 					<div class="col-md-3 center-block">
-						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Nombre:" onkeyup="listarProyectos()">
+						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Proyecto o Responsable" onkeyup="listarProyectos()">
 					</div>
 				</div>
 
@@ -111,71 +133,49 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<table class="table table-bordered">
-							<thead class="thead-dark">
+						<table id="tabla" class="table table-bordered">
+							<thead id="proyectos" class="thead-dark">
 								<tr>
-									<th style="width:30%;">Nombre del Proyecto</th>
-									<th style="width:30%;">Responsable</th>
+									<th style="width:20%;">Nombre del Proyecto</th>
+									<th style="width:20%;">Responsable</th>
+									<th style="width:10%;">Fecha Inicio</th>
+									<th style="width:10%;">Fecha Final</th>
 									<th style="width:35%;">Nivel de Avance</th>
-									<th style="width:50%;">Detallar</th>
+									<th style="width:5%;">Detallar</th>
 								</tr>
 							</thead>
-							<tr>
-								<td class="align-middle">Gestor de Proyectos</td>
-								<td class="align-middle">Wuilmer Palacios</td>
-								<td>
-									<div class="progress-wuil">
-										<div class="progress-bar-wuil procentaje-35" style="width: 35%;">
-											35%
-										</div>
-									</div>									
-								</td>
-								<td class="align-middle text-center">
-									<a href="">
-										<span class="icon-eye"></span>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									Proyecto 1
-								</td>
-								<td class="align-middle">
-									Wilson Oliveros
-								</td>
-								<td>
-									<div class="progress-wuil">
-										<div class="progress-bar-wuil procentaje-65" style="width: 65%;">
-											65%
-										</div>
-									</div>									
-								</td>
-								<td class="align-middle text-center">
-									<a href="">
-										<span class="icon-eye"></span>
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									Proyecto 2
-								</td>
-								<td class="align-middle">
-									Omar Hernandez
-								</td>
-								<td>
-									<div class="progress-wuil">
-										<div class="progress-bar-wuil procentaje-5" style="width: 5%;">
-											5%
-										</div>
-									</div>									
-								</td>
-								<td class="align-middle text-center">
-									<a href="">
-										<span class="icon-eye"></span>
-									</a>
-								</td>
-							</tr>
+							<?php
+								while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
+									
+									echo '
+										<tr>
+											<td>
+												'.$row_pla["plan"].'
+											</td>
+											<td>
+												'.$row_pla["primerNombre"].' '.$row_pla["primerApellido"].'
+											</td>
+											<td>
+												'.$row_pla["fechaInicio"].'
+											</td>
+											<td>
+												'.$row_pla["fechaFinal"].'
+											</td>
+											<td>
+												<div class="progress-wuil">
+													<div class="progress-bar-wuil procentaje-5" style="width: 5%;">
+														5%
+													</div>
+												</div>
+											</td>
+											<td class="align-middle text-center">
+												<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'"><span class="icon-eye"></span></a>
+											</td>
+											
+										</tr>
+									';
+								}
+							?>
 						</table>
 					</div>
 				</div>

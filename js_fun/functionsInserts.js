@@ -195,6 +195,7 @@ function unirAlcanceYParticipante(){
 	i=i+1;
 	});
 
+	var idPlan =$("#idPlan").val();
 	var valores=$("#form-alcances").serialize();
 	var error=false;
 	var nomAlcance=$("#nombreAlcance").val();
@@ -230,9 +231,12 @@ function unirAlcanceYParticipante(){
 		$.ajax({
 			url:'class/sentenciasInserts.php',
 			type:'POST',
-			encoding:"UTF-8",
-			scriptCharset: "utf-8",
-			data:{participantes,valores},
+			data:{
+				sendIdPlan:idPlan,
+				sendPaticipante: participantes,
+				sendNomAlcance: nomAlcance,
+				sendFecInicioAlcance: fecInicioAlcance,
+				sendFecFinalAlcance: fecFinalAlcance},
 			success: function(data){
 				var value=data.split('*');
 				var colaboradores=value[3].split('|');

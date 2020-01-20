@@ -1,8 +1,6 @@
-<meta charset="utf-8">
 <?php
 
 	include('../conexion.php');
-
 	$conexion= new Conexion();
 	$conexion->exec("set names utf8");
 	$conexion->exec("set names utf8");
@@ -136,26 +134,17 @@
 		}
 	}
 /*-------------------------------------*/
-	@$valores=explode("&", $_POST["valores"]);
-
-	for ($i=0; $i < count($valores); $i++) {
-
-		$subValor[$i]=explode("=", $valores[$i]);
-
-		@$valor[$subValor[$i][0]]=$subValor[$i][1];
-	}
 	
-	
-	if (@$valor["tipo"]=="nuevoAlcance") {
-
-		$idAlcance=NULL;
-		echo $alcance=$valor["nombreAlcance"].'<br>';
-		$planTactico=$valor["idPlan"];
-		$fechaInicio=$valor["fechaInicioAlcance"];
-		$fechaFinal=$valor["fechaFinalAlcance"];
-		$estadoAlcance=0;
-
+	if (isset($_POST["sendPaticipante"])) {
 		
+		$idAlcance=NULL;
+		$alcance=$_POST["sendNomAlcance"];	
+		$planTactico=$_POST["sendIdPlan"];
+		$fechaInicio=$_POST["sendFecInicioAlcance"];
+		$fechaFinal=$_POST["sendFecFinalAlcance"];
+		$estadoAlcance=0;
+		$participantes=$_POST["sendPaticipante"];
+	
 
 		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicio, fechaFinal, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
 		$resultado=$conexion->prepare($consulta);
@@ -167,17 +156,13 @@
 			':fechaFinal' => $fechaFinal,
 			':estadoAlcance' => $estadoAlcance
 			 ))) {
-			
-			@$participantes=$_POST["participantes"];
+	
 			$consultaUltimoAlcance="SELECT * FROM alcances ORDER BY idAlcance DESC LIMIT 1";
 			$resultadoUltimoAlcance=$conexion->prepare($consultaUltimoAlcance);
 			$resultadoUltimoAlcance->execute();
 
 			while ($row_ultimo=$resultadoUltimoAlcance->fetch(PDO::FETCH_ASSOC)) {
 				
-				$participantes=$_POST["participantes"];
-				
-
 				for ($i=0; $i < count($participantes); $i++) { 
 					
 					$row_ultimo["idAlcance"];
@@ -189,7 +174,6 @@
 					if ($resultado_unir->execute(array(
 						':idAlcance' => $row_ultimo["idAlcance"],
 						':idParticipante' => $participantes[$i]))) {
-						@$numero+=1;
 					}
 
 				}
@@ -213,16 +197,8 @@
 					$nombre[$e-1]=$datos["primerNombre"]." ".$datos["primerApellido"]."|";
 					echo $nombre[$e-1];
 				}
-
-				
 			}
-			
 		}
-		else{
-			echo "No se registro la informacion";
-		}
-
-		
 	}
 
 /*k------------------------------------*/
