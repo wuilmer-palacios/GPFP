@@ -23,6 +23,7 @@ CREATE TABLE alcances(
 	fechaFinal datetime not null,
 	fechaStart datetime null,
 	fechaFinish datetime null,
+	avance int not null default 0,
 	observaciones varchar(160) null,
 	estadoAlcance int(1) not null,
 	PRIMARY KEY (idAlcance)
@@ -57,9 +58,10 @@ CREATE TABLE gestion_alcance(
 	idGestion int not null auto_increment,
 	gestion varchar(30) not null,
 	alcance int not null,
-	usuarioGestion varchar(30) not null,
+	usuarioGestion varchar(30) null,
 	fechaGestion datetime not null,
 	estadoGestion tinyint not null,
+	valorPorcentual int not null,
 	PRIMARY KEY (idGestion)
 );
 

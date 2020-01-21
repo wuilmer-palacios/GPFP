@@ -195,7 +195,7 @@ body{
 	cursor:pointer;
 }
 .progress-wuil {
-	background:#E6E6E6;
+	background:#C2C4C4;
 	border-radius:20px;
 	margin:2px;
 }
@@ -204,4 +204,18 @@ body{
 	padding:1px;
 	text-align: center;
 	border-radius:20px;
+}
+.negrita{
+	font-weight:1000;
+	font-size:13px;
+}
+.botones-td{
+	width:100%;
+	height:100%;
+	border-radius:10px;
+	background:#15892A;
+	color:#ffffff;
+}
+.no-linea{
+	border:hidden! important;
 }

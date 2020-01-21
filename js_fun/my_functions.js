@@ -218,3 +218,7 @@ function validaFechaInicioAlcance(){
 
 		$("#fechaFinalAlcance").val('');
 }
+function detallarAlcance(){
+	$("#col-table").css("display","none");
+	
+}

@@ -146,14 +146,14 @@
 							</thead>
 							<?php
 								while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
-									
+									$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
 									echo '
 										<tr>
 											<td>
 												'.$row_pla["plan"].'
 											</td>
 											<td>
-												'.$row_pla["primerNombre"].' '.$row_pla["primerApellido"].'
+												'.$rsp.'
 											</td>
 											<td>
 												'.$row_pla["fechaInicio"].'
@@ -169,7 +169,9 @@
 												</div>
 											</td>
 											<td class="align-middle text-center">
-												<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'"><span class="icon-eye"></span></a>
+												<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&responsable='.base64_encode($rsp).'">
+													<span class="icon-eye"></span>
+												</a>
 											</td>
 											
 										</tr>

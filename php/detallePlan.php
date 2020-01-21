@@ -4,47 +4,11 @@
 	$conexion= new Conexion();
 	$conexion->exec("set names utf8");
 	$dato=base64_decode($_GET["id"]);
+	$plan=base64_decode($_GET["plan"]);
+	$responsable=base64_decode($_GET["responsable"]);	
 
-	if (!isset($dato)) {
+	if (!isset($dato) OR !isset($plan) OR !isset($responsable)) {
 		header("Location:../");
-	}
-	else{
-		$consulta_detallada="SELECT * FROM alcances
-		INNER JOIN planes_tacticos ON alcances.planTactico = planes_tacticos.idPlan
-		WHERE alcances.planTactico = '$dato'";
-		$resultado=$conexion->prepare($consulta_detallada);
-		
-		if ($resultado->execute()) {
-			$e=0;
-			$i=0;
-			$allParticipante=null;
-			while ($row_alcances=$resultado->fetch(PDO::FETCH_ASSOC)) {
-
-				$alcances[$e]=$row_alcances["idAlcance"];
-				$row_alcances["idAlcance"].$row_alcances["alcance"]."<br>";
-
-				$consulta_participantes="SELECT * FROM alcances_has_cp_participantes
-				INNER JOIN participantes ON alcances_has_cp_participantes.idParticipante = participantes.idParticipante
-				WHERE alcances_has_cp_participantes.idAlcance = :alcance";
-				$result=$conexion->prepare($consulta_participantes);
-				$result->execute(array(':alcance' => $alcances[$e] ));
-
-				while ($row_participante=$result->fetch(PDO::FETCH_ASSOC)) {
-					$nombre=$row_participante["primerNombre"]." ".$row_participante["primerApellido"]."<br>";
-
-
-					if (!in_array($nombre, $allParticipante)) {
-						$allParticipante[$i]=$nombre;
-					}
-					
-					$i+=1;
-				}
-				$e+=1;
-			}
-			echo "<pre>";
-			var_dump($allParticipante);
-			echo "</pre>";
-		}
 	}
 
 ?>
@@ -53,17 +17,269 @@
 <head>
 	<title> Gestor de Proyectos</title>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/png" href="../img/icon.png">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="../style.css">
+	<link rel="stylesheet" type="text/css" href="../css-my-style/style.css">
+	<link rel="stylesheet" type="text/css" href="../css-my-style/porcentajes.css">
+	<script src="../js/jquery-3.4.1.min.js"></script>
+	<script src="../js/bootstrap.js"></script>
+	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
+	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
+	<script src="../js_fun/busquedasDinamicas.js" type="text/javascript"></script>
+	<script>
+        // Funcion para limitar el numero de caracteres de un textarea o input
+        // Tiene que recibir el evento, valor y número máximo de caracteres
+        function limitar(e, contenido, caracteres)
+        {
+            // obtenemos la tecla pulsada
+            var unicode=e.keyCode? e.keyCode : e.charCode;
+ 
+            // Permitimos las siguientes teclas:
+            // 8 backspace
+            // 46 suprimir
+            // 13 enter
+            // 9 tabulador
+            // 37 izquierda
+            // 39 derecha
+            // 38 subir
+            // 40 bajar
+            if(unicode==8 || unicode==46 || unicode==13 || unicode==9 || unicode==37 || unicode==39 || unicode==38 || unicode==40)
+                return true;
+ 
+            // Si ha superado el limite de caracteres devolvemos false
+            if(contenido.length>=caracteres)
+                return false;
+ 
+            return true;
+        }
+    </script>
+	
+	
 </head>
-<body>
-	<table>
-		<thead>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</thead>
-	</table>
+<body onload="dibujar()">
+	<div id="body-z">
+		<div class="container-fluid">
+			<div class="row row-header">
+				<header class="col-md-3 col-xs-12">
+					<h5>Bienvenido al Gestor de Proyectos</h5>
+				</header>
+				<div class="toggle-btn col-md-1 col-xs-2">
+					<span onclick="menu()">&#9776</span>
+				</div>
+				<div class="col-md-7 ayuda col-xs-5">
+					<h6>
+						User Name
+					</h6>
+				</div>
+				<div style="text-align:left;" class="col-md-1 ayuda col-xs-5">
+					<img style="width:35px; border-radius:50%" src="../img/user.jpg">
+				</div>
+			</div>
+
+			<div id="sidebar" class="nav">
+				
+				<ul class="father">
+					<li>
+						<img src="../img/logo_login.png"></li>
+					<li>
+						<a href="../" >Inicio</a>
+					</li>
+					<li>
+						<a id="subMenu1" onclick="despliegaSubMenu1();" href="#">Proyectos</a>
+						<ul id="children1" class="children">
+							<li>
+								<a href="nuevoProyecto.php">Nuevo Proyecto</a>
+							</li>
+						
+							<li>
+								<a href="verProyecto.php">Ver Proyectos</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
+						<ul id="children2" style="display:none;" class="children">
+							<li>
+								<a href="nuevoResponsable.php">Nuevo Responsables</a>
+							</li>
+							<li>
+								<a href="verResponsable.php">Ver Responsables</a>
+							</li>
+							
+						</ul>
+					</li>
+					<li>
+						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
+						<ul id="children3" style="display:none;" class="children">
+							<li>
+								<a href="nuevoParticipante.php">Nuevo Participante</a>
+							</li>
+							<li>
+								<a href="verParticipante.php">Ver Participante</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
+						<ul id="children4" style="display:none;" class="children">
+							<li>
+								<a href="nuevoParticipante.php">Gestion de Avances</a>
+							</li>
+							<li>
+								<a href="verParticipante.php">Ver Participante</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Cerrar Session</a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- Cuerpo del Body -->
+			<div id="capa" class="">
+				<div style="padding:10px 0px; " class="row center-block">
+					<div id="col-table" style="display:none;" class="col-md-12">
+						<form id="datos" action="" method="POST">
+							<input id="idPlan" type="hidden" name="idPlan" value="<?php echo $dato ?>">
+							<input id="namePlan" type="hidden" name="namePlan" value="<?php echo $plan ?>">
+							<input id="responsable" type="hidden" name="responsable" value="<?php echo $responsable ?>">
+						</form>
+						
+						<table id="tabla" class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th colspan="3">
+										Detalles del Plan
+									</th>
+								</tr>
+								<tr>
+									<td>
+										Nombre Plan
+									</td>
+									<td>
+										<?php
+											echo $plan;
+										?>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Responsable
+									</td>
+									<td>
+										<?php
+											echo $responsable;
+										?>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										Alcances:
+									</td>
+								</tr>
+								<!-- PARTE DINAMICA -->
+								<tr>
+									<td rowspan="4">
+										Levantamiento de Informacion
+									</td>
+									<td rowspan="4">
+										fechas
+									</td>
+								</tr>
+								<tr>
+									<td>sdaadsd</td>
+								</tr>
+								<tr>
+									<td>sdaadsd</td>
+								</tr>
+								<tr>
+									<td>sdaadsd</td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 ">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th colspan="3">
+										Gestion de Avances
+									</th>
+								</tr>
+								<tr class="no-linea">
+									<td colspan="3">
+										
+									</td>
+								</tr>
+								<tr class="no-linea">
+									<td style="width:33%;">
+										<button class="botones-td btn">
+											Sumar al Avance
+										</button>
+									</td>
+									<td style="width:33%;">
+										<button class="botones-td btn">
+											Participantes
+										</button>
+									</td>
+									<td style="width:33%;">
+										<button class="botones-td btn">
+											Cumplimiento
+										</button>
+									</td>
+								</tr>
+							</thead>
+						</table>
+						<form style="width:70%;" class="center-block">
+							<input class="form-control" type="text" name="" value="Levantamiento de Informacion" readonly="readonly">
+							<br>
+							<label>
+								Observaciones
+							</label>
+							<textarea class="form-control" rows="2" placeholder="Observaciones"></textarea>
+							<br>
+							<label>
+								Tarea Realizada
+							</label>
+							<input class="form-control" type="text" name="">
+							<br>
+							<label>
+								Valor de la Tarea  %
+							</label>
+							<select class="form-control">
+								<option>--Seleccione--</option>
+								<?php
+									for ($i=1; $i <= 100; $i++) { 
+										echo'
+											<option value="'.$i.'">'.$i.' %</option>
+										';
+									};
+								?>
+							</select>
+							
+						</form>
+						<br>
+						<button class="center-block btn btn-primary">
+							Registrar
+						</button>
+					</div>
+			
+					<div class="col-md-6 ">
+						<div style="background: red; width:100%; height: 100%;">
+							
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
