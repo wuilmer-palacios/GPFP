@@ -272,3 +272,75 @@ function unirAlcanceYParticipante(){
 		})
 	}
 }
+
+function guardarSubAvance(){
+	var fecha=new Date();
+	var error=false;
+
+	if (fecha.getMonth()<10) {
+		var mes="0"+(fecha.getMonth()+1);
+	}
+	else{
+		var mes=(fecha.getMonth()+1);
+	}
+	if (fecha.getDate()<10) {
+		var dia="0"+fecha.getDate();
+	}
+	else{
+		var dia=fecha.getDate();
+	}
+
+	var hoy=(fecha.getFullYear()+"-"+mes+"-"+dia);
+	var idAlcance=$("#idAlcance").val();
+	var gestion=$("#tarea").val();
+	var observacion=$("#observacion").val();
+	var porcentaje=$("#valorPorcentaje").val();
+
+	if (gestion=="") {
+		$("#tarea").toggleClass('form-control-danger');
+		var error=true;
+	}
+	else{
+		$("#tarea").removeClass('form-control-danger');
+	}
+
+	if (observacion=="") {
+		$("#observacion").toggleClass('form-control-alert');
+	}
+	else{
+		$("#observacion").removeClass('form-control-alert');
+	}
+
+	if (porcentaje=="nulo") {
+		$("#valorPorcentaje").toggleClass('form-control-danger');
+		var error=true;
+	}
+	else{
+		$("#valorPorcentaje").removeClass('form-control-danger');
+	}
+
+	if (error==false) {
+
+		$.ajax({
+			url:'class/sentenciasInserts.php',
+			type:'POST',
+			data:{
+				sendhoy:hoy,
+				sendidAlcance:idAlcance,
+				sendgestion:gestion,
+				sendobservacion:observacion,
+				sendporcentaje:porcentaje
+			},
+			success:function(data){
+
+				if (data=="1") {
+					alert("El Valor del Porcentaje superaria en 100% de este Alcance");
+				}
+				else{
+					$("#lista-historial").html(data);
+				}
+
+			}
+		})
+	}
+}

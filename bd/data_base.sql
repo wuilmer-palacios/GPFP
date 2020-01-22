@@ -23,7 +23,7 @@ CREATE TABLE alcances(
 	fechaFinal datetime not null,
 	fechaStart datetime null,
 	fechaFinish datetime null,
-	avance int not null default 0,
+	porcentajeAlcance int not null default 0,
 	observaciones varchar(160) null,
 	estadoAlcance int(1) not null,
 	PRIMARY KEY (idAlcance)
@@ -32,6 +32,7 @@ CREATE TABLE alcances(
 CREATE TABLE alcances_has_cp_participantes(
 	idAlcance int not null,
 	idParticipante int not null,
+	estadoAlcPar tinyint not null default 1,
 	PRIMARY KEY (idAlcance, idParticipante)
 );
 
@@ -60,8 +61,10 @@ CREATE TABLE gestion_alcance(
 	alcance int not null,
 	usuarioGestion varchar(30) null,
 	fechaGestion datetime not null,
-	estadoGestion tinyint not null,
+	observaciones varchar(200) null,
+	porcentajeGestion int(3) not null default 0,
 	valorPorcentual int not null,
+	estadoGestion tinyint not null,
 	PRIMARY KEY (idGestion)
 );
 

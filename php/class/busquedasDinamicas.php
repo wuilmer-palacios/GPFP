@@ -142,6 +142,8 @@
 			$e=0;
 			/*CONSULTA DE LOS PARTICIPANTES QUE CORRESPONDEN A LOS ALCANCES CONCULTADOS ANTERIORMENTE
 			QUE A SU VEZ PERTENECEN A UN PLAN QUE VIENE POR AL URL*/
+			$idAlcance[$u]=$obj["idAlcance"];
+			$porciento[$u]=$obj["porcentajeAlcance"];
 			$obj["idAlcance"];
 
 			$fechasInicio[$u]=$obj["fechaInicioAlc"];
@@ -215,10 +217,10 @@
 			echo '
 				<tr>
 					<td class=" align-middle" rowspan="'.$row.'">
-						<a href="#" onclick="detallarAlcance();">'.$key[$a].'</a>
+						<a href="#" onclick="detallarAlcance('.$idAlcance[$a].')">'.$key[$a].'</a>
 						<div class="progress-wuil">
-							<div class="progress-bar-wuil procentaje-15" style="width: 10%;">
-								5%
+							<div class="progress-bar-wuil procentaje-'.$porciento[$a].'" style="width: '.$porciento[$a].'%;">
+								'.$porciento[$a].'.%
 							</div>
 						</div>
 					</td>

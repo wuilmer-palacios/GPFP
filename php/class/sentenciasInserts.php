@@ -221,4 +221,173 @@
 		}
 
 	}
+
+	if (isset($_POST["sendIdAlcanceName"])) {
+		
+		$idAlcance=$_POST["sendIdAlcanceName"];
+
+		$consulta_name_alcance="SELECT *  FROM alcances WHERE idAlcance=:alcance";
+		$resultado=$conexion->prepare($consulta_name_alcance);
+		$resultado->execute(array(':alcance' => $idAlcance ));
+
+		while ($row_name=$resultado->fetch(PDO::FETCH_ASSOC)) {
+			echo $row_name["alcance"];
+		}
+	}
+	if (isset($_POST["sendIdAlcance"])) {
+		
+		$idAlcance=$_POST["sendIdAlcance"];
+
+		$consulta="SELECT * FROM gestion_alcance
+		WHERE alcance=:alcance";
+		$resultado=$conexion->prepare($consulta);
+		$resultado->execute(array(':alcance' => $idAlcance ));
+		echo '<ol id="lista-historial" style="padding-left:15px;" class="lista-historial">';
+
+		while ($row_sub_alcances=$resultado->fetch(PDO::FETCH_ASSOC)) {
+			echo '
+			<li style="padding:5px 10px;">
+				'.$row_sub_alcances["gestion"].'
+				<span style="float:right;" class="icon-eye"></span>
+				<span class="porcentaje-list" style="float:right;">
+					'.$row_sub_alcances["porcentajeGestion"].' %
+				</span>
+			</li>
+			';
+			@$total+=$row_sub_alcances["porcentajeGestion"];
+		}
+		echo '
+			<li style="padding:5px 10px; list-style:none">
+				<hr>
+			</li>
+			<li style="padding:5px 10px; list-style:none"" class="text-center">
+				<h5 style="font-weight:900;" class="text-center">
+					Avance Total= '.@$total.' %
+				</h5>
+			</li>
+			';
+		echo "</ol>";
+	}
+	/*231*/
+
+	if (isset($_POST["sendgestion"])) {
+
+		$idGestion=NULL;
+		$gestion=$_POST["sendgestion"];
+		$idAlcance=$_POST["sendidAlcance"];
+		$usuarioGestion=NULL;
+		$hoy=$_POST["sendhoy"];
+		$estadoGestion=1;
+		$observacion=$_POST["sendobservacion"];
+		$porcentaje=$_POST["sendporcentaje"];
+
+		$consulta_porcentaje="SELECT * FROM alcances WHERE idAlcance=:idAlcance";
+		$resultado_porcentaje=$conexion->prepare($consulta_porcentaje);
+		$resultado_porcentaje->execute(array(':idAlcance' => $idAlcance ));
+
+		while ($row_porcentaje=$resultado_porcentaje->fetch(PDO::FETCH_ASSOC)) {
+			$porcentaje_almacenado=$row_porcentaje["porcentajeAlcance"];
+			$porcen=100-$porcentaje_almacenado;
+			/*Comparacion para saber si el usuario a ingregado un valor correcto*/
+			if ($porcentaje>=0 && $porcentaje<=$porcen) {
+		
+				$consulta_insert="INSERT INTO gestion_alcance (idGestion, gestion, alcance, usuarioGestion, fechaGestion, estadoGestion, observaciones, porcentajeGestion) VALUES (:idGestion, :gestion, :alcance, :usuarioGestion, :fechaGestion, :estadoGestion, :observaciones, :porcentajeGestion)";
+
+				$resultado_insert=$conexion->prepare($consulta_insert);
+				
+				$saber=$resultado_insert->execute(array(
+					':idGestion' => $idGestion,
+					':gestion' => $gestion,
+					':alcance' => $idAlcance,
+					':usuarioGestion' => $usuarioGestion,
+					':fechaGestion' => $hoy,
+					':estadoGestion' => $estadoGestion,
+					':observaciones' => $observacion,
+					':porcentajeGestion' => $porcentaje
+				));
+
+				if ($saber) {
+					$consulta="SELECT * FROM gestion_alcance
+					WHERE alcance=:alcance";
+					$resultado=$conexion->prepare($consulta);
+					$resultado->execute(array(':alcance' => $idAlcance ));
+
+					echo '<ol id="lista-historial" style="padding-left:15px;" class="lista-historial">';
+					$row_sub_alcances=0;
+
+					while ($row_sub_alcances=$resultado->fetch(PDO::FETCH_ASSOC)) {
+						echo '
+						<li style="padding:5px 10px;">
+							'.$row_sub_alcances["gestion"].'
+							<span style="float:right;" class="icon-eye"></span>
+							<span class="porcentaje-list" style="float:right;">
+								'.$row_sub_alcances["porcentajeGestion"].' %
+							</span>
+						</li>
+						';
+						@$total+=$row_sub_alcances["porcentajeGestion"];
+					}
+					echo '
+						<li style="padding:5px 10px; list-style:none">
+							<hr>
+						</li>
+						<li style="padding:5px 10px; list-style:none"" class="text-center">
+							<h5 style="font-weight:900;" class="text-center">
+								Avance Total= '.$total.' %
+							</h5>
+						</li>
+						
+					';
+					echo "</ol>";
+
+					/*Consulta para sumar el porcentaje de la Sub Alcance al Alcance mayor*/
+					$valorFinal=$porcentaje_almacenado+$porcentaje;
+					$consulta_update="UPDATE alcances 
+					SET porcentajeAlcance='$valorFinal'
+					WHERE idAlcance='$idAlcance'";
+					$resultadoFinal=$conexion->prepare($consulta_update);
+					$resultadoFinal->execute();
+
+				}
+			}
+			else{
+				echo "1";
+			}
+		}
+	}
+
+	if (isset($_POST["sendIdAlcanceParticipantes"])) {
+		
+		$idAlcance=$_POST["sendIdAlcanceParticipantes"];
+		$consulta_participantes="SELECT * FROM alcances_has_cp_participantes
+		INNER JOIN participantes ON participantes.idParticipante = alcances_has_cp_participantes.idParticipante
+		WHERE alcances_has_cp_participantes.idAlcance = :alcance";
+		$resultado=$conexion->prepare($consulta_participantes);
+
+		if($resultado->execute(array(':alcance' => $idAlcance ))){
+
+			echo '<ol id="lista-historial" style="padding-left:15px;" class="lista-historial">';
+			while ($row_participante=$resultado->fetch(PDO::FETCH_ASSOC)) {
+				$nombre=$row_participante["primerNombre"]." ".$row_participante["primerApellido"];
+				echo '
+					<li style="padding:5px 10px;">
+						'.$nombre.'
+						<a href="#" onclick="confirmar('.$row_participante["idParticipante"].');">
+							<span style="float:right;" class="icon-bin icon-bin-wuil"></span>
+						</a>
+						
+					</li>
+					';
+			}
+				echo '
+					<li style="padding:5px 10px; list-style:none">
+						<hr>
+					</li>
+					';
+				echo "</ol>";
+				/**/
+			
+		}
+
+	}
 ?>

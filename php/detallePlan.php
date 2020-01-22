@@ -144,6 +144,11 @@
 			<!-- Cuerpo del Body -->
 			<div id="capa" class="">
 				<div style="padding:10px 0px; " class="row center-block">
+					<!-- <div class="col-md-12 col-devolver">
+						<a href="#">
+							<span class="icon-arrow-left"></span>
+						</a>
+					</div> -->
 					<div id="col-table" style="display:none;" class="col-md-12">
 						<form id="datos" action="" method="POST">
 							<input id="idPlan" type="hidden" name="idPlan" value="<?php echo $dato ?>">
@@ -206,7 +211,12 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div id="detalle-gestion-avance" style="display:noFne;" class="row">
+					<div class="col-md-12 col-devolver">
+						<a href="#" onclick="iratras();">
+							<span class="icon-arrow-left"></span>
+						</a>
+					</div>
 					<div class="col-md-6 ">
 						<table class="table">
 							<thead class="thead-dark">
@@ -233,30 +243,31 @@
 									</td>
 									<td style="width:33%;">
 										<button class="botones-td btn">
-											Cumplimiento
+											Recursos
 										</button>
 									</td>
 								</tr>
 							</thead>
 						</table>
-						<form style="width:70%;" class="center-block">
-							<input class="form-control" type="text" name="" value="Levantamiento de Informacion" readonly="readonly">
-							<br>
-							<label>
-								Observaciones
-							</label>
-							<textarea class="form-control" rows="2" placeholder="Observaciones"></textarea>
+						<!-- <form id="form-gestion-alcance" style="width:70%;" class="center-block">
+							<input id="idAlcance" class="form-control" type="hidden" name="idAlcance" value="" readonly="readonly">
+							<input id="nameAlcance" class="form-control" type="text" value="" readonly="readonly">
 							<br>
 							<label>
 								Tarea Realizada
 							</label>
-							<input class="form-control" type="text" name="">
+							<input id="tarea" class="form-control" type="text" name="tarea">
+							<br>
+							<label>
+								Observaciones
+							</label>
+							<textarea id="observacion" class="form-control" rows="2" placeholder="Observaciones" name="observacion"></textarea>
 							<br>
 							<label>
 								Valor de la Tarea  %
 							</label>
-							<select class="form-control">
-								<option>--Seleccione--</option>
+							<select id="valorPorcentaje" class="form-control" name="valorPorcentaje">
+								<option value="nulo">--Seleccione--</option>
 								<?php
 									for ($i=1; $i <= 100; $i++) { 
 										echo'
@@ -268,15 +279,73 @@
 							
 						</form>
 						<br>
-						<button class="center-block btn btn-primary">
+						<button class="center-block btn btn-primary" onclick="guardarSubAvance();">
 							Registrar
-						</button>
+						</button> -->
+						<!-- Formulario de Participantes -->
+						<form id="form-gestion-alcance" style="width:70%; display: non;" class="center-block">
+							<div class="form-group col-md-12">
+								<label for="">
+									Participantes que pertenecen a este alcance
+								</label>
+								<input type="hidden" name="tipo" value="nuevoAlcance">
+								<select id="participantes" multiple class="form-control" name="participantes" ondblclick="agregaParticipante();">
+									<option>jhsdgjas</option>
+									<option>jhsdgdjas</option>
+								</select>
+							</div>
+							<div class="col-md-12">
+								<ul id="lista-dinamica" class="list-group list-group-flush">
+									
+								</ul>
+							</div>							
+						</form>
+						<br>
+						<div class="col-md-12">
+							<button class="center-block btn btn-primary">
+								Añadir
+							</button>	
+						</div>
+												
 					</div>
 			
-					<div class="col-md-6 ">
-						<div style="background: red; width:100%; height: 100%;">
-							
+					<div style="display:none;" class="col-md-6" style="padding-right:30px;">
+						<div class="row">
+							<div class="col-md-12 lista-subAvances">
+								<h5 style="font-weight:900;" class="text-center">
+										Historial de Avances
+								</h5>
+								<ol id="lista-historial" style="padding-left:15px;" class="lista-historial">
+									
+								</ol>
+							</div>
+							<div class="col-md-12">
+								<br>
+							</div>
+							<div class="col-md-12 lista-subAvances">
+								<h5 style="font-weight:900;" class="text-center">
+										Observaciones
+								</h5>
+							</div>	
 						</div>
+					</div>
+
+					<!-- /*sdfsdf*/ -->
+					<div class="col-md-6" style="padding-right:30px;">
+						<div class="row">
+							<div class="col-md-12 lista-subAvances">
+								<h5 style="font-weight:900;" class="text-center">
+										Participantes de Este Avance
+								</h5>
+								<ol id="lista-particpantes" style="padding-left:15px;" class="lista-historial">
+									
+								</ol>
+							</div>
+							<div class="col-md-12">
+								<br>
+							</div>	
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

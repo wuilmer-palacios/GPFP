@@ -82,6 +82,7 @@ function validaNombrePlan(){
 		})
 	}
 }
+
 function validaFechaInicio(){
 
 	var fechafin=$("#fechaFinal").val().split('-');
@@ -109,8 +110,8 @@ function validaFechaInicio(){
 		$("#boton-registrar").prop("disabled",false);
 	}
 	$("#fechaFinal").val('');
-
 }
+
 function validaFechaFinal(){
 
 	var fechaini=$("#fechaInicio").val().split('-');
@@ -136,7 +137,8 @@ function validaFechaFinal(){
 
 function desactivarDanger(){
 	$('#responsable').addClass('form-control-success');
-}7
+}
+
 function agregaParticipante(){
 
 	var variable=$('#participantes').val();
@@ -151,15 +153,15 @@ function agregaParticipante(){
 	}
 	else{
 		alert("Participante ya esta en lista");
-	}
-
-	
+	}	
 }
+
 function eliminarListaDinamica(valorVariable){
 	var variable=valorVariable;
 	var node=document.getElementById(variable);
 	node.parentNode.removeChild(node);
 }
+
 function find_li(contenido){
 
 	var el = document.getElementById("lista-dinamica").getElementsByTagName("li");
@@ -170,6 +172,7 @@ function find_li(contenido){
 	}
 		return true;
 }
+
 function validaNombreAlcance(){
 	var nombreAlcance=$("#nombreAlcance").val();
 	var planTactico=$("#idPlan").val();
@@ -212,13 +215,72 @@ function validaFechaFinalAlcance(){
 		$("#label-final-alcance").css("display","none");
 		$("#boton-anadir").prop("disabled",false);
 	}
-
 }
+
 function validaFechaInicioAlcance(){
-
-		$("#fechaFinalAlcance").val('');
+	$("#fechaFinalAlcance").val('');
 }
-function detallarAlcance(){
+
+function iratras(){
+	$("#detalle-gestion-avance").css("display","none");
+	$("#col-table").css("display","block");
+}
+
+function detallarAlcance(valor1){
+	var idAlcance=valor1;
+
+	/*Con esta se pinta el nombre*/
+	$.ajax({
+		url:'class/sentenciasInserts.php',
+		type:'POST',
+		data:{sendIdAlcanceName:idAlcance},
+		success: function (data){
+			var name=data;
+			$("#idAlcance").val(idAlcance);
+			$("#nameAlcance").val(name);
+		}
+	})
+	/* con esta se pinta el Historial*/
+	$.ajax({
+		url:'class/sentenciasInserts.php',
+		type:'POST',
+		data:{sendIdAlcance:idAlcance},
+		success: function (data){
+			$("#lista-historial").html(data);
+
+		}
+	})
+
+	$.ajax({
+		url:'class/sentenciasInserts.php',
+		type:'POST',
+		data:{sendIdAlcanceParticipantes:idAlcance},
+		success: function (data){
+			$("#lista-particpantes").html(data);
+
+		}
+	})
+
 	$("#col-table").css("display","none");
-	
+	$("#detalle-gestion-avance").css("display","block");	
+}
+function confirmar(valorUno){
+	var idAlcance=$("#idAlcance").val();
+	var valor=confirm("¿Esta seguro de eliminar al participante?");
+
+	if (valor==true) {
+		var id=valorUno;
+
+		$.ajax({
+			url:'class/sentenciasInserts.php',
+			type:'POST',
+			data:{
+				sendIdParticipante:id,
+				sendIdAlcance:idAlcance
+			},
+			success: function (data){
+
+			}
+		})
+	}
 }

@@ -185,7 +185,7 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div id="form-alcence" style="display:none;" class="col-md-5 center-block">
+					<div id="form-alcence" style="display:nogne;" class="col-md-5 center-block">
 						<form id="form-alcances" method="POST" accept-charset="utf-8">
 							<div class="row">
 								<div class="col-md-12">
