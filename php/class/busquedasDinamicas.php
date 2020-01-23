@@ -145,6 +145,7 @@
 			$idAlcance[$u]=$obj["idAlcance"];
 			$porciento[$u]=$obj["porcentajeAlcance"];
 			$obj["idAlcance"];
+			$estadoAlcPar=1;
 
 			$fechasInicio[$u]=$obj["fechaInicioAlc"];
 			$fechasFinal[$u]=$obj["fechaFinalAlc"];
@@ -155,7 +156,7 @@
 			WHERE alcances_has_cp_participantes.idAlcance = :idAlcance";
 
 			$resultado_particpantes=$conexion->prepare($consulta_participantes);
-			$resultado_particpantes->execute(array(':idAlcance' => $obj["idAlcance"] ));
+			$resultado_particpantes->execute(array(':idAlcance' => $obj["idAlcance"]));
 
 			while ($row_participantes=$resultado_particpantes->fetch(PDO::FETCH_ASSOC)) {
 
@@ -165,9 +166,12 @@
 			/*----------------*/
 		}
 		/*---------------------*/
-		foreach ($objPlanes as $key[$i] => $value) {
-			$i+=1;
+		if (!@$objPlanes==null) {
+			foreach ($objPlanes as $key[$i] => $value) {
+				$i+=1;
+			}
 		}
+		
 
 		echo '
 			<table class="table table-bordered">
@@ -196,6 +200,9 @@
 					<tr>
 						<td class="negrita" colspan="0">
 							Alcances:
+							<a href="#" title="Agregar Alcances">
+								<span class="icon-plus" style="float:right; margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
+							</a>
 						</td>
 						<td class="negrita" colspan="0">
 							Fecha a Iniciar / Finalizar:
@@ -210,41 +217,56 @@
 					</tr>
 				</thead>
 		';
+		if (isset($key)) {
+			for ($a=0; $a < count($key); $a++) {
+				$row=count($objPlanes[$key[$a]])+1;
 
-		for ($a=0; $a < count($key); $a++) {
-			$row=count($objPlanes[$key[$a]])+1;
-
-			echo '
-				<tr>
-					<td class=" align-middle" rowspan="'.$row.'">
-						<a href="#" onclick="detallarAlcance('.$idAlcance[$a].')">'.$key[$a].'</a>
-						<div class="progress-wuil">
-							<div class="progress-bar-wuil procentaje-'.$porciento[$a].'" style="width: '.$porciento[$a].'%;">
-								'.$porciento[$a].'.%
-							</div>
-						</div>
-					</td>
-					<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-						Inicio:'.$fechasInicio[$a].' <br>
-						Final: '.$fechasFinal[$a].'
-					</td>
-					<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-						Inicio:01 de Enero 2020 <br>
-						Final: 30 de Enero 2020:
-					</td>
-					
-				</tr>
-				';
-				$var=$key[$a];
-				for ($o=0; $o < count($objPlanes[$var]); $o++) { 
-					echo '
-						<tr>
-							<td>
-								'.$objPlanes[$var][$o].'
-							</td>
-						</tr>
-					';
+				if ($row<=1) {
+					$row=2;
 				}
+
+				echo '
+					<tr>
+						<td class=" align-middle" rowspan="'.$row.'">
+							<a href="#" onclick="detallarAlcance('.$idAlcance[$a].')">'.$key[$a].'</a>
+							<div class="progress-wuil">
+								<div class="progress-bar-wuil procentaje-'.$porciento[$a].'" style="width: '.$porciento[$a].'%;">
+									'.$porciento[$a].'.%
+								</div>
+							</div>
+						</td>
+						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
+							Inicio:'.$fechasInicio[$a].' <br>
+							Final: '.$fechasFinal[$a].'
+						</td>
+						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
+							Inicio:01 de Enero 2020 <br>
+							Final: 30 de Enero 2020:
+						</td>
+						
+					</tr>
+					';
+
+					$var=$key[$a];
+					for ($o=0; $o < count($objPlanes[$var]); $o++) { 
+						echo '
+							<tr>
+								<td>
+									'.$objPlanes[$var][$o].'
+								</td>
+							</tr>
+						';
+					}	
+					
+			}
 		}
+		else{
+			echo '
+			<tr>
+				<td colspan="4" class="text-center">Este Proyecto no tiene Avances Registrados</td>
+			</tr>
+			';
+		}
+		
 	}
 ?>

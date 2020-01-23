@@ -146,7 +146,7 @@
 		$participantes=$_POST["sendPaticipante"];
 	
 
-		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicio, fechaFinal, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
+		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicioAlc, fechaFinalAlc, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
 		$resultado=$conexion->prepare($consulta);
 		if ($resultado->execute(array(
 			':idAlcance' => $idAlcance,
@@ -167,13 +167,15 @@
 					
 					$row_ultimo["idAlcance"];
 					$participantes[$i];
+					$estadoAlcPar=1;
 
-					$consulta_unir="INSERT INTO alcances_has_cp_participantes (idAlcance, idParticipante) VALUES (:idAlcance, :idParticipante)";
+					$consulta_unir="INSERT INTO alcances_has_cp_participantes (idAlcance, idParticipante, estadoAlcPar) VALUES (:idAlcance, :idParticipante, :estadoAlcPar)";
 					$resultado_unir=$conexion->prepare($consulta_unir);
 
 					if ($resultado_unir->execute(array(
 						':idAlcance' => $row_ultimo["idAlcance"],
-						':idParticipante' => $participantes[$i]))) {
+						':idParticipante' => $participantes[$i],
+						':estadoAlcPar' => $estadoAlcPar))) {
 					}
 
 				}
@@ -190,8 +192,8 @@
 					
 					if ($e==1) {
 						echo $datos["alcance"]."*";
-						echo $datos["fechaInicio"]."*";
-						echo $datos["fechaFinal"]."*";
+						echo $datos["fechaInicioAlc"]."*";
+						echo $datos["fechaFinalAlc"]."*";
 					}
 					
 					$nombre[$e-1]=$datos["primerNombre"]." ".$datos["primerApellido"]."|";
@@ -386,8 +388,58 @@
 					';
 				echo "</ol>";
 				/**/
-			
 		}
 
 	}
+
+	if (isset($_POST["sendAlcanceId"])) {
+		
+		$idAlcance=$_POST["sendAlcanceId"];
+		$participante=$_POST["sendPaticipanteId"];
+		$estadoAlcPar=1;
+		$planId=$_POST["sendPlaId"];
+
+		for ($i=0; $i < count($participante); $i++) { 
+
+			$consulta="INSERT INTO alcances_has_cp_participantes (idAlcance, idParticipante, estadoAlcPar)
+			VALUES (:idAlcance, :idParticipante, :estadoAlcPar)";
+			$resultado=$conexion->prepare($consulta);
+			$saber=$resultado->execute(array(
+				':idAlcance' => $idAlcance,
+				':idParticipante' => $participante[$i],
+				':estadoAlcPar' => $estadoAlcPar));
+
+		}
+		if ($saber==true) {
+
+			
+			echo '<ol id="lista-historial" style="padding-left:15px;" class="lista-historial">';
+			$consulta_list="SELECT * FROM alcances_has_cp_participantes
+			INNER JOIN participantes ON alcances_has_cp_participantes.idParticipante = participantes.idParticipante
+			WHERE alcances_has_cp_participantes.idAlcance = :idAlcance";
+			$resultado_list=$conexion->prepare($consulta_list);
+			$resultado_list->execute(array(':idAlcance' => $idAlcance ));
+
+			while ($row_participante=$resultado_list->fetch(PDO::FETCH_ASSOC)) {
+				$nombre=$row_participante["primerNombre"]." ".$row_participante["primerApellido"];
+				echo '
+					<li style="padding:5px 10px;">
+						'.$nombre.'
+						<a href="#" onclick="confirmar('.$row_participante["idParticipante"].');">
+							<span style="float:right;" class="icon-bin icon-bin-wuil"></span>
+						</a>
+						
+					</li>
+				';
+			}
+				echo '
+					<li style="padding:5px 10px; list-style:none">
+						<hr>
+					</li>
+					';
+				echo "</ol>";
+		}
+	}
 ?>
+
+				

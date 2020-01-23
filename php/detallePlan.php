@@ -10,6 +10,9 @@
 	if (!isset($dato) OR !isset($plan) OR !isset($responsable)) {
 		header("Location:../");
 	}
+	$consulta_partcipantes="SELECT * FROM participantes WHERE estadoParticipante=1";
+	$resultado=$conexion->prepare($consulta_partcipantes);
+	$resultado->execute();
 
 ?>
 <!DOCTYPE html>
@@ -31,35 +34,6 @@
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
 	<script src="../js_fun/busquedasDinamicas.js" type="text/javascript"></script>
-	<script>
-        // Funcion para limitar el numero de caracteres de un textarea o input
-        // Tiene que recibir el evento, valor y número máximo de caracteres
-        function limitar(e, contenido, caracteres)
-        {
-            // obtenemos la tecla pulsada
-            var unicode=e.keyCode? e.keyCode : e.charCode;
- 
-            // Permitimos las siguientes teclas:
-            // 8 backspace
-            // 46 suprimir
-            // 13 enter
-            // 9 tabulador
-            // 37 izquierda
-            // 39 derecha
-            // 38 subir
-            // 40 bajar
-            if(unicode==8 || unicode==46 || unicode==13 || unicode==9 || unicode==37 || unicode==39 || unicode==38 || unicode==40)
-                return true;
- 
-            // Si ha superado el limite de caracteres devolvemos false
-            if(contenido.length>=caracteres)
-                return false;
- 
-            return true;
-        }
-    </script>
-	
-	
 </head>
 <body onload="dibujar()">
 	<div id="body-z">
@@ -103,7 +77,7 @@
 					</li>
 					<li>
 						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
-						<ul id="children2" style="display:none;" class="children">
+						<ul id="children2" style="display:block;" class="children">
 							<li>
 								<a href="nuevoResponsable.php">Nuevo Responsables</a>
 							</li>
@@ -115,7 +89,7 @@
 					</li>
 					<li>
 						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
-						<ul id="children3" style="display:none;" class="children">
+						<ul id="children3" style="display:block;" class="children">
 							<li>
 								<a href="nuevoParticipante.php">Nuevo Participante</a>
 							</li>
@@ -126,7 +100,7 @@
 					</li>
 					<li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
-						<ul id="children4" style="display:none;" class="children">
+						<ul id="children4" style="display:block;" class="children">
 							<li>
 								<a href="nuevoParticipante.php">Gestion de Avances</a>
 							</li>
@@ -149,7 +123,7 @@
 							<span class="icon-arrow-left"></span>
 						</a>
 					</div> -->
-					<div id="col-table" style="display:none;" class="col-md-12">
+					<div id="col-table" style="display:non;" class="col-md-12">
 						<form id="datos" action="" method="POST">
 							<input id="idPlan" type="hidden" name="idPlan" value="<?php echo $dato ?>">
 							<input id="namePlan" type="hidden" name="namePlan" value="<?php echo $plan ?>">
@@ -211,7 +185,7 @@
 					</div>
 				</div>
 
-				<div id="detalle-gestion-avance" style="display:noFne;" class="row">
+				<div id="detalle-gestion-avance" style="display:none;" class="row">
 					<div class="col-md-12 col-devolver">
 						<a href="#" onclick="iratras();">
 							<span class="icon-arrow-left"></span>
@@ -232,12 +206,12 @@
 								</tr>
 								<tr class="no-linea">
 									<td style="width:33%;">
-										<button class="botones-td btn">
+										<button class="botones-td btn" onclick="sumarAvance();">
 											Sumar al Avance
 										</button>
 									</td>
 									<td style="width:33%;">
-										<button class="botones-td btn">
+										<button class="botones-td btn" onclick="buttonParticipantes();">
 											Participantes
 										</button>
 									</td>
@@ -249,7 +223,7 @@
 								</tr>
 							</thead>
 						</table>
-						<!-- <form id="form-gestion-alcance" style="width:70%;" class="center-block">
+						<form id="form-gestion-alcance" style="width:70%; display: none;" class="center-block">
 							<input id="idAlcance" class="form-control" type="hidden" name="idAlcance" value="" readonly="readonly">
 							<input id="nameAlcance" class="form-control" type="text" value="" readonly="readonly">
 							<br>
@@ -279,19 +253,26 @@
 							
 						</form>
 						<br>
-						<button class="center-block btn btn-primary" onclick="guardarSubAvance();">
+						<button id="boton-tareas" style="display:none;" class="center-block btn btn-primary" onclick="guardarSubAvance();">
 							Registrar
-						</button> -->
+						</button>
 						<!-- Formulario de Participantes -->
-						<form id="form-gestion-alcance" style="width:70%; display: non;" class="center-block">
+						<form id="form-gestion-participantes" style="display:none;" style="width:70%; display:block;" class="center-block">
 							<div class="form-group col-md-12">
 								<label for="">
-									Participantes que pertenecen a este alcance
+									Participantes agregar
 								</label>
 								<input type="hidden" name="tipo" value="nuevoAlcance">
-								<select id="participantes" multiple class="form-control" name="participantes" ondblclick="agregaParticipante();">
-									<option>jhsdgjas</option>
-									<option>jhsdgdjas</option>
+								<select id="participantes" multiple class="form-control" name="participantes" ondblclick="agregaParticipante2();">
+									<?php
+										while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+											$var+=1;
+											echo '
+											<option id="parti['.$var.']" class="participantes" value="'.$row["idParticipante"].'" >'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
+
+											';
+										}
+									?>
 								</select>
 							</div>
 							<div class="col-md-12">
@@ -302,14 +283,14 @@
 						</form>
 						<br>
 						<div class="col-md-12">
-							<button class="center-block btn btn-primary">
+							<button id="button-participantes" style="display:none;" class="center-block btn btn-primary" onclick="agregarParticipante();">
 								Añadir
 							</button>	
 						</div>
 												
 					</div>
 			
-					<div style="display:none;" class="col-md-6" style="padding-right:30px;">
+					<div id="historial-avances" style="display:none;" class="col-md-6" style="padding-right:30px;">
 						<div class="row">
 							<div class="col-md-12 lista-subAvances">
 								<h5 style="font-weight:900;" class="text-center">
@@ -322,16 +303,16 @@
 							<div class="col-md-12">
 								<br>
 							</div>
-							<div class="col-md-12 lista-subAvances">
+							<!-- <div class="col-md-12 lista-subAvances">
 								<h5 style="font-weight:900;" class="text-center">
 										Observaciones
 								</h5>
-							</div>	
+							</div> -->
 						</div>
 					</div>
 
 					<!-- /*sdfsdf*/ -->
-					<div class="col-md-6" style="padding-right:30px;">
+					<div id="historial-participantes" style="display:none;" class="col-md-6" style="padding-right:30px;">
 						<div class="row">
 							<div class="col-md-12 lista-subAvances">
 								<h5 style="font-weight:900;" class="text-center">

@@ -191,8 +191,8 @@ function unirAlcanceYParticipante(){
 	var partici=[];
 	$("#lista-dinamica li").each(function(){
 		
-	partici[i]=$(this).val();
-	i=i+1;
+		partici[i]=$(this).val();
+		i=i+1;
 	});
 
 	var idPlan =$("#idPlan").val();
@@ -343,4 +343,33 @@ function guardarSubAvance(){
 			}
 		})
 	}
+}
+
+function agregarParticipante(){
+	
+	var i=0;
+	var partici=[];
+	$("#lista-dinamica li").each(function(){
+		
+		partici[i]=$(this).val();
+		i=i+1;
+	});
+
+	var idAlcance=$("#idAlcance").val();
+	var participante=partici;
+	var idPlan=$("#idPlan").val();
+
+	$.ajax({
+		url:'class/sentenciasInserts.php',
+		type:'POST',
+		data:{
+			sendAlcanceId:idAlcance,
+			sendPaticipanteId:participante,
+			sendPlaId: idPlan
+		},
+		success: function(data){
+			$("#lista-particpantes").html(data);
+			$("#lista-dinamica").find('li').remove().end();
+		}
+	})
 }

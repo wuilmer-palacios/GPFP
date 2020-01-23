@@ -156,6 +156,43 @@ function agregaParticipante(){
 	}	
 }
 
+function agregaParticipante2(){
+
+	var variable=$('#participantes').val();
+	var combo = document.getElementById("participantes");
+	var selected = combo.options[combo.selectedIndex].text;
+	var idAlcance=$("#idAlcance").val();
+	var idParticipante=variable[0];
+	$.ajax({
+		url:'class/validaNombre.php',
+		type:'POST',
+		data:{
+			alcanceId:idAlcance,
+			participanteId:idParticipante
+		},
+		success: function(data){
+			var booleano=data;
+
+			if (booleano==1) {
+				alert("Participante ya fue Asignado a este alcance");
+			}
+			else{
+				if (!$('#'+variable).length) {
+					
+					$('#lista-dinamica').append('<li id="'+ variable + '" class="participantes" value="' + variable + '">' + selected + '<span class="icon-bin" onclick="eliminarListaDinamica(' + variable + ');"></span></li>');
+
+				}
+				else{
+					alert("Participante ya esta en lista");
+
+				}	
+			}
+		}
+	})
+
+	
+}
+
 function eliminarListaDinamica(valorVariable){
 	var variable=valorVariable;
 	var node=document.getElementById(variable);
@@ -262,25 +299,64 @@ function detallarAlcance(valor1){
 	})
 
 	$("#col-table").css("display","none");
-	$("#detalle-gestion-avance").css("display","block");	
+	$("#detalle-gestion-avance").css("display","block");
+	$("#form-gestion-alcance").css("display","block");
+	$("#boton-tareas").css("display","block");
+	$("#historial-avances").css("display","block");	
 }
 function confirmar(valorUno){
 	var idAlcance=$("#idAlcance").val();
 	var valor=confirm("¿Esta seguro de eliminar al participante?");
 
-	if (valor==true) {
+	var i=-1;
+	var partici=[];
+	$("#lista-particpantes li").each(function(){
+		
+		partici[i]=$(this).val();
+		i=i+1;
+	});
+
+	if (valor==true && i>=2) {
 		var id=valorUno;
 
 		$.ajax({
-			url:'class/sentenciasInserts.php',
+			url:'class/sentenciasDelete.php',
 			type:'POST',
 			data:{
 				sendIdParticipante:id,
 				sendIdAlcance:idAlcance
 			},
 			success: function (data){
-
+				$("#lista-particpantes").html(data);
 			}
 		})
 	}
+	else{
+		alert("El Avance no puede quedar sin Participantes");
+	}
 }
+/*Botones -- Botones -- Botones*/
+function sumarAvance(){
+	$("#col-table").css("display","none");
+	$("#detalle-gestion-avance").css("display","block");
+	$("#form-gestion-alcance").css("display","block");
+	$("#boton-tareas").css("display","block");
+	$("#historial-avances").css("display","block");
+	$("#form-gestion-participantes").css("display","none");
+	$("#button-participantes").css("display","none");
+	$("#historial-participantes").css("display","none");
+
+}
+
+function buttonParticipantes(){
+	$("#col-table").css("display","none");
+	$("#detalle-gestion-avance").css("display","block");
+	$("#form-gestion-alcance").css("display","none");
+	$("#boton-tareas").css("display","none");
+	$("#historial-avances").css("display","none");
+	$("#form-gestion-participantes").css("display","block");
+	$("#button-participantes").css("display","block");
+	$("#historial-participantes").css("display","block");
+	
+}
+/*-------------------*/

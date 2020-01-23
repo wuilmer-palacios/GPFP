@@ -29,4 +29,18 @@
 		echo $numRow;
 	}
 
+	/*-----------------------------------------------------------------------------------------*/
+
+	/*EN ESTE TROZO DE CODIGO RECIBE ID DE PARTICIPANTE Y ID DE ALCANCE Y COMPRUEBA SI YA EXISTE ESTE REGISTRO*/
+
+	if (isset($_POST["alcanceId"])) {
+		$idAlcance=$_POST["alcanceId"];
+		$idParticipante=$_POST["participanteId"];
+
+		$consulta="SELECT count(*) FROM alcances_has_cp_participantes
+		WHERE idAlcance=$idAlcance AND idParticipante=$idParticipante";
+		$resultado=$conexion->query($consulta);
+		$numRow=$resultado->fetchColumn();
+		echo $numRow;
+	}
 ?>
