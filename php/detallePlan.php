@@ -408,7 +408,7 @@
 										</form>
 										<div class="row">
 											<div class="col-md-12 text-center">
-												<button id="boton-anadir" class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
+												<button id="boton-anadir" class="btn btn-success" onclick="unirAlcanceYParticipante2();"> Añadir </button>
 											</div>
 											<hr>
 											<div style="display: none;" id="success-card" class="col-md-12 text-center">

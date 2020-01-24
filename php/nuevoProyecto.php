@@ -123,7 +123,7 @@
 
 						<!-- Formulario del Primer Bloque donde se capturan los datos para la tabla de planes Tacticos -->
 						<!-- Incio -- Inicio --  Incio -- Inicio --  Incio -- Inicio --  Incio -- Inicio --  Incio -- -->
-						<form id="form-plan-tactico" action="" method="POST">
+						<form id="form-plan-tactico"action="" method="POST">
 							<div class="row">
 								<div class="col-md-12">
 									Nombre del Plan
@@ -185,12 +185,12 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div id="form-alcence" style="display:nogne;" class="col-md-5 center-block">
+					<div id="form-alcence" style="display:nosne;" class="col-md-5 center-block">
 						<form id="form-alcances" method="POST" accept-charset="utf-8">
 							<div class="row">
 								<div class="col-md-12">
 									Agregar Alcances
-									<input id="idPlan" type="hidden" name="idPlan" value="" readonly="readonly">
+									<input id="idPlan" type="text" name="idPlan" value="1" readonly="readonly">
 									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" onblur="validaNombreAlcance();">
 									<label style="display:none;" id="label-control-danger-alcance" class="label-control-danger">
 										Ya existe un Ancance con este nombre

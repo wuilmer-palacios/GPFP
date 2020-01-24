@@ -186,7 +186,7 @@ function registraPlanTactico(){
 	}
 }
 function unirAlcanceYParticipante(){
-
+	
 	var i=0;
 	var partici=[];
 	$("#lista-dinamica li").each(function(){
@@ -272,7 +272,7 @@ function unirAlcanceYParticipante(){
 		})
 	}
 }
-function unirAlcanceYParticipante(){
+function unirAlcanceYParticipante2(){
 
 	var i=0;
 	var partici=[];
