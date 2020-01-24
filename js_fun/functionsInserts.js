@@ -272,6 +272,93 @@ function unirAlcanceYParticipante(){
 		})
 	}
 }
+function unirAlcanceYParticipante(){
+
+	var i=0;
+	var partici=[];
+	$("#lista-dinamica3 li").each(function(){
+		
+		partici[i]=$(this).val();
+		i=i+1;
+	});
+
+	var idPlan =$("#idPlan").val();
+	var valores=$("#form-alcances").serialize();
+	var error=false;
+	var nomAlcance=$("#nombreAlcance").val();
+	var fecInicioAlcance=$("#fechaInicioAlcance").val();
+	var fecFinalAlcance=$("#fechaFinalAlcance").val();
+	var participantes=partici;
+
+
+	if (nomAlcance=="") {
+		$("#nombreAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (fecInicioAlcance=="") {
+		$("#fechaInicioAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (fecFinalAlcance=="") {
+		$("#fechaFinalAlcance").toggleClass('form-control-danger');
+		error=true;
+	}
+	if (participantes=="") {
+		$("#participantes").toggleClass('form-control-danger');
+		error=true;
+	}
+	
+	if (error==false) {
+
+		$("#nombreAlcance").removeClass('form-control-danger');
+		$("#fechaInicioAlcance").removeClass('form-control-danger');
+		$("#fechaFinalAlcance").removeClass('form-control-danger');
+		$("#participantes").removeClass('form-control-danger');
+
+		$.ajax({
+			url:'class/sentenciasInserts.php',
+			type:'POST',
+			data:{
+				sendIdPlan:idPlan,
+				sendPaticipante: participantes,
+				sendNomAlcance: nomAlcance,
+				sendFecInicioAlcance: fecInicioAlcance,
+				sendFecFinalAlcance: fecFinalAlcance},
+			success: function(data){
+				var value=data.split('*');
+				var colaboradores=value[3].split('|');
+				var rowspan=colaboradores.length-1;
+
+				$("#form-table-wuil").css("display","block");
+
+				$("#antepenultimo-tr").after('<tr id="ultimo-tr" class="moment"><td class="align-middle" rowspan="'+rowspan+'">'+value[0]+'</td><td class="align-middle" rowspan="'+rowspan+'"><label id="fecInicio"> Fecha de Inicio: '+value[1]+'</label><br><label id="fecFinal"> Fecha Final: '+value[2]+'</label><td>'+colaboradores[0]+'</td></td></tr>');
+
+				for (var i = 1; i < colaboradores.length-1; i++) {
+
+					$(".moment").after('<tr><td>'+colaboradores[i]+'</td></tr>');
+				}
+				
+				$("#ultimo-tr").removeClass('moment');
+
+				$("#lista-dinamica").find('li').remove();
+				$("#nombreAlcance").val('');
+				$("#fechaInicioAlcance").val(fecFinalAlcance);
+				$("#fechaFinalAlcance").val('');
+				$("#participantes").val('');
+
+				$(document).ready(function() {
+
+				setTimeout(function() {
+					$("#success-card").fadeIn(100);
+					},1);
+				setTimeout(function() {
+					$("#success-card").fadeOut(1000);
+					},3000);
+				});
+			}		
+		})
+	}
+}
 
 function guardarSubAvance(){
 	var fecha=new Date();
@@ -333,7 +420,7 @@ function guardarSubAvance(){
 			},
 			success:function(data){
 
-				if (data=="1") {
+				if (data==1) {
 					alert("El Valor del Porcentaje superaria en 100% de este Alcance");
 				}
 				else{
@@ -372,4 +459,9 @@ function agregarParticipante(){
 			$("#lista-dinamica").find('li').remove().end();
 		}
 	})
+}
+
+function formularioEmergente() {
+	$("#form-emergente").removeClass("form-emergente-show");
+	$("#form-emergente").addClass("form-emergente-show");
 }

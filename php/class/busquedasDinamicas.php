@@ -47,8 +47,8 @@
 						</td>
 						<td>
 							<div class="progress-wuil">
-								<div class="progress-bar-wuil procentaje-5" style="width: 5%;">
-									5%
+								<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+									'.$row_pla["avance"].'%
 								</div>
 							</div>
 						</td>
@@ -102,13 +102,13 @@
 						</td>
 						<td>
 							<div class="progress-wuil">
-								<div class="progress-bar-wuil procentaje-5" style="width: 5%;">
-									5%
+								<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+									'.$row_pla["avance"].'%
 								</div>
 							</div>
 						</td>
 						<td class="align-middle text-center">
-							<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&responsable='.base64_encode($rsp).'">
+							<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
 								<span class="icon-eye"></span>
 							</a>
 						</td>
@@ -200,7 +200,7 @@
 					<tr>
 						<td class="negrita" colspan="0">
 							Alcances:
-							<a href="#" title="Agregar Alcances">
+							<a href="#" title="Agregar Alcances" onclick="formularioEmergente();">
 								<span class="icon-plus" style="float:right; margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
 							</a>
 						</td>

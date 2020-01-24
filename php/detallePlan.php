@@ -5,14 +5,20 @@
 	$conexion->exec("set names utf8");
 	$dato=base64_decode($_GET["id"]);
 	$plan=base64_decode($_GET["plan"]);
-	$responsable=base64_decode($_GET["responsable"]);	
-
+	$fInicioPlan=base64_decode($_GET["fechaInicio"]);
+	$fFinalPlan=base64_decode($_GET["fechaFinal"]);
+	$responsable=base64_decode($_GET["responsable"]);
+	$fInicioPlan=substr($fInicioPlan, 0, 10);
+	$fFinalPlan=substr($fFinalPlan, 0, 10);	
 	if (!isset($dato) OR !isset($plan) OR !isset($responsable)) {
 		header("Location:../");
 	}
 	$consulta_partcipantes="SELECT * FROM participantes WHERE estadoParticipante=1";
 	$resultado=$conexion->prepare($consulta_partcipantes);
 	$resultado->execute();
+
+	$resultado2=$conexion->prepare($consulta_partcipantes);
+	$resultado2->execute();
 
 ?>
 <!DOCTYPE html>
@@ -38,7 +44,7 @@
 <body onload="dibujar()">
 	<div id="body-z">
 		<div class="container-fluid">
-			<div class="row row-header">
+			<div class="row row-header" style="z-index:1000">
 				<header class="col-md-3 col-xs-12">
 					<h5>Bienvenido al Gestor de Proyectos</h5>
 				</header>
@@ -118,12 +124,18 @@
 			<!-- Cuerpo del Body -->
 			<div id="capa" class="">
 				<div style="padding:10px 0px; " class="row center-block">
-					<!-- <div class="col-md-12 col-devolver">
-						<a href="#">
+					<div id="iratras2" style="display:block;" class="col-md-12 col-devolver">
+						<a href="verProyecto.php" onclick="iratras2();">
 							<span class="icon-arrow-left"></span>
 						</a>
-					</div> -->
-					<div id="col-table" style="display:non;" class="col-md-12">
+					</div>
+					<div id="iratras" style="display:none;" class="col-md-12 col-devolver">
+						<a href="#" onclick="iratras();">
+							<span class="icon-arrow-left"></span>
+						</a>
+					</div>
+
+					<div id="col-table" style="display:non; z-index:500" class="col-md-12">
 						<form id="datos" action="" method="POST">
 							<input id="idPlan" type="hidden" name="idPlan" value="<?php echo $dato ?>">
 							<input id="namePlan" type="hidden" name="namePlan" value="<?php echo $plan ?>">
@@ -186,11 +198,6 @@
 				</div>
 
 				<div id="detalle-gestion-avance" style="display:none;" class="row">
-					<div class="col-md-12 col-devolver">
-						<a href="#" onclick="iratras();">
-							<span class="icon-arrow-left"></span>
-						</a>
-					</div>
 					<div class="col-md-6 ">
 						<table class="table">
 							<thead class="thead-dark">
@@ -224,6 +231,9 @@
 							</thead>
 						</table>
 						<form id="form-gestion-alcance" style="width:70%; display: none;" class="center-block">
+							<label>
+								Nombre Alcance
+							</label>
 							<input id="idAlcance" class="form-control" type="hidden" name="idAlcance" value="" readonly="readonly">
 							<input id="nameAlcance" class="form-control" type="text" value="" readonly="readonly">
 							<br>
@@ -326,6 +336,97 @@
 								<br>
 							</div>	
 						</div>
+					</div>
+				</div>
+
+				<div id="form-emergente" class="form-emergente">
+					<div class="modal-dialog">
+
+					<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Nuevo Alcance</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row center-block">
+									<div class="col-md-12">
+										<form id="form-alcances" method="POST" accept-charset="utf-8">
+											<div class="row">
+												<div class="col-md-12">
+													Agregar Alcances
+													<input id="idPlan" type="hidden" name="idPlan" value="<?php echo$dato ?>" readonly="readonly">
+													<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" onblur="validaNombreAlcance();">
+													<label style="display:none;" id="label-control-danger-alcance" class="label-control-danger">
+														Ya existe un Ancance con este nombre
+													</label>
+
+													<br>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													Fecha de Inicio
+													<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" min="<?php echo $fInicioPlan ?>" max="<?php echo $fFinalPlan ?>" onblur="validaFechaInicioAlcance();">
+													<br>
+												</div>
+												<div class="col-md-6">
+													Fecha Final
+													<input id="fechaFinalAlcance" class="form-control" type="date" name="fechaFinalAlcance" min="<?php echo $fInicioPlan ?>" max="<?php echo $fFinalPlan ?>" onblur="validaFechaFinalAlcance();">
+													<label style="display:none;" id="label-final-alcance" class="label-control-warning">
+														<span class="icon-warning"></span>
+														Fecha Invalida
+													</label>
+													<br>
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group col-md-12">
+													<label for="">
+														Participantes que pertenecen a este alcance
+													</label>
+													<input type="hidden" name="tipo" value="nuevoAlcance">
+													<select id="participantes3" multiple class="form-control" name="participantes" ondblclick="agregaParticipante3();">
+														<?php
+															while ($row=$resultado2->fetch(PDO::FETCH_ASSOC)) {
+																$var+=1;
+																echo '
+																<option id="parti['.$var.']" class="participantes" value="'.$row["idParticipante"].'" >'.$row["primerNombre"]." ".$row["primerApellido"].'</option>
+
+																';
+															}
+														?>
+													</select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<ul id="lista-dinamica3" class="list-group list-group-flush">
+
+													</ul>
+												</div>
+											</div>
+										</form>
+										<div class="row">
+											<div class="col-md-12 text-center">
+												<button id="boton-anadir" class="btn btn-success" onclick="unirAlcanceYParticipante();"> Añadir </button>
+											</div>
+											<hr>
+											<div style="display: none;" id="success-card" class="col-md-12 text-center">
+												<div class="alert alert-success alert-dismissible">
+													<strong>Nuevo Alcance Registrado con exito.</strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="formEmergenteClose();">
+									Close
+								</button>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>

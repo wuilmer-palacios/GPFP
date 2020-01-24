@@ -1,18 +1,14 @@
 <?php
+
 	include('conexion.php');
 	$conexion= new Conexion();
 	$conexion->exec("set names utf8");
 
-	$consulta_proyectos="SELECT * FROM planes_tacticos 
-	INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable ORDER BY planes_tacticos.plan ASC";
-	
-	$resultado=$conexion->prepare($consulta_proyectos);
-	$resultado->execute();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Nuevo Proyecto</title>
+	<title> Gestor de Proyectos</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
@@ -29,7 +25,7 @@
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
 	<script src="../js_fun/busquedasDinamicas.js" type="text/javascript"></script>
 </head>
-<body onload="actualizar();">
+<body onload="dibujar()">
 	<div id="body-z">
 		<div class="container-fluid">
 			<div class="row row-header">
@@ -71,7 +67,7 @@
 					</li>
 					<li>
 						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
-						<ul id="children2" style="display:none;" class="children">
+						<ul id="children2" style="display:block;" class="children">
 							<li>
 								<a href="nuevoResponsable.php">Nuevo Responsables</a>
 							</li>
@@ -83,7 +79,7 @@
 					</li>
 					<li>
 						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
-						<ul id="children3" style="display:none;" class="children">
+						<ul id="children3" style="display:block;" class="children">
 							<li>
 								<a href="nuevoParticipante.php">Nuevo Participante</a>
 							</li>
@@ -94,7 +90,7 @@
 					</li>
 					<li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
-						<ul id="children4" style="display:none;" class="children">
+						<ul id="children4" style="display:block;" class="children">
 							<li>
 								<a href="nuevoParticipante.php">Gestion de Avances</a>
 							</li>
@@ -109,76 +105,69 @@
 				</ul>
 			</div>
 
-			<!-- Cuerpo del body -->
+			<!-- Cuerpo del Body -->
 			<div id="capa" class="">
-				<div class="row">
-					<div class="col-md-10 center-block">
-						<h5 class="text-center">Buscador de Proyectos</h5>
-						<br>
-					</div>
-				</div>
+				
+				<!-- Modal -->
+				<!-- <div class="modal fade" id="myModal" role="dialog"> -->
+				<div>
+					<div class="modal-dialog">
 
-				<div class="row">
-					<div class="col-md-3 center-block">
-						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Proyecto o Responsable" onkeyup="listarProyectos()">
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-5 center-block">
-						<label id="listar">
-							
-						</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<table id="tabla" class="table table-bordered">
-							<thead id="proyectos" class="thead-dark">
-								<tr>
-									<th style="width:20%;">Nombre del Proyecto</th>
-									<th style="width:20%;">Responsable</th>
-									<th style="width:10%;">Fecha Inicio</th>
-									<th style="width:10%;">Fecha Final</th>
-									<th style="width:35%;">Nivel de Avance</th>
-									<th style="width:5%;">Detallar</th>
-								</tr>
-							</thead>
-							<?php
-								while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
-									$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
-									echo '
-										<tr>
-											<td>
-												'.$row_pla["plan"].'
-											</td>
-											<td>
-												'.$rsp.'
-											</td>
-											<td>
-												'.$row_pla["fechaInicio"].'
-											</td>
-											<td>
-												'.$row_pla["fechaFinal"].'
-											</td>
-											<td>
-												<div class="progress-wuil">
-													<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
-														'.$row_pla["avance"].'%
-													</div>
-												</div>
-											</td>
-											<td class="align-middle text-center">
-												<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
-													<span class="icon-eye"></span>
-												</a>
-											</td>
+					<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Nuevo Alcance</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row center-block">
+									<div class="col-md-12">
+										<form>
+											<label>
+												Nombre de la Actividad
+											</label>
+											<input class="form-control" type="text" name="">
+											<br>
 											
-										</tr>
-									';
-								}
-							?>
-						</table>
+											<div class="row">
+												<div class="col-md-6">
+													<label>
+														Fecha Inicio
+													</label>
+													<input class="form-control" type="date" name="">
+												</div>
+												<div class="col-md-6">
+													<label>
+														Fecha Final
+													</label>
+													<input class="form-control" type="date" name="">
+												</div>
+											</div>											
+											<br>
+											<label>
+												Participantes
+											</label>
+											<br>
+											<select multiple="" class="form-control">
+												<option>Uno</option>
+												<option>Otro</option>
+												<option>asad</option>
+											</select>
+										</form>
+										<br>
+										<button class="btn btn-primary">
+												Registrar
+											</button>
+										<div class="col-md-12 content-center">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>

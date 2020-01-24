@@ -252,3 +252,19 @@ a:link{
 	font-size:15px;
 	color:red;
 }
+.form-emergente{
+	position:absolute;
+	z-index:1000;
+	top:-5000px;
+	transition:4000ms;
+	margin:0px 30%;
+	z-index:750;
+}
+.form-emergente-show{
+	position:absolute;
+	z-index:1000;
+	top:8%;
+	transition:800ms;
+	margin:0px 30%;
+	z-index:750;
+}

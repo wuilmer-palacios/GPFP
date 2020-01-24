@@ -1,3 +1,4 @@
+
 // FUNCIONES DEL MENU ¡¡¡¡CUIDADO!!!!
 // FUNCIONES DEL MENU ¡¡¡¡CUIDADO!!!!
 //INICIO - INICIO - INICIO - INICIO 
@@ -192,6 +193,22 @@ function agregaParticipante2(){
 
 	
 }
+function agregaParticipante3(){
+
+	var variable=$('#participantes3').val();
+	var combo = document.getElementById("participantes3");
+	var selected = combo.options[combo.selectedIndex].text;
+
+
+	if (!$('#'+variable).length) {
+		
+		$('#lista-dinamica3').append('<li id="'+ variable + '" class="participantes" value="' + variable + '">' + selected + '<span class="icon-bin" onclick="eliminarListaDinamica(' + variable + ');"></span></li>');
+		
+	}
+	else{
+		alert("Participante ya esta en lista");
+	}	
+}
 
 function eliminarListaDinamica(valorVariable){
 	var variable=valorVariable;
@@ -261,10 +278,20 @@ function validaFechaInicioAlcance(){
 function iratras(){
 	$("#detalle-gestion-avance").css("display","none");
 	$("#col-table").css("display","block");
+	$("#iratras").css("display","none");
+	location.reload();
+}
+
+function iratras2(){
+	$("#detalle-gestion-avance").css("display","none");
+	$("#col-table").css("display","block");
+	location.reload();
 }
 
 function detallarAlcance(valor1){
 	var idAlcance=valor1;
+	$("#form-emergente").removeClass("form-emergente-show");
+	$("#form-emergente").addClass("form-emergente");
 
 	/*Con esta se pinta el nombre*/
 	$.ajax({
@@ -302,7 +329,9 @@ function detallarAlcance(valor1){
 	$("#detalle-gestion-avance").css("display","block");
 	$("#form-gestion-alcance").css("display","block");
 	$("#boton-tareas").css("display","block");
-	$("#historial-avances").css("display","block");	
+	$("#historial-avances").css("display","block");
+	$("#iratras2").css("display","none");
+	$("#iratras").css("display","block");
 }
 function confirmar(valorUno){
 	var idAlcance=$("#idAlcance").val();
@@ -360,3 +389,22 @@ function buttonParticipantes(){
 	
 }
 /*-------------------*/
+
+function formEmergenteClose() {
+
+	$("#form-emergente").removeClass("form-emergente-show");
+	$("#form-emergente").addClass("form-emergente");
+	location.reload();
+}
+
+function actualizar(){
+	var onOff=1;
+	$.ajax({
+		url:'class/actualizarCampos.php',
+		type:'POST',
+		data:{sendOnOff:onOff},
+		success:function(data){
+
+		}
+	})
+}

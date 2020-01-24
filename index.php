@@ -16,7 +16,7 @@
 	<script src="js_fun/my_functions.js" type="text/javascript"></script>
 	
 </head>
-<body>
+<body onload="actualizar();">
 	<div id="body-z">
 		<div class="container-fluid">
 			<div class="row row-header">
