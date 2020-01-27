@@ -124,7 +124,7 @@
 
 				<div class="row">
 					<div class="col-md-3 center-block">
-						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Proyecto o Responsable" onkeyup="listarProyectos()">
+						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Proyecto o Responsable" onkeyup="listarProyectos2()">
 					</div>
 				</div>
 
@@ -141,12 +141,12 @@
 							<thead id="proyectos" class="thead-dark">
 								<tr>
 									<th style="width:8%;">Estado</th>
-									<th style="width:19%;">Nombre del Proyecto</th>
-									<th style="width:19%;">Responsable</th>
-									<th style="width:10%;">Fecha Inicio</th>
-									<th style="width:10%;">Fecha Final</th>
-									<th style="width:29%;">Nivel de Avance</th>
-									<th style="width:5%;">Detallar</th>
+									<th style="width:18%;">Nombre del Proyecto</th>
+									<th style="width:18%;">Responsable</th>
+									<th style="width:9%;">Fecha Inicio</th>
+									<th style="width:9%;">Fecha Final</th>
+									<th style="width:24%;">Nivel de Avance</th>
+									<th style="width:14%;">Controles</th>
 								</tr>
 							</thead>
 							<?php
@@ -175,6 +175,7 @@
 											<tr>
 												<td>
 													'.$estadoPlan.'
+													<input type="hidden">
 												</td>
 												<td>
 													'.$row_pla["plan"].'
@@ -196,7 +197,15 @@
 													</div>
 												</td>
 												<td class="align-middle text-center">
-													<span class="icon-eye-blocked"></span>
+													<button onclick="stop('.$row_pla["idPlan"].')">
+														<span class="icon-stop2 btn btn-danger"></span>
+													</button>
+													<button onclick="pause('.$row_pla["idPlan"].')">
+														<span class="icon-pause2 btn btn-warning"></span>
+													</button>
+													<button onclick="play('.$row_pla["idPlan"].')">
+														<span class="icon-play3 btn btn-success"></span>
+													</button>
 												</td>
 												
 											</tr>
@@ -228,9 +237,15 @@
 													</div>
 												</td>
 												<td class="align-middle text-center">
-													<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
-														<span class="icon-eye"></span>
-													</a>
+													<button onclick="stop('.$row_pla["idPlan"].')">
+														<span class="icon-stop2 btn btn-danger"></span>
+													</button>
+													<button onclick="pause('.$row_pla["idPlan"].')">
+														<span class="icon-pause2 btn btn-warning"></span>
+													</button>
+													<button onclick="play('.$row_pla["idPlan"].')">
+														<span class="icon-play3 btn btn-success"></span>
+													</button>
 												</td>
 												
 											</tr>

@@ -70,6 +70,10 @@
 							<li>
 								<a href="verProyecto.php">Ver Proyectos</a>
 							</li>
+
+							<li>
+								<a href="suspenderProyecto.php">Suspender</a>
+							</li>
 						</ul>
 					</li>
 					<li>
@@ -185,12 +189,12 @@
 						
 					</div>
 					<!-- sdlkjfhskj -->
-					<div id="form-alcence" style="display:nosne;" class="col-md-5 center-block">
+					<div id="form-alcence" style="display:none;" class="col-md-5 center-block">
 						<form id="form-alcances" method="POST" accept-charset="utf-8">
 							<div class="row">
 								<div class="col-md-12">
 									Agregar Alcances
-									<input id="idPlan" type="text" name="idPlan" value="1" readonly="readonly">
+									<input id="idPlan" type="hidden" name="idPlan" value="" readonly="readonly">
 									<input id="nombreAlcance" class="form-control" type="text" name="nombreAlcance" onblur="validaNombreAlcance();">
 									<label style="display:none;" id="label-control-danger-alcance" class="label-control-danger">
 										Ya existe un Ancance con este nombre

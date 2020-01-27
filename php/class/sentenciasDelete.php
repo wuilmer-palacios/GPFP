@@ -49,4 +49,57 @@
 		}
 	}
 
+	if (isset($_POST["sendStop"])) {
+		
+		$idPlan=$_POST["sendStop"];
+
+		$consulta_estado="UPDATE planes_tacticos
+		SET estadoPlan=4
+		WHERE idPlan='$idPlan'";
+
+		$resultado=$conexion->prepare($consulta_estado);
+		$saber=$resultado->execute();
+		if ($saber) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+	if (isset($_POST["sendPause"])) {
+		
+		$idPlan=$_POST["sendPause"];
+
+		$consulta_estado="UPDATE planes_tacticos
+		SET estadoPlan=3
+		WHERE idPlan='$idPlan'";
+
+		$resultado=$conexion->prepare($consulta_estado);
+		$saber=$resultado->execute();
+		if ($saber) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
+
+	if (isset($_POST["sendPlay"])) {
+		
+		$idPlan=$_POST["sendPlay"];
+
+		$consulta_estado="UPDATE planes_tacticos
+		SET estadoPlan=0
+		WHERE idPlan='$idPlan'";
+
+		$resultado=$conexion->prepare($consulta_estado);
+		$saber=$resultado->execute();
+		if ($saber) {
+			echo "1";
+		}
+		else{
+			echo "0";
+		}
+	}
 ?>

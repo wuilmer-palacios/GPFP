@@ -109,7 +109,7 @@
 		$fechaIni=$_POST["fechaInicio"];
 		$fechaFin=$_POST["fechaFinal"];
 		$responsable=$_POST["responsable"];
-		$estadoPlan=1;
+		$estadoPlan=0;
 		$fechaInicio=str_replace("/","-", $fechaIni)." 00:00:00";
 		$fechaFinal=str_replace("/","-",$fechaFin)." 00:00:00";
 
@@ -207,7 +207,7 @@
 	if (@$_POST["senUltimoRegistro"]>=1) {
 
 		$idPlan=$_POST["senUltimoRegistro"];
-		$estadoPlan=1;
+		$estadoPlan=0;
 		
 		$sentecia="SELECT * FROM planes_tacticos 
 		INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
@@ -282,6 +282,39 @@
 		$estadoGestion=1;
 		$observacion=$_POST["sendobservacion"];
 		$porcentaje=$_POST["sendporcentaje"];
+		$fechaStart=NULL;
+		$fechaFinish=NULL;
+
+		// EN EL SIGUIENTE PEDAZO DE CODIGO
+		// 1.- PRIMERO HAGO UNA CONSULTA A LA TABLA DE gestion_alcance PARA SABER SI YA HAY ALGUNA TAREA REALACIONADA CON EL ALCACNE EN CUESTION, SI LA RESPUESTA DE LA CONSULTA ES "0" ENTONCES ACTUALIZO EL CAMPO DEL LA TABLA fechaStart DE LA TABLA alcances PARA ESPECIFICAR QUE ES LA PRMERA TAREA DEL ALCANCE Y OBTENGO LA FECHA DEL DIA ACTUAL Y LO METO EN EL CAMPO ANTES MENCIONADO.
+
+		// 	EN CASO QUE LA CONSULTA SEA > DE "0" QUIERE DECIR QUE YA EL CAMPO fechaStart DE LA TABLA alcances YA FUE MODIFICADO
+
+		$consulta_gestion="SELECT count(*) AS numrow FROM gestion_alcance WHERE alcance='$idAlcance'";
+		$resultado_gestion=$conexion->prepare($consulta_gestion);
+		$resultado_gestion->execute();
+		$ges=$resultado_gestion->fetch(PDO::FETCH_ASSOC);
+		$numGestion=$ges["numrow"];
+
+		if ($numGestion=="0") {
+			$hoy_ges = getdate();
+
+			if ($hoy_ges["mon"]<="9") {
+				$hoy_ges["mon"]="0".$hoy_ges["mon"];
+			}
+			$fechaStart=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"]." "."00:00:00";
+
+			$consulta_update="UPDATE alcances 
+			SET fechaStart='$fechaStart'
+			WHERE idAlcance='$idAlcance'";
+			$resultado_update=$conexion->prepare($consulta_update);
+			$resultado_update->execute();
+		}
+
+		/*FIN DE LA CONSULTA - - FIN DE LA CONSULTA - - FIN DE LA CONSULTA*/
+		/*FIN DE LA CONSULTA - - FIN DE LA CONSULTA - - FIN DE LA CONSULTA*/
+
+		/*----------------------------------------------------------------------------------------------------*/
 
 		$consulta_porcentaje="SELECT * FROM alcances WHERE idAlcance=:idAlcance";
 		$resultado_porcentaje=$conexion->prepare($consulta_porcentaje);
@@ -342,7 +375,29 @@
 					';
 					echo "</ol>";
 
-					/*Consulta para sumar el porcentaje de la Sub Alcance al Alcance mayor*/
+					/*EN ESTE PEDAZO DE CODIGO DETERMINO SI EL ALCANCE YA LLEGO A SU 100% EN CASO QUE LA RESPUESTA SEA true.
+					ACTUALIZO EL CAMPO fechaFinish QUE CORRESPONDE A LA TABLA alcances PARA ESTABLECER LA FECHA EN LA QUE ESE ALCANCE YA ALCACNZO SU 100% */
+
+					if ($total=="100") {
+
+						$hoy_ges = getdate();
+
+						if ($hoy_ges["mon"]<="9") {
+							$hoy_ges["mon"]="0".$hoy_ges["mon"];
+						}
+						$fechaFinish=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"]." "."00:00:00";
+
+						$consulta_update_final="UPDATE alcances
+						SET fechaFinish='$fechaFinish'
+						WHERE idAlcance='$idAlcance'";
+						$resultado_update_final=$conexion->prepare($consulta_update_final);
+						$resultado_update_final->execute();
+					}
+					/*FIN DE LA CONSULTA - - FIN DE LA CONSULTA - - FIN DE LA CONSULTA*/
+					/*FIN DE LA CONSULTA - - FIN DE LA CONSULTA - - FIN DE LA CONSULTA*/
+					/*----------------------------------------------------------------------------------------------------*/
+
+					/**/
 					$valorFinal=$porcentaje_almacenado+$porcentaje;
 					$consulta_update="UPDATE alcances 
 					SET porcentajeAlcance='$valorFinal'

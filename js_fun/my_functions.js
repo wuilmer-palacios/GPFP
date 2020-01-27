@@ -286,6 +286,7 @@ function iratras2(){
 	$("#detalle-gestion-avance").css("display","none");
 	$("#col-table").css("display","block");
 	location.reload();
+	window.locationf="verProyecto.php";
 }
 
 function detallarAlcance(valor1){
@@ -406,5 +407,69 @@ function actualizar(){
 		success:function(data){
 
 		}
-	})
+	});
+}
+
+function stop(valor1){
+	var valorIdPlan=valor1;
+	
+	var booleano=confirm("¿Estas Seguro de CANCELAR este Proyecto?");
+	if (booleano==true) {
+		$.ajax({
+			url:'class/sentenciasDelete.php',
+			type:'POST',
+			data:{sendStop:valorIdPlan},
+			success:function(data){
+				var respuesta=data;
+
+				if (respuesta=="1") {
+					alert("Proyecto CANCELADO exitosamente");
+					location.reload();
+				}
+			}
+		})
+	}
+
+}
+
+function pause(valor1){
+	var valorIdPlan=valor1;
+	
+	var booleano=confirm("¿Estas Seguro de PAUSAR este Proyecto?");
+	if (booleano==true) {
+		$.ajax({
+			url:'class/sentenciasDelete.php',
+			type:'POST',
+			data:{sendPause:valorIdPlan},
+			success:function(data){
+				var respuesta=data;
+
+				if (respuesta=="1") {
+					alert("Proyecto PAUSADO exitosamente");
+					location.reload();
+				}
+			}
+		})
+	}
+}
+
+function play(valor1){
+	var valorIdPlan=valor1;
+	
+	var booleano=confirm("¿Estas Seguro de ACTIVAR nuevamente este Proyecto?");
+	if (booleano==true) {
+		$.ajax({
+			url:'class/sentenciasDelete.php',
+			type:'POST',
+			data:{sendPlay:valorIdPlan},
+			success:function(data){
+				var respuesta=data;
+
+				if (respuesta=="1") {
+					alert("Proyecto En EJECUCION exitosamente");
+					location.reload();
+				}
+			}
+		})
+	}
 }

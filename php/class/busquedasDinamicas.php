@@ -20,46 +20,103 @@
 					<table class="table table-bordered">
 						<thead id="proyectos" class="thead-dark">
 							<tr>
+								<th style="width:5%;">Estado</th>
 								<th style="width:20%;">Nombre del Proyecto</th>
 								<th style="width:20%;">Responsable</th>
 								<th style="width:10%;">Fecha Inicio</th>
 								<th style="width:10%;">Fecha Final</th>
-								<th style="width:35%;">Nivel de Avance</th>
+								<th style="width:30%;">Nivel de Avance</th>
 								<th style="width:5%;">Detallar</th>
 							</tr>
 						</thead>
 				';
 			while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
 				$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
-				echo '
-					<tr>
-						<td>
-							'.$row_pla["plan"].'
-						</td>
-						<td>
-							'.$rsp.'
-						</td>
-						<td>
-							'.$row_pla["fechaInicio"].'
-						</td>
-						<td>
-							'.$row_pla["fechaFinal"].'
-						</td>
-						<td>
-							<div class="progress-wuil">
-								<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
-									'.$row_pla["avance"].'%
+				switch ($row_pla["estadoPlan"]) {
+					case '0':
+						$estadoPlan="<b>Sin Iniciar</b>";
+						break;
+					case '1':
+						$estadoPlan="<b>En Ejecucion</b>";
+						break;
+					case '2':
+						$estadoPlan="<b>Terminado</b>";
+						break;
+					case '3':
+						$estadoPlan="<b style='color:#E57F05'>Pausado</b>";
+						break;
+					case '4':
+						$estadoPlan="<b style='color:red'>Cancelado</b>";
+						break;
+					
+				}
+				if ($row_pla["estadoPlan"]=="3" OR $row_pla["estadoPlan"]=="4"){
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
 								</div>
-							</div>
-						</td>
-						<td class="align-middle text-center">
-							<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&responsable='.base64_encode($rsp).'">
-								<span class="icon-eye"></span>
-							</a>
-						</td>
-						
-					</tr>
-				';
+							</td>
+							<td class="align-middle text-center">
+								<span class="icon-eye-blocked"></span>
+							</td>
+							
+						</tr>
+					';
+				}
+				else{
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
+								</div>
+							</td>
+							<td class="align-middle text-center">
+								<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
+									<span class="icon-eye"></span>
+								</a>
+							</td>
+							
+						</tr>
+					';
+				}
+				
 			}
 			echo "</table>";
 		}
@@ -75,19 +132,42 @@
 					<table class="table table-bordered">
 						<thead id="proyectos" class="thead-dark">
 							<tr>
+								<th style="width:5%;">Estado</th>
 								<th style="width:20%;">Nombre del Proyecto</th>
 								<th style="width:20%;">Responsable</th>
 								<th style="width:10%;">Fecha Inicio</th>
 								<th style="width:10%;">Fecha Final</th>
-								<th style="width:35%;">Nivel de Avance</th>
+								<th style="width:30%;">Nivel de Avance</th>
 								<th style="width:5%;">Detallar</th>
 							</tr>
 						</thead>
 				';
 			while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
 				$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
+				switch ($row_pla["estadoPlan"]) {
+					case '0':
+						$estadoPlan="<b>Sin Iniciar</b>";
+						break;
+					case '1':
+						$estadoPlan="<b>En Ejecucion</b>";
+						break;
+					case '2':
+						$estadoPlan="<b>Terminado</b>";
+						break;
+					case '3':
+						$estadoPlan="<b style='color:#E57F05'>Pausado</b>";
+						break;
+					case '4':
+						$estadoPlan="<b style='color:red'>Cancelado</b>";
+						break;
+					
+				}
+				if ($row_pla["estadoPlan"]=="3" OR $row_pla["estadoPlan"]=="4") {
 				echo '
 					<tr>
+						<td>
+							'.$estadoPlan.'
+						</td>
 						<td>
 							'.$row_pla["plan"].'
 						</td>
@@ -108,13 +188,302 @@
 							</div>
 						</td>
 						<td class="align-middle text-center">
-							<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
-								<span class="icon-eye"></span>
-							</a>
+							<span class="icon-eye-blocked"></span>
 						</td>
 						
 					</tr>
 				';
+				}
+				else{
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
+								</div>
+							</td>
+							<td class="align-middle text-center">
+								<a href="detallePlan.php?id='.base64_encode($row_pla["idPlan"]).'&plan='.base64_encode($row_pla["plan"]).'&fechaInicio='.base64_encode($row_pla["fechaInicio"]).'&fechaFinal='.base64_encode($row_pla["fechaFinal"]).'&responsable='.base64_encode($rsp).'">
+									<span class="icon-eye"></span>
+								</a>
+							</td>
+							
+						</tr>
+					';
+				}
+			}
+			echo "</table>";	
+		}
+	}
+
+	if (isset($_POST["sendProyectoOrResponsable2"])) {
+
+		$nombreProyecto=$_POST["sendProyectoOrResponsable2"];
+
+		if ($nombreProyecto=="") {
+
+			$consulta_proyectos="SELECT * FROM planes_tacticos
+			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable ORDER BY planes_tacticos.plan ASC";
+			$resultado=$conexion->prepare($consulta_proyectos);
+			$resultado->execute();
+
+			echo '
+					<table class="table table-bordered">
+						<thead id="proyectos" class="thead-dark">
+							<tr>
+								<th style="width:8%;">Estado</th>
+								<th style="width:18%;">Nombre del Proyecto</th>
+								<th style="width:18%;">Responsable</th>
+								<th style="width:9%;">Fecha Inicio</th>
+								<th style="width:9%;">Fecha Final</th>
+								<th style="width:24%;">Nivel de Avance</th>
+								<th style="width:14%;">Controles</th>
+							</tr>
+						</thead>
+				';
+			while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
+				$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
+				switch ($row_pla["estadoPlan"]) {
+					case '0':
+						$estadoPlan="<b>Sin Iniciar</b>";
+						break;
+					case '1':
+						$estadoPlan="<b>En Ejecucion</b>";
+						break;
+					case '2':
+						$estadoPlan="<b>Terminado</b>";
+						break;
+					case '3':
+						$estadoPlan="<b style='color:#E57F05'>Pausado</b>";
+						break;
+					case '4':
+						$estadoPlan="<b style='color:red'>Cancelado</b>";
+						break;
+					
+				}
+				if ($row_pla["estadoPlan"]=="3" OR $row_pla["estadoPlan"]=="4"){
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
+								</div>
+							</td>
+							<td class="align-middle text-center">
+								<button onclick="stop('.$row_pla["idPlan"].')">
+									<span class="icon-stop2 btn btn-danger"></span>
+								</button>
+								<button onclick="pause('.$row_pla["idPlan"].')">
+									<span class="icon-pause2 btn btn-warning"></span>
+								</button>
+								<button onclick="play('.$row_pla["idPlan"].')">
+									<span class="icon-play3 btn btn-success"></span>
+								</button>
+							</td>
+							
+						</tr>
+					';
+				}
+				else{
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
+								</div>
+							</td>
+							<td class="align-middle text-center">
+								<button onclick="stop('.$row_pla["idPlan"].')">
+									<span class="icon-stop2 btn btn-danger"></span>
+								</button>
+								<button onclick="pause('.$row_pla["idPlan"].')">
+									<span class="icon-pause2 btn btn-warning"></span>
+								</button>
+								<button onclick="play('.$row_pla["idPlan"].')">
+									<span class="icon-play3 btn btn-success"></span>
+								</button>
+							</td>
+							
+						</tr>
+					';
+				}
+				
+			}
+			echo "</table>";
+		}
+		else {
+			$consulta_proyectos="SELECT * FROM planes_tacticos
+			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
+			WHERE planes_tacticos.plan LIKE '%$nombreProyecto%' OR responsables.primerNombre LIKE '%$nombreProyecto%' OR responsables.primerApellido LIKE '%$nombreProyecto%'";
+			$resultado=$conexion->prepare($consulta_proyectos);
+			$resultado->execute();
+			$numColum=0;
+
+			echo '
+					<table class="table table-bordered">
+						<thead id="proyectos" class="thead-dark">
+							<tr>
+								<th style="width:8%;">Estado</th>
+								<th style="width:18%;">Nombre del Proyecto</th>
+								<th style="width:18%;">Responsable</th>
+								<th style="width:9%;">Fecha Inicio</th>
+								<th style="width:9%;">Fecha Final</th>
+								<th style="width:24%;">Nivel de Avance</th>
+								<th style="width:14%;">Controles</th>
+							</tr>
+						</thead>
+				';
+			while ($row_pla=$resultado->fetch(PDO::FETCH_ASSOC)) {
+				$rsp=$row_pla["primerNombre"].' '.$row_pla["primerApellido"];
+				switch ($row_pla["estadoPlan"]) {
+					case '0':
+						$estadoPlan="<b>Sin Iniciar</b>";
+						break;
+					case '1':
+						$estadoPlan="<b>En Ejecucion</b>";
+						break;
+					case '2':
+						$estadoPlan="<b>Terminado</b>";
+						break;
+					case '3':
+						$estadoPlan="<b style='color:#E57F05'>Pausado</b>";
+						break;
+					case '4':
+						$estadoPlan="<b style='color:red'>Cancelado</b>";
+						break;
+					
+				}
+				if ($row_pla["estadoPlan"]=="3" OR $row_pla["estadoPlan"]=="4") {
+				echo '
+					<tr>
+						<td>
+							'.$estadoPlan.'
+						</td>
+						<td>
+							'.$row_pla["plan"].'
+						</td>
+						<td>
+							'.$rsp.'
+						</td>
+						<td>
+							'.$row_pla["fechaInicio"].'
+						</td>
+						<td>
+							'.$row_pla["fechaFinal"].'
+						</td>
+						<td>
+							<div class="progress-wuil">
+								<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+									'.$row_pla["avance"].'%
+								</div>
+							</div>
+						</td>
+						<td class="align-middle text-center">
+							<button onclick="stop('.$row_pla["idPlan"].')">
+								<span class="icon-stop2 btn btn-danger"></span>
+							</button>
+							<button onclick="pause('.$row_pla["idPlan"].')">
+								<span class="icon-pause2 btn btn-warning"></span>
+							</button>
+							<button onclick="play('.$row_pla["idPlan"].')">
+								<span class="icon-play3 btn btn-success"></span>
+							</button>
+						</td>
+						
+					</tr>
+				';
+				}
+				else{
+					echo '
+						<tr>
+							<td>
+								'.$estadoPlan.'
+							</td>
+							<td>
+								'.$row_pla["plan"].'
+							</td>
+							<td>
+								'.$rsp.'
+							</td>
+							<td>
+								'.$row_pla["fechaInicio"].'
+							</td>
+							<td>
+								'.$row_pla["fechaFinal"].'
+							</td>
+							<td>
+								<div class="progress-wuil">
+									<div class="progress-bar-wuil procentaje-'.$row_pla["avance"].'" style="width: '.$row_pla["avance"].'%;">
+										'.$row_pla["avance"].'%
+									</div>
+								</div>
+							</td>
+							<td class="align-middle text-center">
+								<button onclick="stop('.$row_pla["idPlan"].')">
+									<span class="icon-stop2 btn btn-danger"></span>
+								</button>
+								<button onclick="pause('.$row_pla["idPlan"].')">
+									<span class="icon-pause2 btn btn-warning"></span>
+								</button>
+								<button onclick="play('.$row_pla["idPlan"].')">
+									<span class="icon-play3 btn btn-success"></span>
+								</button>
+							</td>
+							
+						</tr>
+					';
+				}
 			}
 			echo "</table>";	
 		}
@@ -149,6 +518,8 @@
 
 			$fechasInicio[$u]=$obj["fechaInicioAlc"];
 			$fechasFinal[$u]=$obj["fechaFinalAlc"];
+			$fechaStart[$u]=$obj["fechaStart"];
+			$fechaFinish[$u]=$obj["fechaFinish"];
 			$u+=1;
 			$consulta_participantes="SELECT * FROM alcances_has_cp_participantes
 			INNER JOIN participantes ON participantes.idParticipante = alcances_has_cp_participantes.idParticipante
@@ -236,12 +607,12 @@
 							</div>
 						</td>
 						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-							Inicio:'.$fechasInicio[$a].' <br>
-							Final: '.$fechasFinal[$a].'
+							<b>Inicio: </b>'.$fechasInicio[$a].' <br><br>
+							<b>Final: </b>'.$fechasFinal[$a].'
 						</td>
 						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-							Inicio:01 de Enero 2020 <br>
-							Final: 30 de Enero 2020:
+							<b>Inicio: </b> '.$fechaStart[$a].' <br><br>
+							<b>Final: </b>'.$fechaFinish[$a].'
 						</td>
 						
 					</tr>

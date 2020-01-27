@@ -14,6 +14,22 @@ function listarProyectos(){
 		}
 	})
 }
+function listarProyectos2(){
+
+	var nombreProyecto=$("#nombreProyecto").val();
+	$("#listar").empty();
+
+	$.ajax({
+		url:'class/busquedasDinamicas.php',
+		type:'POST',
+		data:{sendProyectoOrResponsable2: nombreProyecto},
+		success:function(data){
+
+			$("#tabla").html(data);
+
+		}
+	})
+}
 function dibujar(){
 	var idPlan=$("#idPlan").val();
 	var nombrePlan=$("#namePlan").val();

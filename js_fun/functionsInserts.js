@@ -126,10 +126,10 @@ function registraPlanTactico(){
 	}
 	
 	if (error==false) {
-		$("#nombrePlan").toggleClass('form-control-danger');
-		$("#fechaInicio").toggleClass('form-control-danger');
-		// $("#fechaFinal").toggleClass('form-control-danger');
-		$("#responsable").toggleClass('form-control-danger');
+		$("#nombrePlan").removeClass('form-control-danger');
+		$("#fechaInicio").removeClass('form-control-danger');
+		$("#fechaFinal").removeClass('form-control-danger');
+		$("#responsable").removeClass('form-control-danger');
 
 		$.ajax({
 			url:'class/sentenciasInserts.php',

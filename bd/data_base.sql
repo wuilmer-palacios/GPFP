@@ -11,7 +11,7 @@ CREATE TABLE planes_tacticos(
 	fechaFinishPlan datetime null,
 	responsable int not null,
 	avance int not null default 0,
-	estadoPlan int(1) not null,
+	estadoPlan int(1) not null default 0,
 	PRIMARY KEY(idPlan)
 );
 
@@ -107,3 +107,33 @@ FOREIGN KEY (alcance) REFERENCES alcances (idAlcance);
 
 ALTER TABLE estrategias ADD CONSTRAINT cp_estrategias_and_cp_ejes_estrategicos
 FOREIGN KEY (ejeEstrategico) REFERENCES ejes_estrategicos (idEje);
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Gabriel', 'de Jesus', 'Stainagel', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Yeferson', 'Jose', 'Suarez', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Lucas', 'Santiago', 'Chavez', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Hector', NULL, 'Segura', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Yelibel', 'Andrea', 'Salazar', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Genesis', NULL, 'Osorio', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Jidi', 'Dayanna', 'Barrolleta', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Dani', 'Jose', 'Camora', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Hector', NULL, 'Abache', NULL, '1');
+
+INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
+(NULL, 'Santiago', 'Daniel', 'Roa', NULL, '1');

@@ -55,6 +55,10 @@
 							<li>
 								<a href="verProyecto.php">Ver Proyectos</a>
 							</li>
+
+							<li>
+								<a href="suspenderProyecto.php">Suspender</a>
+							</li>
 						</ul>
 					</li>
 					<li>
