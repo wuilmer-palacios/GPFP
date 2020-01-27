@@ -304,13 +304,13 @@
 								</div>
 							</td>
 							<td class="align-middle text-center">
-								<button onclick="stop('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="stop('.$row_pla["idPlan"].')">
 									<span class="icon-stop2 btn btn-danger"></span>
 								</button>
-								<button onclick="pause('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="pause('.$row_pla["idPlan"].')">
 									<span class="icon-pause2 btn btn-warning"></span>
 								</button>
-								<button onclick="play('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="play('.$row_pla["idPlan"].')">
 									<span class="icon-play3 btn btn-success"></span>
 								</button>
 							</td>
@@ -344,13 +344,13 @@
 								</div>
 							</td>
 							<td class="align-middle text-center">
-								<button onclick="stop('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="stop('.$row_pla["idPlan"].')">
 									<span class="icon-stop2 btn btn-danger"></span>
 								</button>
-								<button onclick="pause('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="pause('.$row_pla["idPlan"].')">
 									<span class="icon-pause2 btn btn-warning"></span>
 								</button>
-								<button onclick="play('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="play('.$row_pla["idPlan"].')">
 									<span class="icon-play3 btn btn-success"></span>
 								</button>
 							</td>
@@ -430,13 +430,13 @@
 							</div>
 						</td>
 						<td class="align-middle text-center">
-							<button onclick="stop('.$row_pla["idPlan"].')">
+							<button style="border:none" onclick="stop('.$row_pla["idPlan"].')">
 								<span class="icon-stop2 btn btn-danger"></span>
 							</button>
-							<button onclick="pause('.$row_pla["idPlan"].')">
+							<button style="border:none" onclick="pause('.$row_pla["idPlan"].')">
 								<span class="icon-pause2 btn btn-warning"></span>
 							</button>
-							<button onclick="play('.$row_pla["idPlan"].')">
+							<button style="border:none" onclick="play('.$row_pla["idPlan"].')">
 								<span class="icon-play3 btn btn-success"></span>
 							</button>
 						</td>
@@ -470,13 +470,13 @@
 								</div>
 							</td>
 							<td class="align-middle text-center">
-								<button onclick="stop('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="stop('.$row_pla["idPlan"].')">
 									<span class="icon-stop2 btn btn-danger"></span>
 								</button>
-								<button onclick="pause('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="pause('.$row_pla["idPlan"].')">
 									<span class="icon-pause2 btn btn-warning"></span>
 								</button>
-								<button onclick="play('.$row_pla["idPlan"].')">
+								<button style="border:none" onclick="play('.$row_pla["idPlan"].')">
 									<span class="icon-play3 btn btn-success"></span>
 								</button>
 							</td>
