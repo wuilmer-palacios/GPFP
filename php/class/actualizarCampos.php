@@ -26,7 +26,7 @@
 
 		$total_count=$row_count["total_count"];
 		
-		$porcentajeFinal=floor($porcentajeFinal=$total_suma/$total_count);
+		@$porcentajeFinal=floor($porcentajeFinal=$total_suma/$total_count);
 		
 		$update="UPDATE planes_tacticos
 		SET avance='$porcentajeFinal'
