@@ -84,7 +84,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
 						<ul id="children4" style="display:none;" class="children">
 							<li>
@@ -94,7 +94,7 @@
 								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">Cerrar Session</a>
 					</li>

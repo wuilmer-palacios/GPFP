@@ -4,6 +4,7 @@
 	$conexion= new Conexion();
 	$conexion->exec("set names utf8");
 	$conexion->exec("set names utf8");
+
 	if (@$_POST["tipo"]=="responsable") {
 
 		$error=false;
@@ -497,4 +498,3 @@
 	}
 ?>
 
-				

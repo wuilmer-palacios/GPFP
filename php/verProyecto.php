@@ -96,7 +96,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
 						<ul id="children4" style="display:none;" class="children">
 							<li>
@@ -106,7 +106,7 @@
 								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">Cerrar Session</a>
 					</li>
@@ -121,13 +121,13 @@
 						<br>
 					</div>
 				</div>
-
+				
 				<div class="row">
 					<div class="col-md-3 center-block">
 						<input id="nombreProyecto" class="form-control" type="search" name="" placeholder="Proyecto o Responsable" onkeyup="listarProyectos()">
 					</div>
 				</div>
-
+				<hr style="border:solid 1px; ">
 				<div class="row">
 					<div class="col-md-5 center-block">
 						<label id="listar">

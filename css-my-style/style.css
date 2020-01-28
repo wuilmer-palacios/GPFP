@@ -252,6 +252,16 @@ a:link{
 	font-size:15px;
 	color:red;
 }
+.icon-switch-wuil{
+	padding:2px;
+	border-radius:50%;
+	background:blue;
+	font-size:15px;
+	color:#349E31;
+	float:right;
+	margin-right:20px;
+	border:solid 1px black;
+}
 .form-emergente{
 	position:absolute;
 	z-index:1000;
@@ -267,4 +277,29 @@ a:link{
 	transition:800ms;
 	margin:0px 30%;
 	z-index:750;
+}
+.ul-responsables{
+	background:#B7B7B7;
+	list-style:none;
+	padding:10px 20px;
+}
+.ul-responsables li{
+	margin:10px;
+	background:#22B02D;
+	padding:6px 10px;
+	cursor:pointer;
+}
+.ul-responsables li:hover{
+	opacity:0.5;
+}
+
+.btn-span{
+	width:100px;
+	background:red;
+	padding:4px 4px;
+	margin:3px;
+}
+.a-remplazar{
+	background:red;
+	padding:3px;
 }

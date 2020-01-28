@@ -607,19 +607,29 @@
 							</div>
 						</td>
 						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-							<b>Inicio: </b>'.$fechasInicio[$a].' <br><br>
+							<b>Inicio: </b>'.$fechasInicio[$a].' <br>
 							<b>Final: </b>'.$fechasFinal[$a].'
 						</td>
 						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
-							<b>Inicio: </b> '.$fechaStart[$a].' <br><br>
+							<b>Inicio: </b> '.$fechaStart[$a].' <br>
 							<b>Final: </b>'.$fechaFinish[$a].'
 						</td>
 						
 					</tr>
 					';
 
-					$var=$key[$a];
-					for ($o=0; $o < count($objPlanes[$var]); $o++) { 
+				$var=$key[$a];
+				for ($o=0; $o < count($objPlanes[$var]); $o++) {
+					if (count($objPlanes[$var])<=1) {
+						echo '
+							<tr>
+								<td colspan="2">
+									'.$objPlanes[$var][$o].'
+								</td>
+							</tr>
+						';
+					}
+					else{
 						echo '
 							<tr>
 								<td>
@@ -627,8 +637,8 @@
 								</td>
 							</tr>
 						';
-					}	
-					
+					}
+				}		
 			}
 		}
 		else{
@@ -639,5 +649,123 @@
 			';
 		}
 		
+	}
+
+	if (isset($_POST["sendResponsableId"])) {
+
+		$idResponsable=$_POST["sendResponsableId"];
+
+		/*Consulta para traer los datos de los Responsable*/
+		/*INICIO -- INICIO -- INICIO -- INICIO -- INICIO*/
+		$consulta_responsable="SELECT * FROM responsables
+		WHERE idResponsable='$idResponsable'";
+		$resultado_responsable=$conexion->prepare($consulta_responsable);
+		$resultado_responsable->execute();
+
+		while ($row_head=$resultado_responsable->fetch(PDO::FETCH_ASSOC)) {
+			$nombre=$row_head["primerNombre"].' '.$row_head["primerApellido"];
+			echo '
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th colspan="4">
+								Informacion del Responsable
+							</th>
+						</tr>
+					</thead>
+					<tr>
+						<td style="width:20%">
+							<b>Nombre del Responsable</b>
+						</td>
+						<td colspan="3">
+							<a href="#" title="Remplazar Responsable" class="align-middle">
+								<span class="icon-loop2" style="margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
+							</a>
+							 '.$nombre.'
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							Proyectos Asignados:
+						</td>
+					</tr>
+					<tr>
+					<td style="width:25%">
+						<b>Proyecto</b>
+					</td>
+					<td colspan="2">
+						<b>Avance</b>
+					</td>
+					<td style="width:25%">
+						<b>Estado</b>
+					</td>
+				</tr>
+			';
+		}
+		/*FIN -- FIN -- FIN -- FIN -- FIN -- FIN -- FIN*/
+		/*Consulta para traer los datos de los Responsable*/
+		
+
+		/*Consulta para traer los datos de los PlanesTacticos*/
+		/*INICIO -- INICIO -- INICIO -- INICIO -- INICIO*/
+		$consulta="SELECT * FROM planes_tacticos
+		WHERE responsable='$idResponsable'";
+		$resultado=$conexion->prepare($consulta);
+		$resultado->execute();
+		$i=0;
+		/*FIN -- FIN -- FIN -- FIN -- FIN -- FIN -- FIN*/
+		/*Consulta para traer los datos de los PlanesTacticos*/
+
+	
+		while ($row_plan=$resultado->fetch(PDO::FETCH_ASSOC)) {
+
+			switch ($row_plan["estadoPlan"]) {
+				case '0':
+					$estado="Sin Iniciar";
+					break;
+				case '1':
+					$estado="En Ejecucion";
+					break;
+				case '2':
+					$estado="Pausado";
+					break;
+				case '3':
+					$estado="Cancelado";
+					break;
+			}
+			$i+=1;
+			echo '
+				<tr>
+					<td>
+					<a href="detallePlan.php?id='.base64_encode($row_plan["idPlan"]).'&plan='.base64_encode($row_plan["plan"]).'&fechaInicio='.base64_encode($row_plan["fechaInicio"]).'&fechaFinal='.base64_encode($row_plan["fechaFinal"]).'&responsable='.base64_encode($nombre).'">
+						'.$row_plan["plan"].'
+					</a>
+						
+					</td>
+					<td colspan="2">
+						<div class="progress-wuil">
+							<div class="progress-bar-wuil procentaje-'.$row_plan["avance"].'" style="width: '.$row_plan["avance"].'%;">
+								'.$row_plan["avance"].'%
+							</div>
+						</div>
+					</td>
+					<td>
+						'.$estado.'
+					</td>
+					
+				</tr>			
+			';
+			
+		}
+		if (!$i>=1) {
+			echo '
+				<tr>
+					<td colspan="4">
+						Este Responsable no tiene Proyectos Asignados
+					</td>
+				</tr>
+			';
+		}
+		echo '<table>';
 	}
 ?>

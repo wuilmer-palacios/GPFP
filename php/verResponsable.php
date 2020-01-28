@@ -1,3 +1,10 @@
+<?php
+	include_once('conexion.php');
+	$cnx= new Conexion();
+	$consulta="SELECT * FROM responsables";
+	$resultado=$cnx->prepare($consulta);
+	$resultado->execute();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +18,7 @@
 	<link rel="stylesheet" href="../css/bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="../style.css">
 	<link rel="stylesheet" type="text/css" href="../css-my-style/style.css">
+	<link rel="stylesheet" type="text/css" href="../css-my-style/porcentajes.css">
 	<script src="../js/jquery-3.4.1.min.js"></script>
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
@@ -84,7 +92,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
 						<ul id="children4" style="display:none;" class="children">
 							<li>
@@ -94,7 +102,7 @@
 								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">Cerrar Session</a>
 					</li>
@@ -105,10 +113,55 @@
 			<div id="capa" class="">
 				<div class="row">
 					<div class="col-md-10 center-block">
-						<h5 class="text-center">Ver Responsable "En construccion"</h5>
+						<h5 class="text-center">
+							Gestor de Responsables
+						</h5>
 						<br>
 					</div>
-				</div>			
+				</div>
+				<div class="row">
+					<div class="col-md-3 center-block">
+						<input type="text" name="responsable" class="form-control" placeholder="Responsable">
+					</div>
+				</div>
+				<hr style="border:solid 1px; ">
+				<div class="row">
+					<div class="col-md-10 center-block">
+						<span style="background:#22B02D" class="btn-span">Disponibles</span>
+						<span style="background:#FF4C4C" class="btn-span">Suspendidos</span>
+						<span style="background:#979797" class="btn-span">Completado</span>
+						<br><br>
+						<ul class="ul-responsables">
+							<?php
+								while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+									if ($row["estadoResponsable"]==0) {
+										echo'
+										<li style="background:#FF4C4C" onclick="detallarResponsable('.$row["idResponsable"].')">
+											<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+										</li>';
+									}
+									elseif ($row["estadoResponsable"]==2) {
+										echo'
+										<li style="background:#979797" onclick="detallarResponsable('.$row["idResponsable"].')">
+											<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+										</li>';
+									}else{
+										echo'
+										<li onclick="detallarResponsable('.$row["idResponsable"].')">
+											<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+										</li>';
+									}
+								}
+							?>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 center-block">
+						<div id="table-responsables" class="ul-responsables">
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

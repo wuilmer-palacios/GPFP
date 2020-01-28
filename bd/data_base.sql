@@ -137,3 +137,25 @@ INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerAp
 
 INSERT INTO participantes (idParticipante, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoParticipante) VALUES
 (NULL, 'Santiago', 'Daniel', 'Roa', NULL, '1');
+/*------------------------------------------------------*/
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Wuilmer', 'Andres', 'Palacios', 'Oliveros', '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Jorge', 'Carlos', 'Oliveira', NULL, '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Ricardo', 'Alfonso', 'Diaz', NULL, '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Andy', NULL, 'Castellanos', NULL, '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Williams', 'Eduardo', 'Ortuñoz', 'Requena', '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Diana', 'de los Angeles', 'Ortuñoz', 'Requena', '1');
+
+INSERT INTO responsables (idResponsable, primerNombre, segundoNombre, primerApellido, segundoApellido, estadoResponsable) VALUES 
+(NULL, 'Miguel', 'Jose', 'Perez', 'Mezones', '1');

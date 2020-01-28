@@ -1,3 +1,10 @@
+<?php
+	include_once('conexion.php');
+	$cnx= new Conexion();
+	$consulta="SELECT * FROM participantes WHERE estadoParticipante=1";
+	$resultado=$cnx->prepare($consulta);
+	$resultado->execute();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,7 +91,7 @@
 							</li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
 						<ul id="children4" style="display:none;" class="children">
 							<li>
@@ -94,7 +101,7 @@
 								<a href="verParticipante.php">Ver Participante</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">Cerrar Session</a>
 					</li>
@@ -105,8 +112,19 @@
 			<div id="capa" class="">
 				<div class="row">
 					<div class="col-md-10 center-block">
-						<h5 class="text-center">Ver Participantes "En construccion"</h5>
-						<br>
+						<ol id="participantes" style="background:red; padding: 20px; list-style:none;">
+							<?php
+								while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+									$var+=1;
+									echo '
+									<li id="parti['.$var.']" class="participantes" value="'.$row["idParticipante"].'" >'
+										.$row["primerNombre"]." ".$row["primerApellido"].
+									'</li>
+
+									';
+								}
+							?>
+						</ol>
 					</div>
 				</div>			
 			</div>

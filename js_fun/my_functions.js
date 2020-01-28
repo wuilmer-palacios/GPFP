@@ -473,3 +473,16 @@ function play(valor1){
 		})
 	}
 }
+
+function detallarResponsable(value){
+	var valor=value;
+
+	$.ajax({
+		url:'class/busquedasDinamicas.php',
+		type:'POST',
+		data:{sendResponsableId:valor},
+		success:function(data){
+			$("#table-responsables").html(data);
+		}
+	})
+}
