@@ -102,4 +102,18 @@
 			echo "0";
 		}
 	}
+
+	if (isset($_POST["sendIdNew"]) && isset($_POST["sendIdOld"])) {
+		
+		$sendIdNew=$_POST["sendIdNew"];
+		$sendIdOld=$_POST["sendIdOld"];
+
+		$consulta_update="UPDATE planes_tacticos
+		SET responsable = '$sendIdNew'
+		WHERE responsable = '$sendIdOld'";
+		$resultado=$conexion->prepare($consulta_update);
+		if($resultado->execute()){
+			echo "1";
+		}
+	}
 ?>

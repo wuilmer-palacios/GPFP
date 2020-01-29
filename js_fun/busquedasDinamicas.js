@@ -30,6 +30,7 @@ function listarProyectos2(){
 		}
 	})
 }
+
 function dibujar(){
 	var idPlan=$("#idPlan").val();
 	var nombrePlan=$("#namePlan").val();
@@ -45,6 +46,19 @@ function dibujar(){
 		success:function(data){
 
 			$("#tabla").html(data);
+		}
+	})
+}
+
+function listarResponsables(){
+	var valor=$("#form-search").val();
+
+	$.ajax({
+		url:'class/busquedasDinamicas.php',
+		type:'POST',
+		data:{sendValueResponsable:valor},
+		success:function(data){
+			$("#list-responsable").html(data);
 		}
 	})
 }

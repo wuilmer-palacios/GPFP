@@ -4,6 +4,10 @@
 	$consulta="SELECT * FROM responsables";
 	$resultado=$cnx->prepare($consulta);
 	$resultado->execute();
+
+	$consulta_responsable=$consulta." "."WHERE estadoResponsable=1";
+	$resultado_responsable=$cnx->prepare($consulta_responsable);
+	$resultado_responsable->execute();
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +27,7 @@
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
+	<script src="../js_fun/busquedasDinamicas.js" type="text/javascript"></script>
 	
 </head>
 <body>
@@ -121,7 +126,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 center-block">
-						<input type="text" name="responsable" class="form-control" placeholder="Responsable">
+						<input id="form-search" type="text" value="" name="responsable" class="form-control" placeholder="Responsable" onkeyup="listarResponsables()">
 					</div>
 				</div>
 				<hr style="border:solid 1px; ">
@@ -131,6 +136,9 @@
 						<span style="background:#FF4C4C" class="btn-span">Suspendidos</span>
 						<span style="background:#979797" class="btn-span">Completado</span>
 						<br><br>
+					</div>
+
+					<div id="list-responsable" class="col-md-10 center-block">	
 						<ul class="ul-responsables">
 							<?php
 								while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
@@ -160,6 +168,59 @@
 					<div class="col-md-10 center-block">
 						<div id="table-responsables" class="ul-responsables">
 						</div>
+					</div>
+				</div>
+				<div id="form-emergente" class="form-emergente">
+					<div class="modal-dialog">
+
+					<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Nuevo Responsable</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row center-block">
+									<div class="col-md-12">
+										
+										<div class="row">
+											<div class="col-md-12 text-center">
+												<form>
+													<input id="wuil" type="hidden" name="wuil" value="">
+													<select id="new-responsable" class="form-control" name="responsable">
+														<?php
+														while ($row_responsable=$resultado_responsable->fetch(PDO::FETCH_ASSOC)) {
+															$nombre=$row_responsable["primerNombre"]." ".$row_responsable["primerApellido"];
+															echo '
+																<option value="'.$row_responsable["idResponsable"].'">'.$nombre.'</option>
+															';
+														}
+														?>
+													</select>
+													<br>
+												</form>
+											</div>
+											<div class="col-md-12 text-center">
+												<button id="boton-anadir" class="btn btn-success" onclick="cambiarResponsable();">
+													Cambiar
+												</button>
+											</div>
+											<hr>
+											<div style="display: none;" id="success-card" class="col-md-12 text-center">
+												<div class="alert alert-success alert-dismissible">
+													<strong>Nuevo Alcance Registrado con exito.</strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="formEmergenteClose()">
+									Close
+								</button>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>

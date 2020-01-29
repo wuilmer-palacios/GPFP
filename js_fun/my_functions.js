@@ -283,13 +283,16 @@ function iratras(){
 }
 
 function iratras2(){
+
+	window.locationf="verProyecto.php";
 	$("#detalle-gestion-avance").css("display","none");
 	$("#col-table").css("display","block");
 	location.reload();
-	window.locationf="verProyecto.php";
+	
 }
 
 function detallarAlcance(valor1){
+
 	var idAlcance=valor1;
 	$("#form-emergente").removeClass("form-emergente-show");
 	$("#form-emergente").addClass("form-emergente");
@@ -396,7 +399,7 @@ function formEmergenteClose() {
 	$("#form-emergente").removeClass("form-emergente-show");
 	$("#form-emergente").addClass("form-emergente");
 	location.reload();
-}
+}	
 
 function actualizar(){
 	var onOff=1;
@@ -476,6 +479,7 @@ function play(valor1){
 
 function detallarResponsable(value){
 	var valor=value;
+	$("#wuil").val(valor);
 
 	$.ajax({
 		url:'class/busquedasDinamicas.php',
@@ -486,3 +490,4 @@ function detallarResponsable(value){
 		}
 	})
 }
+

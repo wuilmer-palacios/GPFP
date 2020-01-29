@@ -465,3 +465,24 @@ function formularioEmergente() {
 	$("#form-emergente").removeClass("form-emergente-show");
 	$("#form-emergente").addClass("form-emergente-show");
 }
+
+function cambiarResponsable(){
+	var idResponsableNew=$("#new-responsable").val();
+	var idResponsableOld=$("#wuil").val();
+
+	$.ajax({
+		url:'class/sentenciasDelete.php',
+		type:'POST',
+		data:{
+			sendIdNew:idResponsableNew,
+			sendIdOld:idResponsableOld
+		},
+		success:function(data){
+			if (data=="1") {
+				$("#form-emergente").removeClass("form-emergente-show");
+				$("#form-emergente").addClass("form-emergente");
+				detallarResponsable(idResponsableNew);
+			}
+		}
+	})
+}

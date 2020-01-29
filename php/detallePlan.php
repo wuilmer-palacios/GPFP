@@ -128,11 +128,11 @@
 			<!-- Cuerpo del Body -->
 			<div id="capa" class="">
 				<div style="padding:10px 0px; " class="row center-block">
-					<div id="iratras2" style="display:block;" class="col-md-12 col-devolver">
+					<!-- <div id="iratras2" style="display:block;" class="col-md-12 col-devolver">
 						<a href="verProyecto.php" onclick="iratras2();">
 							<span class="icon-arrow-left"></span>
 						</a>
-					</div>
+					</div> -->
 					<div id="iratras" style="display:none;" class="col-md-12 col-devolver">
 						<a href="#" onclick="iratras();">
 							<span class="icon-arrow-left"></span>

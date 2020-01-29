@@ -1,4 +1,3 @@
-
 <?php
 
 	include('../conexion.php');
@@ -678,7 +677,7 @@
 							<b>Nombre del Responsable</b>
 						</td>
 						<td colspan="3">
-							<a href="#" title="Remplazar Responsable" class="align-middle">
+							<a href="#" title="Remplazar Responsable" class="align-middle" onclick="formularioEmergente()">
 								<span class="icon-loop2" style="margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
 							</a>
 							 '.$nombre.'
@@ -767,5 +766,74 @@
 			';
 		}
 		echo '<table>';
+	}
+	if (isset($_POST["sendValueResponsable"])) {
+		
+		$valor=$_POST["sendValueResponsable"];
+
+		if ($valor=="") {
+			$consulta="SELECT * FROM responsables";
+			$resultado=$conexion->prepare($consulta);
+			if($resultado->execute()){
+				echo '
+					<ul class="ul-responsables">
+				';
+				while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+					if ($row["estadoResponsable"]==0) {
+						echo'
+						<li style="background:#FF4C4C" onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}
+					elseif ($row["estadoResponsable"]==2) {
+						echo'
+						<li style="background:#979797" onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}else{
+						echo'
+						<li onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}
+				}
+				echo '
+					</ul>
+				';
+			}
+		}
+		else{
+			$consulta="SELECT * FROM responsables
+			WHERE primerNombre LIKE '%$valor%' OR primerApellido LIKE '%$valor%'";
+			$resultado=$conexion->prepare($consulta);
+			if($resultado->execute()){
+				echo '
+					<ul class="ul-responsables">
+				';
+				while ($row=$resultado->fetch(PDO::FETCH_ASSOC)) {
+					if ($row["estadoResponsable"]==0) {
+						echo'
+						<li style="background:#FF4C4C" onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}
+					elseif ($row["estadoResponsable"]==2) {
+						echo'
+						<li style="background:#979797" onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}else{
+						echo'
+						<li onclick="detallarResponsable('.$row["idResponsable"].')">
+							<b>'.$row["primerNombre"]." ".$row["primerApellido"].'</b>
+						</li>';
+					}
+				}
+				echo '
+					</ul>
+				';
+			}
+		}
+		
 	}
 ?>

@@ -30,6 +30,25 @@
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
+	<script src="../jsPDF/dist/jspdf.min.js"></script>
+	<script type="text/javascript">
+		function wuilmerpdf(){
+			var doc = new jsPDF();
+			var elementHTML = $('#form-table-wuil').html();
+			var specialElementHandlers = {
+			    '#elementH': function (element, renderer) {
+			        return true;
+			    }
+			};
+			doc.fromHTML(elementHTML, 15, 15, {
+			    'width': 170,
+			    'elementHandlers': specialElementHandlers
+			});
+
+			// Save the PDF
+			doc.save('sample-document.pdf');
+		}
+	</script>
 	
 </head>
 <body>
