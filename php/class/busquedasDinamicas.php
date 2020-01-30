@@ -252,7 +252,7 @@
 								<th style="width:18%;">Responsable</th>
 								<th style="width:9%;">Fecha Inicio</th>
 								<th style="width:9%;">Fecha Final</th>
-								<th style="width:24%;">Nivel de Avance</th>
+								<th style="width:14%;">Nivel de Avance</th>
 								<th style="width:14%;">Controles</th>
 							</tr>
 						</thead>
@@ -378,7 +378,7 @@
 								<th style="width:18%;">Responsable</th>
 								<th style="width:9%;">Fecha Inicio</th>
 								<th style="width:9%;">Fecha Final</th>
-								<th style="width:24%;">Nivel de Avance</th>
+								<th style="width:14%;">Nivel de Avance</th>
 								<th style="width:14%;">Controles</th>
 							</tr>
 						</thead>
@@ -512,6 +512,7 @@
 			QUE A SU VEZ PERTENECEN A UN PLAN QUE VIENE POR AL URL*/
 			$idAlcance[$u]=$obj["idAlcance"];
 			$porciento[$u]=$obj["porcentajeAlcance"];
+			$importancia[$u]=$obj["importancia"];
 			$obj["idAlcance"];
 			$estadoAlcPar=1;
 
@@ -547,7 +548,7 @@
 			<table class="table table-bordered">
 				<thead class="thead-dark">
 					<tr>
-						<th class="text-center negrita" colspan="4">
+						<th class="text-center negrita" colspan="5">
 							Detalles del Plan
 						</th>
 					</tr>
@@ -555,7 +556,7 @@
 						<td class="negrita" style="width:25%">
 							Nombre Plan
 						</td>
-						<td colspan="3">
+						<td colspan="4">
 							'.$plan.'
 						</td>
 					</tr>
@@ -563,7 +564,7 @@
 						<td style="width:25%;" class="negrita">
 							Responsable
 						</td>
-						<td colspan="3">
+						<td colspan="4">
 							'.$responsable.'
 						</td>
 					</tr>
@@ -573,6 +574,9 @@
 							<a href="#" title="Agregar Alcances" onclick="formularioEmergente();">
 								<span class="icon-plus" style="float:right; margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
 							</a>
+						</td>
+						<td class="negrita" colspan="0">
+							Importancia
 						</td>
 						<td class="negrita" colspan="0">
 							Fecha a Iniciar / Finalizar:
@@ -604,6 +608,9 @@
 									'.$porciento[$a].'.%
 								</div>
 							</div>
+						</td>
+						<td rowspan="'.$row.'" class="align-middle">
+							'.$importancia[$a].'
 						</td>
 						<td style="width:18%" class=" align-middle" rowspan="'.$row.'">
 							<b>Inicio: </b>'.$fechasInicio[$a].' <br>
@@ -643,7 +650,7 @@
 		else{
 			echo '
 			<tr>
-				<td colspan="4" class="text-center">Este Proyecto no tiene Avances Registrados</td>
+				<td colspan="5" class="text-center">Este Proyecto no tiene Avances Registrados</td>
 			</tr>
 			';
 		}
@@ -681,6 +688,9 @@
 								<span class="icon-loop2" style="margin:3px; font-size:15px; color:white; background:#1EA70B; padding:3px; border-radius:9px;"></span>
 							</a>
 							 '.$nombre.'
+							<a style="float:right; margin-right:5px; background:#353535; padding:2px; border-radius:20%; width:17px;" href="#" title="Activar y Desactivar" class="align-middle" onclick="onOffResponsable('.$idResponsable.')">
+								<span class="icon-switch" style="color:red"></span>
+							</a>
 						</td>
 					</tr>
 					<tr>

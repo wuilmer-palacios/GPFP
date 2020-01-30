@@ -30,23 +30,20 @@
 	<script src="../js/bootstrap.js"></script>
 	<script src="../js_fun/my_functions.js" type="text/javascript"></script>
 	<script src="../js_fun/functionsInserts.js" type="text/javascript"></script>
-	<script src="../jsPDF/dist/jspdf.min.js"></script>
+	<!-- <script src="../jsPDF/dist/jspdf.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 	<script type="text/javascript">
 		function wuilmerpdf(){
-			var doc = new jsPDF();
-			var elementHTML = $('#form-table-wuil').html();
-			var specialElementHandlers = {
-			    '#elementH': function (element, renderer) {
-			        return true;
-			    }
-			};
-			doc.fromHTML(elementHTML, 15, 15, {
-			    'width': 170,
-			    'elementHandlers': specialElementHandlers
-			});
 
-			// Save the PDF
-			doc.save('sample-document.pdf');
+             var printContents = document.getElementById("content").innerHTML;
+
+             var originalContents = document.body.innerHTML;
+
+             document.body.innerHTML = printContents;
+
+             window.print();
+
+             document.body.innerHTML = originalContents;
 		}
 	</script>
 	
@@ -136,7 +133,7 @@
 			</div>
 			<!-- Cuerpo del body -->
 			<div id="capa" class="">
-				<div class="row">
+				<div class="row">					
 					<div class="col-md-10 center-block">
 						<h5 class="text-center">Nuevo Plan Tactico</h5>
 					</div>
@@ -223,6 +220,35 @@
 								</div>
 							</div>
 							<div class="row">
+								<div class="col-md-12">
+									Nivel de Importancia
+									<div class="radio">
+										<label>
+											<input type="radio" name="importancia" class="importancia" value="Importancia Moderada" checked>
+											<u>Importancia Moderada</u>
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="importancia" class="importancia" value="Importante">
+											<u>Importante</u>
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="importancia" class="importancia" value="Muy Importante">
+											<u>Muy Importante</u>
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input type="radio" name="importancia" class="importancia" value="Alta Importancia">
+											<u>Alta Importancia</u>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
 								<div class="col-md-6">
 									Fecha de Inicio
 									<input id="fechaInicioAlcance" class="form-control" type="date" name="fechaInicioAlcance" min="2020-01-01" max="" onblur="validaFechaInicioAlcance();">
@@ -287,9 +313,9 @@
 					</div>
 				</div>
 
-				<div id="form-table-wuil" style="display: none" class="row row-body">
-					<div class="col-md-12">
-						<table class="table table-bordered">
+				<div id="form-table-wuil" style="display:none" class="row row-body">
+					<div id="content" class="col-md-12">
+						<table id="wuilmer-tabla" class="table table-bordered">
 							<thead class="thead-dark">
 								<tr>
 									<th colspan="3" class="text-center">Detalles del Plan Tactico</th>
@@ -322,11 +348,28 @@
 								</th>
 							</tr>
 
+							<tr>
+								<th>
+									Nombre del Alcance
+								</th>
+								<th>
+									Fechas
+								</th>
+								<th>
+									Participantes
+								</th>
+							</tr>
+
 							<!-- Parte Dinamica -->
 							<tr id="antepenultimo-tr">
 								
 							</tr>
 						</table>
+						
+						<button class="btn btn-primary" onclick="wuilmerpdf()">
+							<span class="icon-file-pdf"></span>
+							- Descargar
+						</button>
 					</div>
 				</div>
 			</div>

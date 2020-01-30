@@ -491,3 +491,19 @@ function detallarResponsable(value){
 	})
 }
 
+function onOffResponsable(valorUno){
+	var idResponsable=valorUno;
+	$.ajax({
+		url:'class/sentenciasDelete.php',
+		type:'POST',
+		data:{sendOnOffResponsable:idResponsable},
+		success:function(data){
+			
+			var valor=data;
+			if (valor=="1") {
+				listarResponsables()
+				detallarResponsable(idResponsable);
+			}
+		}
+	})
+}

@@ -202,7 +202,7 @@ function unirAlcanceYParticipante(){
 	var fecInicioAlcance=$("#fechaInicioAlcance").val();
 	var fecFinalAlcance=$("#fechaFinalAlcance").val();
 	var participantes=partici;
-
+	var importancia=$('input:radio[name=importancia]:checked').val();
 
 	if (nomAlcance=="") {
 		$("#nombreAlcance").toggleClass('form-control-danger');
@@ -236,7 +236,8 @@ function unirAlcanceYParticipante(){
 				sendPaticipante: participantes,
 				sendNomAlcance: nomAlcance,
 				sendFecInicioAlcance: fecInicioAlcance,
-				sendFecFinalAlcance: fecFinalAlcance},
+				sendFecFinalAlcance: fecFinalAlcance,
+				sendImportancia:importancia},
 			success: function(data){
 				var value=data.split('*');
 				var colaboradores=value[3].split('|');

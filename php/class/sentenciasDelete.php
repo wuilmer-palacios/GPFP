@@ -116,4 +116,41 @@
 			echo "1";
 		}
 	}
+
+	if (isset($_POST["sendOnOffResponsable"])) {
+		$idResponsable=$_POST["sendOnOffResponsable"];
+		
+		$consulta_estado="SELECT estadoResponsable AS estado FROM responsables
+		WHERE idResponsable = '$idResponsable'";
+		$resultado_estado=$conexion->prepare($consulta_estado);
+		$resultado_estado->execute();
+		$row=$resultado_estado->fetch(PDO::FETCH_ASSOC);
+		$row["estado"];
+
+		switch ($row["estado"]) {
+			case '0':
+				$consulta_update="UPDATE responsables
+				SET estadoResponsable=1
+				WHERE idResponsable=:idResponsable";
+				$resultado=$conexion->prepare($consulta_update);
+				$saber=$resultado->execute(array(':idResponsable' => $idResponsable));
+
+				if ($saber==true) {
+					echo "1";
+				}
+				break;
+
+			case '1':
+				$consulta_update="UPDATE responsables
+				SET estadoResponsable=0
+				WHERE idResponsable=:idResponsable";
+				$resultado=$conexion->prepare($consulta_update);
+				$saber=$resultado->execute(array(':idResponsable' => $idResponsable));
+
+				if ($saber==true) {
+					echo "1";
+				}
+				break;
+		}
+	}
 ?>

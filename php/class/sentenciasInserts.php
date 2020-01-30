@@ -111,8 +111,8 @@
 		$fechaFin=$_POST["fechaFinal"];
 		$responsable=$_POST["responsable"];
 		$estadoPlan=0;
-		$fechaInicio=str_replace("/","-", $fechaIni)." 00:00:00";
-		$fechaFinal=str_replace("/","-",$fechaFin)." 00:00:00";
+		$fechaInicio=str_replace("/","-", $fechaIni);
+		$fechaFinal=str_replace("/","-",$fechaFin);
 
 
 
@@ -145,9 +145,10 @@
 		$fechaFinal=$_POST["sendFecFinalAlcance"];
 		$estadoAlcance=0;
 		$participantes=$_POST["sendPaticipante"];
+		$importancia=$_POST["sendImportancia"];
 	
 
-		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicioAlc, fechaFinalAlc, estadoAlcance) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance)";
+		$consulta="INSERT INTO alcances (idAlcance, alcance, planTactico, fechaInicioAlc, fechaFinalAlc, estadoAlcance, importancia) VALUES (:idAlcance, :alcance, :planTactico, :fechaInicio, :fechaFinal, :estadoAlcance, :importancia)";
 		$resultado=$conexion->prepare($consulta);
 		if ($resultado->execute(array(
 			':idAlcance' => $idAlcance,
@@ -155,7 +156,8 @@
 			':planTactico' => $planTactico,
 			':fechaInicio' => $fechaInicio,
 			':fechaFinal' => $fechaFinal,
-			':estadoAlcance' => $estadoAlcance
+			':estadoAlcance' => $estadoAlcance,
+			':importancia' => $importancia,
 			 ))) {
 	
 			$consultaUltimoAlcance="SELECT * FROM alcances ORDER BY idAlcance DESC LIMIT 1";
@@ -303,7 +305,7 @@
 			if ($hoy_ges["mon"]<="9") {
 				$hoy_ges["mon"]="0".$hoy_ges["mon"];
 			}
-			$fechaStart=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"]." "."00:00:00";
+			$fechaStart=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"];
 
 			$consulta_update="UPDATE alcances 
 			SET fechaStart='$fechaStart'
@@ -386,7 +388,7 @@
 						if ($hoy_ges["mon"]<="9") {
 							$hoy_ges["mon"]="0".$hoy_ges["mon"];
 						}
-						$fechaFinish=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"]." "."00:00:00";
+						$fechaFinish=$hoy_ges["year"]."-".$hoy_ges["mon"]."-".$hoy_ges["mday"];
 
 						$consulta_update_final="UPDATE alcances
 						SET fechaFinish='$fechaFinish'

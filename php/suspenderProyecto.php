@@ -136,7 +136,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-9 center-block">
 						<table id="tabla" class="table table-bordered">
 							<thead id="proyectos" class="thead-dark">
 								<tr>
@@ -145,7 +145,7 @@
 									<th style="width:18%;">Responsable</th>
 									<th style="width:9%;">Fecha Inicio</th>
 									<th style="width:9%;">Fecha Final</th>
-									<th style="width:24%;">Nivel de Avance</th>
+									<th style="width:14%;">Nivel de Avance</th>
 									<th style="width:14%;">Controles</th>
 								</tr>
 							</thead>
