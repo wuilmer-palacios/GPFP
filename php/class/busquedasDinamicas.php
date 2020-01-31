@@ -1,5 +1,5 @@
 <?php
-
+	session_start();
 	include('../conexion.php');
 	$conexion= new Conexion();
 	$conexion->exec("set names utf8");
@@ -7,11 +7,12 @@
 	if (isset($_POST["sendProyectoOrResponsable"])) {
 
 		$nombreProyecto=$_POST["sendProyectoOrResponsable"];
-
+		$idResponsable=$_SESSION["idResponsable"];
 		if ($nombreProyecto=="") {
 
 			$consulta_proyectos="SELECT * FROM planes_tacticos
-			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable ORDER BY planes_tacticos.plan ASC";
+			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
+			WHERE planes_tacticos.responsable = '$idResponsable' ORDER BY planes_tacticos.plan ASC";
 			$resultado=$conexion->prepare($consulta_proyectos);
 			$resultado->execute();
 
@@ -120,9 +121,10 @@
 			echo "</table>";
 		}
 		else {
+			$idResponsable=$_SESSION["idResponsable"];
 			$consulta_proyectos="SELECT * FROM planes_tacticos
 			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
-			WHERE planes_tacticos.plan LIKE '%$nombreProyecto%' OR responsables.primerNombre LIKE '%$nombreProyecto%' OR responsables.primerApellido LIKE '%$nombreProyecto%'";
+			WHERE planes_tacticos.responsable = '$idResponsable' planes_tacticos.plan LIKE '%$nombreProyecto%'";
 			$resultado=$conexion->prepare($consulta_proyectos);
 			$resultado->execute();
 			$numColum=0;
@@ -235,11 +237,12 @@
 	if (isset($_POST["sendProyectoOrResponsable2"])) {
 
 		$nombreProyecto=$_POST["sendProyectoOrResponsable2"];
-
+		$idResponsable=$_SESSION["idResponsable"];
 		if ($nombreProyecto=="") {
 
 			$consulta_proyectos="SELECT * FROM planes_tacticos
-			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable ORDER BY planes_tacticos.plan ASC";
+			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
+			WHERE planes_tacticos.responsable = '$idResponsable' ORDER BY planes_tacticos.plan ASC";
 			$resultado=$conexion->prepare($consulta_proyectos);
 			$resultado->execute();
 
@@ -362,9 +365,10 @@
 			echo "</table>";
 		}
 		else {
+			$idResponsable=$_SESSION["idResponsable"]; 
 			$consulta_proyectos="SELECT * FROM planes_tacticos
 			INNER JOIN responsables ON planes_tacticos.responsable = responsables.idResponsable
-			WHERE planes_tacticos.plan LIKE '%$nombreProyecto%' OR responsables.primerNombre LIKE '%$nombreProyecto%' OR responsables.primerApellido LIKE '%$nombreProyecto%'";
+			WHERE planes_tacticos.plan LIKE '%$nombreProyecto%' AND planes_tacticos.responsable = '$idResponsable'";
 			$resultado=$conexion->prepare($consulta_proyectos);
 			$resultado->execute();
 			$numColum=0;

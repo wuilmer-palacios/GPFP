@@ -1,3 +1,9 @@
+<?php
+	session_start();
+	if (!isset($_SESSION["responsable"]) OR !isset($_SESSION["idResponsable"])) {
+		header('location:login.php');
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +34,7 @@
 				</div>
 				<div class="col-md-7 ayuda col-xs-5">
 					<h6>
-						User Name
+						<?php echo $_SESSION["responsable"];?>
 					</h6>
 				</div>
 				<div style="text-align:left;" class="col-md-1 ayuda col-xs-5">
@@ -47,42 +53,50 @@
 					<li>
 						<a id="subMenu1" onclick="despliegaSubMenu1();" href="#">Proyectos</a>
 						<ul id="children1" class="children">
-							<li>
-								<a href="php/nuevoProyecto.php">Nuevo Proyecto</a>
-							</li>
+							<?php if ($_SESSION["tipoUser"]=="1"): ?>
+								<li>
+									<a href="php/nuevoProyecto.php">Nuevo Proyecto</a>
+								</li>	
+							<?php endif ?>
 						
 							<li>
 								<a href="php/verProyecto.php">Ver Proyectos</a>
 							</li>
-
-							<li>
-								<a href="php/suspenderProyecto.php">Suspender</a>
-							</li>
+							<?php if ($_SESSION["tipoUser"]=="1"): ?>
+								<li>
+									<a href="php/suspenderProyecto.php">Suspender</a>
+								</li>	
+							<?php endif ?>
 						</ul>
 					</li>
-					<li>
-						<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
-						<ul id="children2" style="display:none;" class="children">
-							<li>
-								<a href="php/nuevoResponsable.php">Nuevo Responsables</a>
-							</li>
-							<li>
-								<a href="php/verResponsable.php">Ver Responsables</a>
-							</li>
-							
-						</ul>
-					</li>
-					<li>
-						<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
-						<ul id="children3" style="display:none;" class="children">
-							<li>
-								<a href="php/nuevoParticipante.php">Nuevo Participante</a>
-							</li>
-							<li>
-								<a href="php/verParticipante.php">Ver Participante</a>
-							</li>
-						</ul>
-					</li>
+					<?php if ($_SESSION["tipoUser"]=="1"): ?>
+						<li>
+							<a id="subMenu2" value="responsables" onclick="despliegaSubMenu2();" href="#">Responsables</a>
+							<ul id="children2" style="display:none;" class="children">
+								<li>
+									<a href="php/nuevoResponsable.php">Nuevo Responsables</a>
+								</li>
+								<li>
+									<a href="php/verResponsable.php">Ver Responsables</a>
+								</li>
+								
+							</ul>
+						</li>
+						
+						<li>
+							<a id="subMenu3" value="participantes" onclick="despliegaSubMenu3();" href="#">Participantes</a>
+							<ul id="children3" style="display:none;" class="children">
+								<li>
+									<a href="php/nuevoParticipante.php">Nuevo Participante</a>
+								</li>
+								<li>
+									<a href="php/verParticipante.php">Ver Participante</a>
+								</li>
+							</ul>
+						</li>	
+					<?php endif ?>
+					
+					
 					<!-- <li>
 						<a id="subMenu4" value="avances" onclick="despliegaSubMenu4();" href="#">Gestion de Avances</a>
 						<ul id="children4" style="display:none;" class="children">
@@ -95,7 +109,7 @@
 						</ul>
 					</li> -->
 					<li>
-						<a href="#">Cerrar Session</a>
+						<a href="" onclick="cerrarSession()">Cerrar Session</a>
 					</li>
 				</ul>
 			</div>

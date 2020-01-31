@@ -43,4 +43,32 @@
 		$numRow=$resultado->fetchColumn();
 		echo $numRow;
 	}
+
+	if (isset($_POST["sendusuario"]) && isset($_POST["sendclave"])) {
+		
+		$usuario=$_POST["sendusuario"];
+		$clave=$_POST["sendclave"];
+
+		$consulta="SELECT count(*) FROM usuarios
+		WHERE usuario = '$usuario' AND clave = '$clave'";
+		$resultado=$conexion->query($consulta);
+		$numRow=$resultado->fetchColumn();
+		$numRow;
+
+		if ($numRow=="1") {
+			$consultaResponsable="SELECT * FROM usuarios
+			INNER JOIN responsables ON responsables.idResponsable = usuarios.responsableUsuario
+			WHERE usuarios.usuario = '$usuario' AND usuarios.clave = '$clave'";
+			$resultadoResponsable=$conexion->prepare($consultaResponsable);
+			$resultadoResponsable->execute();
+
+			while ($row=$resultadoResponsable->fetch(PDO::FETCH_ASSOC)) {
+				session_start();
+				$_SESSION["responsable"]=$row["primerNombre"]." ".$row["primerApellido"];
+				$_SESSION["idResponsable"]=$row["idResponsable"];
+				$_SESSION["tipoUser"]=$row["tipoUser"];
+				echo "1";
+			}
+		}
+	}
 ?>

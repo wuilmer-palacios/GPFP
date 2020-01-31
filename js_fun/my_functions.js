@@ -507,3 +507,58 @@ function onOffResponsable(valorUno){
 		}
 	})
 }
+
+function loginUsuario(){
+	var usuario= $("#usuario").val();
+	var clave= $("#clave").val();
+
+	$.ajax({
+		url:'php/class/validaNombre.php',
+		type:'POST',
+		data:{
+			sendusuario:usuario,
+			sendclave:clave
+		},
+		success:function(data){
+			var valor=data;
+			if (valor=="1") {
+				window.location="index.php";
+			}
+		}
+	})
+	
+}
+
+function cerrarSession(){
+	var close="1";
+	$.ajax({
+		url:'php/class/close.php',
+		type:'POST',
+		data:{
+			sendClose:close
+		},
+		success:function(data){
+			var valor=data;
+			if (valor=="1" || valor==1) {
+				window.locationf="login.php";
+			}
+		}
+	})
+}
+
+function cerrarSession2(){
+	var close="1";
+	$.ajax({
+		url:'class/close.php',
+		type:'POST',
+		data:{
+			sendClose:close
+		},
+		success:function(data){
+			var valor=data;
+			if (valor=="1" || valor==1) {
+				window.locationf="login.php";
+			}
+		}
+	})
+}

@@ -89,7 +89,20 @@ CREATE TABLE responsables(
 	PRIMARY KEY(idResponsable)
 );
 
+CREATE TABLE usuarios(
+	idUsuario int not null auto_increment,
+	responsableUsuario int not null,
+	usuario varchar(15) not null,
+	clave varchar(15)not null,
+	estadoUsuario tinyint not null,
+	UNIQUE (usuario),
+	PRIMARY KEY (idUsuario)
+);
+
 -- RELACIONES -- -- RELACIONES -- -- RELACIONES -- -- RELACIONES -- ;
+
+ALTER TABLE usuarios ADD CONSTRAINT usuario_and_responsable
+FOREIGN KEY (responsableUsuario) REFERENCES responsables (idResponsable);
 
 ALTER TABLE planes_tacticos ADD CONSTRAINT cp_planes_tacticos_and_cp_responsables
 FOREIGN KEY (responsable) REFERENCES responsables (idResponsable);
