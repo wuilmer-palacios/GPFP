@@ -26,6 +26,8 @@
 	<div id="body-z">
 		<div class="container-fluid">
 			<div class="row row-header">
+			<h1>HOLA SOY ALGO NUEVO</h1>
+			<h2>HOLA HOLA HOLA HOLA</h2>
 				<header class="col-md-3 col-xs-12">
 					<h5>Bienvenido al Gestor de Proyectos</h5>
 				</header>
